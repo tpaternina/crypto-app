@@ -21,10 +21,8 @@ export default class Coins extends React.Component {
       const { data } = await axios(`
       https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&order=${order}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d
       `);
-      console.log(data);
       this.setState({ coinList: data, isLoading: false, hasError: false });
     } catch (err) {
-      console.log(err);
       this.setState({ isLoading: false, hasError: err });
     }
   };
@@ -35,10 +33,10 @@ export default class Coins extends React.Component {
 
   render() {
     const { isLoading, hasError } = this.state;
+    const hasResponse =
+      !_.isEmpty(this.state.coinList) && !isLoading && !hasError;
     return (
-      !_.isEmpty(this.state.coinList) &&
-      !isLoading &&
-      !hasError && (
+      hasResponse && (
         <CoinTable>
           <thead>
             <tr>
