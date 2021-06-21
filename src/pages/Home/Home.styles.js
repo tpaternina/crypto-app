@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-
+export const StyledTitle = styled.h2`
+  color: #fff;
+`;
 
 export const CoinTable = styled.table`
   text-align: left;

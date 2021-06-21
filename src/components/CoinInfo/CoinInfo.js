@@ -15,7 +15,6 @@ import { ColorBar } from "components";
 
 function MarketInfo(props) {
   const { numerator, denominator, logoUrl, currency } = props;
-  console.log({ currency });
   const { data } = usePalette(logoUrl.split("/").splice(3).join("/"));
 
   return (

@@ -27,7 +27,7 @@ export default function App() {
             <Route path="/portfolio">
               <Portfolio />
             </Route>
-            <Route path="/" component={() => <Home currency={currency} />} />
+            <Route path="/" component={(props) => <Home currency={currency} {...props} />} />
           </Switch>
         </Container>
       </Router>
