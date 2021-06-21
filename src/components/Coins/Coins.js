@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { default as _ } from "lodash";
 import { CoinTable } from "./Coins.styles";
-import CoinOverview from "components/CoinOverview";
+import CoinOverview from "components/CoinInfo";
 
 export default class Coins extends React.Component {
   state = {

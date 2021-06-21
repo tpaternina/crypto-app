@@ -1,16 +1,46 @@
 import React from "react";
+import { usePalette } from "react-palette";
 import { formatLongNumber } from "utils";
 import {
   CoinLogo,
   IncreaseArrow,
-  MarketInfo,
+  MarketDiv,
   MarketInfoRow,
   StyledCoinName,
+  StyledInfo,
   StyledPercentage,
-} from "./CoinOverview.styles";
+} from "./CoinInfo.styles";
 import { increaseArrow, decreaseArrow } from "assets";
+import { ColorBar } from "components";
 
-export default class CoinOverview extends React.Component {
+function MarketInfo(props) {
+  const { numerator, denominator, logoUrl, currency } = props;
+  console.log({ currency });
+  const { data } = usePalette(logoUrl.split("/").splice(3).join("/"));
+
+  return (
+    <StyledInfo>
+      <MarketInfoRow>
+        <MarketDiv color={data.vibrant}>
+          {formatLongNumber(numerator, currency)}
+        </MarketDiv>
+        <MarketDiv color={data.lightMuted}>
+          {formatLongNumber(denominator, currency)}
+        </MarketDiv>
+      </MarketInfoRow>
+      <MarketInfoRow>
+        <ColorBar
+          numerator={numerator}
+          denominator={denominator}
+          numeratorColor={data.vibrant}
+          denominatorColor={data.lightMuted}
+        />
+      </MarketInfoRow>
+    </StyledInfo>
+  );
+}
+
+export default class CoinInfo extends React.Component {
   render() {
     const { coin } = this.props;
 
@@ -60,34 +90,20 @@ export default class CoinOverview extends React.Component {
           </StyledPercentage>
         </td>
         <td>
-          <MarketInfo>
-            <MarketInfoRow>
-              <div>
-                {formatLongNumber(coin.total_volume, this.props.currency)}
-              </div>
-              <div>
-                {formatLongNumber(coin.market_cap, this.props.currency)}
-              </div>
-            </MarketInfoRow>
-            <MarketInfoRow>
-              <small>fraction bar with pretty colors</small>
-            </MarketInfoRow>
-          </MarketInfo>
+          <MarketInfo
+            logoUrl={coin.image}
+            numerator={coin.total_volume}
+            denominator={coin.market_cap}
+            currency={this.props.currency}
+          />
         </td>
         <td>
-          <MarketInfo>
-            <MarketInfoRow>
-              <div>
-                {formatLongNumber(coin.circulating_supply, this.props.currency)}
-              </div>
-              <div>
-                {formatLongNumber(coin.total_supply, this.props.currency)}
-              </div>
-            </MarketInfoRow>
-            <MarketInfoRow>
-              <small>fraction bar with pretty colors</small>
-            </MarketInfoRow>
-          </MarketInfo>
+        <MarketInfo
+            logoUrl={coin.image}
+            numerator={coin.circulating_supply}
+            denominator={coin.total_supply}
+            currency={this.props.currency}
+          />
         </td>
         <td>Chart coming soon...</td>
       </tr>

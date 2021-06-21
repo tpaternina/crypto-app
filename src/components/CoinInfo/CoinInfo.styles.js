@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const CoinLogo = styled.img`
   width: 20px;
   margin-right: 0.75rem;
@@ -31,9 +30,13 @@ export const MarketInfoRow = styled.div`
   justify-content: space-between;
 `;
 
-export const MarketInfo = styled.div`
+export const StyledInfo = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+export const MarketDiv = styled.div`
+  color: ${(props) => props.color};
 `;
