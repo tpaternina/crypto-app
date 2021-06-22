@@ -7,8 +7,10 @@ import {
   MarketDiv,
   MarketInfoRow,
   StyledCoinName,
+  StyledCol,
   StyledInfo,
   StyledPercentage,
+  StyledRow,
 } from "./CoinInfo.styles";
 import { increaseArrow, decreaseArrow } from "assets";
 import { ColorBar } from "components";
@@ -49,63 +51,63 @@ export default class CoinInfo extends React.Component {
     const increase7d = coin.price_change_percentage_7d_in_currency > 0;
 
     return (
-      <tr key={coin}>
-        <td>{coin.market_cap_rank}</td>
-        <td>
+      <StyledRow key={coin}>
+        <StyledCol span={1}>{coin.market_cap_rank}</StyledCol>
+        <StyledCol span={3}>
           <StyledCoinName>
             <CoinLogo src={coin.image} alt={coin.name} />
             {coin.name} ({coin.symbol.toUpperCase()})
           </StyledCoinName>
-        </td>
-        <td>
+        </StyledCol>
+        <StyledCol span={2}>
           {coin.current_price.toLocaleString("en-UK", {
             style: "currency",
             currency: this.props.currency.toUpperCase(),
             maximumFractionDigits: 2,
           })}
-        </td>
-        <td>
+        </StyledCol>
+        <StyledCol span={2}>
           <StyledPercentage increase={increase1h}>
             <IncreaseArrow src={increase1h ? increaseArrow : decreaseArrow} />
             {coin.price_change_percentage_1h_in_currency &&
               Math.abs(coin.price_change_percentage_1h_in_currency.toFixed(2))}
             %
           </StyledPercentage>
-        </td>
-        <td>
+        </StyledCol>
+        <StyledCol span={2}>
           <StyledPercentage increase={increase24h}>
             <IncreaseArrow src={increase24h ? increaseArrow : decreaseArrow} />
             {coin.price_change_percentage_24h &&
               Math.abs(coin.price_change_percentage_24h.toFixed(2))}
             %
           </StyledPercentage>
-        </td>
-        <td>
+        </StyledCol>
+        <StyledCol span={2}>
           <StyledPercentage increase={increase7d}>
             <IncreaseArrow src={increase7d ? increaseArrow : decreaseArrow} />
             {coin.price_change_percentage_7d_in_currency &&
               Math.abs(coin.price_change_percentage_7d_in_currency.toFixed(2))}
             %
           </StyledPercentage>
-        </td>
-        <td>
+        </StyledCol>
+        <StyledCol span={4}>
           <MarketInfo
             logoUrl={coin.image}
             numerator={coin.total_volume}
             denominator={coin.market_cap}
             currency={this.props.currency}
           />
-        </td>
-        <td>
-        <MarketInfo
+        </StyledCol>
+        <StyledCol span={4}>
+          <MarketInfo
             logoUrl={coin.image}
             numerator={coin.circulating_supply}
             denominator={coin.total_supply}
             currency={this.props.currency}
           />
-        </td>
-        <td>Chart coming soon...</td>
-      </tr>
+        </StyledCol>
+        <StyledCol span={4}>Chart coming soon...</StyledCol>
+      </StyledRow>
     );
   }
 }

@@ -2,35 +2,9 @@ import React from "react";
 import axios from "axios";
 import { default as _ } from "lodash";
 import queryString from "query-string";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import { Coins } from "components";
-import { CoinTable, StyledTitle } from "./Home.styles";
+import { Coins, TableHeader } from "components";
+import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
 
-class TableHeader extends React.Component {
-  // HANDLE CLICKING ON OTHER COMPONENT AND RESETTING DESCENDING ORDER
-  state = {
-    descending: true,
-  };
-
-  toggleOrder = () => {
-    // toggle descending order
-    this.setState({ descending: !this.state.descending });
-    this.props.toggleOrder(this.props.sortBy, !this.state.descending);
-  };
-
-  render() {
-    return (
-      <span onClick={this.toggleOrder}>
-        {this.props.text}{" "}
-        {this.state.descending ? (
-          <DownOutlined style={{ fontSize: "0.75rem", fontWeight: "bold" }} />
-        ) : (
-          <UpOutlined style={{ fontSize: "0.75rem", fontWeight: "bold" }} />
-        )}
-      </span>
-    );
-  }
-}
 export default class Home extends React.Component {
   state = {
     isLoading: false,
@@ -48,7 +22,7 @@ export default class Home extends React.Component {
     try {
       this.setState({ isLoading: true });
       const { data } = await axios(`
-      https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&order=${queryOrder}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d
+      https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&order=${queryOrder}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d&sparkline=true
       `);
       this.setState({ coinList: data, isLoading: false, hasError: false });
     } catch (err) {
@@ -101,74 +75,78 @@ export default class Home extends React.Component {
     return (
       <>
         <StyledTitle>Market Overview</StyledTitle>
-        <CoinTable>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>
-                <TableHeader
-                  text="Name"
-                  sortBy="id"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>
-                <TableHeader
-                  text="Price"
-                  sortBy="current_price"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>
-                <TableHeader
-                  text="1h"
-                  sortBy="price_change_percentage_1h_in_currency"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>
-                <TableHeader
-                  text="24h"
-                  sortBy="price_change_percentage_24h_in_currency"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>
-                <TableHeader
-                  text="7d"
-                  sortBy="price_change_percentage_7d_in_currency"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>
-                <TableHeader
-                  text="24h Volume"
-                  sortBy="total_volume"
-                  toggleOrder={this.toggleOrder}
-                />{" "}
-                /{" "}
-                <TableHeader
-                  text="Market Cap"
-                  sortBy="market_cap"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>
-                <TableHeader
-                  text="Circulating"
-                  sortBy="circulating_supply"
-                  toggleOrder={this.toggleOrder}
-                />{" "}
-                /{" "}
-                <TableHeader
-                  text="Total Supply"
-                  sortBy="total_supply"
-                  toggleOrder={this.toggleOrder}
-                />
-              </th>
-              <th>Last 7d</th>
-            </tr>
-          </thead>
+        <Container>
+          <StyledRow>
+            <StyledCol span={1}>
+              <TableHeader
+                text="#"
+                sortBy="market_cap_rank"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={3}>
+              <TableHeader
+                text="Name"
+                sortBy="id"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={2}>
+              <TableHeader
+                text="Price"
+                sortBy="current_price"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={2}>
+              <TableHeader
+                text="1h"
+                sortBy="price_change_percentage_1h_in_currency"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={2}>
+              <TableHeader
+                text="24h"
+                sortBy="price_change_percentage_24h_in_currency"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={2}>
+              <TableHeader
+                text="7d"
+                sortBy="price_change_percentage_7d_in_currency"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={4}>
+              <TableHeader
+                text="24h Volume"
+                sortBy="total_volume"
+                toggleOrder={this.toggleOrder}
+              />{" "}
+              /{" "}
+              <TableHeader
+                text="Market Cap"
+                sortBy="market_cap"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={4}>
+              <TableHeader
+                text="Circulating"
+                sortBy="circulating_supply"
+                toggleOrder={this.toggleOrder}
+              />{" "}
+              /{" "}
+              <TableHeader
+                text="Total Supply"
+                sortBy="total_supply"
+                toggleOrder={this.toggleOrder}
+              />
+            </StyledCol>
+            <StyledCol span={4}>Last 7d</StyledCol>
+          </StyledRow>
           {hasResponse && (
             <Coins
               currency={this.props.currency}
@@ -182,7 +160,7 @@ export default class Home extends React.Component {
               )}
             />
           )}
-        </CoinTable>
+        </Container>
       </>
     );
   }

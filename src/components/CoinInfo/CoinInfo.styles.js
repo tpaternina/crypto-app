@@ -1,4 +1,17 @@
 import styled from "styled-components";
+import { Col, Row } from "antd";
+
+export const StyledCol = styled(Col)`
+  box-sizing: border-box;
+  padding: 1.5rem 0.75rem;
+  display: flex;
+  align-items: flex-end;
+`;
+
+export const StyledRow = styled(Row)`
+  border-bottom: solid 1px #fff;
+  vertical-align: bottom;
+`;
 
 export const CoinLogo = styled.img`
   width: 20px;

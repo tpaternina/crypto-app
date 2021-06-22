@@ -1,10 +1,19 @@
 import styled from "styled-components";
+import { Col, Row } from "antd";
 
 export const StyledTitle = styled.h2`
   color: #fff;
 `;
 
-export const CoinTable = styled.table`
+export const StyledCol = styled(Col)`
+  padding: 1.5rem 0.75rem 0 0.75rem;
+`;
+
+export const StyledRow = styled(Row)`
+  font-weight: 900;
+`;
+
+export const Container = styled.div`
   text-align: left;
   font-size: 0.9rem;
 
@@ -17,7 +26,6 @@ export const CoinTable = styled.table`
   background-color: #191b1f;
 
   thead {
-    font-weight: 900;
   }
 
   tbody tr {
@@ -28,16 +36,6 @@ export const CoinTable = styled.table`
     border: none;
   }
 
-  th,
-  td {
-    padding: 1.5rem 0.75rem;
-  }
-
   th {
-    padding-bottom: 0;
-  }
-
-  tr {
-    vertical-align: bottom;
   }
 `;
