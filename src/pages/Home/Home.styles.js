@@ -24,18 +24,4 @@ export const Container = styled.div`
   border-radius: 15px;
   border-collapse: collapse;
   background-color: #191b1f;
-
-  thead {
-  }
-
-  tbody tr {
-    border-bottom: solid 1px #fff;
-  }
-
-  tbody tr:last-of-type {
-    border: none;
-  }
-
-  th {
-  }
 `;

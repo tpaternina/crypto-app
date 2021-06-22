@@ -1,7 +1,7 @@
 export function formatLongNumber(number, currency) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
 
-  if (!number) return "unkown";
+  if (!number) return "∞";
 
   // Get the tier of number to determine symbol
   // e.g. if x = 1000, then log10(x) = 3, and  tier = 1, which is the 2nd element of symbols array

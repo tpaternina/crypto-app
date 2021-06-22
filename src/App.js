@@ -12,7 +12,7 @@ export default function App() {
     <AppContainer>
       <Router>
         <StyledNav>
-          <ul>
+          <ul style={{margin: 0}}>
             <li>
               <StyledLink to="/">Coins</StyledLink>
             </li>

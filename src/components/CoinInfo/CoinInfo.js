@@ -23,10 +23,10 @@ function MarketInfo(props) {
     <StyledInfo>
       <MarketInfoRow>
         <MarketDiv color={data.vibrant}>
-          {formatLongNumber(numerator, currency)}
+          • {formatLongNumber(numerator, currency)}
         </MarketDiv>
         <MarketDiv color={data.lightMuted}>
-          {formatLongNumber(denominator, currency)}
+          • {formatLongNumber(denominator, currency)}
         </MarketDiv>
       </MarketInfoRow>
       <MarketInfoRow>

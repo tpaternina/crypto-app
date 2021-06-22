@@ -11,6 +11,9 @@ export const StyledCol = styled(Col)`
 export const StyledRow = styled(Row)`
   border-bottom: solid 1px #fff;
   vertical-align: bottom;
+  &:last-of-type {
+    border: none;
+  }
 `;
 
 export const CoinLogo = styled.img`

@@ -21,12 +21,14 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   padding: 0.5rem 1.5rem;
   border-radius: 15px;
+  font-size: 1rem;
 
   &::after {
     text-decoration: none;
   }
   &:hover {
     background-color: #2c2f36;
+    color: #fff;
   }
 `;
 
