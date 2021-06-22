@@ -1,11 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { default as _ } from "lodash";
+import queryString from "query-string";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Coins } from "components";
 import { CoinTable, StyledTitle } from "./Home.styles";
 
 class TableHeader extends React.Component {
+  // HANDLE CLICKING ON OTHER COMPONENT AND RESETTING DESCENDING ORDER
   state = {
     descending: true,
   };
@@ -13,14 +15,18 @@ class TableHeader extends React.Component {
   toggleOrder = () => {
     // toggle descending order
     this.setState({ descending: !this.state.descending });
-    this.props.toggleOrder(this.props.colName, !this.state.descending);
+    this.props.toggleOrder(this.props.sortBy, !this.state.descending);
   };
 
   render() {
     return (
       <span onClick={this.toggleOrder}>
-        {this.props.text}
-        {this.state.descending ? <DownOutlined /> : <UpOutlined />}
+        {this.props.text}{" "}
+        {this.state.descending ? (
+          <DownOutlined style={{ fontSize: "0.75rem", fontWeight: "bold" }} />
+        ) : (
+          <UpOutlined style={{ fontSize: "0.75rem", fontWeight: "bold" }} />
+        )}
       </span>
     );
   }
@@ -33,8 +39,8 @@ export default class Home extends React.Component {
     perPage: 10,
     page: 1,
     queryOrder: "market_cap_desc",
-    order: "market_cap",
-    descending: -1, // if 1, descending order, if -1, ascending order
+    sortBy: "market_cap",
+    descending: true, // if true, sort in descending order, if false sort in ascending order
   };
 
   getCoins = async () => {
@@ -51,29 +57,41 @@ export default class Home extends React.Component {
   };
 
   sortCoins = (item1, item2, key, descending) => {
-    if (item1[key] < item2[key]) return -1 * descending;
-    if (item1[key] > item2[key]) return 1 * descending;
+    if (item1[key] < item2[key]) return descending ? 1 : -1;
+    if (item1[key] > item2[key]) return descending ? -1 : 1;
     return 0;
   };
 
-  toggleOrder = (colName, descending) => {
-    const newOrder = colName;
-    let newDescending;
-    if (newOrder !== this.state.order) {
-      // if changed the column, reset descending value
-      newDescending = -1;
-    } else {
-      newDescending = this.state.descending * -1;
-    }
-    this.setState({ order: newOrder, descending: newDescending });
+  toggleOrder = (sortBy) => {
+    const descending = !this.state.descending;
+    this.setState({ sortBy, descending });
+    const query = queryString.stringify({ sortBy, descending });
+    this.props.history.push(`/?${query}`);
   };
 
   componentDidMount() {
-    this.getCoins();
+    if (this.props.location.search) {
+      const parsed = queryString.parse(this.props.location.search, {
+        parseBooleans: true,
+      });
+      this.setState(parsed);
+      this.getCoins();
+    } else {
+      const { sortBy, descending } = this.state;
+      const query = queryString.stringify({ sortBy, descending });
+      this.props.history.push(`/?${query}`);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.order !== this.state.order) {
+    if (prevProps.location.search !== this.props.location.search) {
+      this.getCoins();
+    }
+    if (
+      prevState.sortBy !== this.state.sortBy ||
+      prevState.descending !== this.state.descending
+    ) {
+      this.getCoins();
     }
   }
 
@@ -90,38 +108,64 @@ export default class Home extends React.Component {
               <th>
                 <TableHeader
                   text="Name"
-                  colName="id"
+                  sortBy="id"
                   toggleOrder={this.toggleOrder}
                 />
               </th>
               <th>
                 <TableHeader
                   text="Price"
-                  colName="current_price"
+                  sortBy="current_price"
                   toggleOrder={this.toggleOrder}
                 />
               </th>
               <th>
                 <TableHeader
                   text="1h"
-                  colName="price_change_percentage_1h_in_currency"
+                  sortBy="price_change_percentage_1h_in_currency"
                   toggleOrder={this.toggleOrder}
                 />
               </th>
               <th>
                 <TableHeader
                   text="24h"
-                  colName="price_change_percentage_24h_in_currency"
+                  sortBy="price_change_percentage_24h_in_currency"
                   toggleOrder={this.toggleOrder}
                 />
               </th>
-              <th><TableHeader
+              <th>
+                <TableHeader
                   text="7d"
-                  colName="price_change_percentage_7d_in_currency"
+                  sortBy="price_change_percentage_7d_in_currency"
                   toggleOrder={this.toggleOrder}
-                /></th>
-              <th>24h volume / Market Cap</th>
-              <th>Circulating / Total Supply</th>
+                />
+              </th>
+              <th>
+                <TableHeader
+                  text="24h Volume"
+                  sortBy="total_volume"
+                  toggleOrder={this.toggleOrder}
+                />{" "}
+                /{" "}
+                <TableHeader
+                  text="Market Cap"
+                  sortBy="market_cap"
+                  toggleOrder={this.toggleOrder}
+                />
+              </th>
+              <th>
+                <TableHeader
+                  text="Circulating"
+                  sortBy="circulating_supply"
+                  toggleOrder={this.toggleOrder}
+                />{" "}
+                /{" "}
+                <TableHeader
+                  text="Total Supply"
+                  sortBy="total_supply"
+                  toggleOrder={this.toggleOrder}
+                />
+              </th>
               <th>Last 7d</th>
             </tr>
           </thead>
@@ -132,7 +176,7 @@ export default class Home extends React.Component {
                 this.sortCoins(
                   item1,
                   item2,
-                  this.state.order,
+                  this.state.sortBy,
                   this.state.descending
                 )
               )}
