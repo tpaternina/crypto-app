@@ -1,5 +1,20 @@
 import styled from "styled-components";
+import { Col, Row } from "antd";
 
+export const StyledCol = styled(Col)`
+  box-sizing: border-box;
+  padding: 1.5rem 0.75rem;
+  display: flex;
+  align-items: flex-end;
+`;
+
+export const StyledRow = styled(Row)`
+  border-bottom: solid 1px #fff;
+  vertical-align: bottom;
+  &:last-of-type {
+    border: none;
+  }
+`;
 
 export const CoinLogo = styled.img`
   width: 20px;
@@ -31,9 +46,13 @@ export const MarketInfoRow = styled.div`
   justify-content: space-between;
 `;
 
-export const MarketInfo = styled.div`
+export const StyledInfo = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+export const MarketDiv = styled.div`
+  color: ${(props) => props.color};
 `;
