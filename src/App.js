@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AppContainer, Container, StyledLink, StyledNav } from "./App.styles";
+import { AppContainer, Container, StyledLink, StyledList, StyledNav } from "./App.styles";
 import { Home, Portfolio } from "pages";
 import { Currency } from "components";
 
@@ -12,14 +12,14 @@ export default function App() {
     <AppContainer>
       <Router>
         <StyledNav>
-          <ul style={{margin: 0}}>
+          <StyledList style={{margin: 0}}>
             <li>
               <StyledLink to="/">Coins</StyledLink>
             </li>
             <li>
               <StyledLink to="/portfolio">Portfolio</StyledLink>
             </li>
-          </ul>
+          </StyledList>
           <Currency currency={currency} />
         </StyledNav>
         <Container>

@@ -32,6 +32,10 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const StyledList = styled.ul`
+  margin: 0;
+`
+
 export const StyledNav = styled.nav`
   width: 100%;
   padding: 1rem 2.5rem;

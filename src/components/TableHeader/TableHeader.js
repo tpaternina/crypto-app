@@ -2,7 +2,6 @@ import React from "react";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 
 export default class TableHeader extends React.Component {
-  // HANDLE CLICKING ON OTHER COMPONENT AND RESETTING DESCENDING ORDER
   state = {
     descending: true,
   };

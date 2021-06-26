@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { default as _ } from "lodash";
+import { isEmpty } from "lodash";
 import queryString from "query-string";
 import { Coins, TableHeader } from "components";
 import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
@@ -10,15 +10,17 @@ export default class Home extends React.Component {
     isLoading: false,
     hasError: false,
     coinList: [],
-    perPage: 10,
-    page: 1,
-    queryOrder: "market_cap_desc",
-    sortBy: "market_cap",
-    descending: true, // if true, sort in descending order, if false sort in ascending order
+    pageConfig: {
+      perPage: 10,
+      page: 1,
+      queryOrder: "market_cap_desc",
+      sortBy: "market_cap",
+      descending: true, // if true, sort in descending order, if false sort in ascending order
+    },
   };
 
   getCoins = async () => {
-    const { perPage, page, queryOrder } = this.state;
+    const { perPage, page, queryOrder } = this.state.pageConfig;
     try {
       this.setState({ isLoading: true });
       const { data } = await axios(`
@@ -30,16 +32,17 @@ export default class Home extends React.Component {
     }
   };
 
-  sortCoins = (item1, item2, key, descending) => {
-    if (item1[key] < item2[key]) return descending ? 1 : -1;
-    if (item1[key] > item2[key]) return descending ? -1 : 1;
+  sortCoins = (item1, item2) => {
+    const { sortBy, descending } = this.state.pageConfig;
+    if (item1[sortBy] < item2[sortBy]) return descending ? 1 : -1;
+    if (item1[sortBy] > item2[sortBy]) return descending ? -1 : 1;
     return 0;
   };
 
-  toggleOrder = (sortBy) => {
-    const descending = !this.state.descending;
-    this.setState({ sortBy, descending });
-    const query = queryString.stringify({ sortBy, descending });
+  toggleOrder = (sortBy, descending) => {
+    this.setState({ pageConfig: { ...this.state.pageConfig, sortBy, descending } });
+    const query = queryString.stringify(this.state.pageConfig);
+    console.log(query);
     this.props.history.push(`/?${query}`);
   };
 
@@ -48,22 +51,25 @@ export default class Home extends React.Component {
       const parsed = queryString.parse(this.props.location.search, {
         parseBooleans: true,
       });
-      this.setState(parsed);
+      this.setState({ pageConfig: {...this.state.pageConfig, ...parsed} });
       this.getCoins();
     } else {
-      const { sortBy, descending } = this.state;
-      const query = queryString.stringify({ sortBy, descending });
+      const query = queryString.stringify(this.state.pageConfig);
       this.props.history.push(`/?${query}`);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
+      const parsed = queryString.parse(this.props.location.search, {
+        parseBooleans: true,
+      });
+      this.setState({ pageConfig: {...this.state.pageConfig, ...parsed} });
       this.getCoins();
     }
     if (
-      prevState.sortBy !== this.state.sortBy ||
-      prevState.descending !== this.state.descending
+      JSON.stringify(prevState.pageConfig) !==
+      JSON.stringify(this.state.pageConfig)
     ) {
       this.getCoins();
     }
@@ -71,7 +77,7 @@ export default class Home extends React.Component {
 
   render() {
     const { coinList, isLoading, hasError } = this.state;
-    const hasResponse = !_.isEmpty(coinList) && !isLoading && !hasError;
+    const hasResponse = !isEmpty(coinList) && !isLoading && !hasError;
     return (
       <>
         <StyledTitle>Market Overview</StyledTitle>
@@ -150,14 +156,7 @@ export default class Home extends React.Component {
           {hasResponse && (
             <Coins
               currency={this.props.currency}
-              coinList={this.state.coinList.sort((item1, item2) =>
-                this.sortCoins(
-                  item1,
-                  item2,
-                  this.state.sortBy,
-                  this.state.descending
-                )
-              )}
+              coinList={this.state.coinList.sort(this.sortCoins)}
             />
           )}
         </Container>
