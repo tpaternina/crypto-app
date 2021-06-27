@@ -42,7 +42,6 @@ export default class Home extends React.Component {
   toggleOrder = (sortBy, descending) => {
     this.setState({ pageConfig: { ...this.state.pageConfig, sortBy, descending } });
     const query = queryString.stringify(this.state.pageConfig);
-    console.log(query);
     this.props.history.push(`/?${query}`);
   };
 
