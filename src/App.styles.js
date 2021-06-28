@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const AppContainer = styled.div`
   background-color: #1f2128;
@@ -16,7 +16,7 @@ export const Container = styled.div`
   padding: 2rem 2.5rem;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(NavLink)`
   color: #fff;
   text-decoration: none;
   padding: 0.5rem 1.5rem;
@@ -25,8 +25,9 @@ export const StyledLink = styled(Link)`
 
   &::after {
     text-decoration: none;
+    background-color: none;
   }
-  &:hover {
+  &:hover, &.selected  {
     background-color: #2c2f36;
     color: #fff;
   }

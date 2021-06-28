@@ -12,12 +12,12 @@ export default function App() {
     <AppContainer>
       <Router>
         <StyledNav>
-          <StyledList style={{margin: 0}}>
+          <StyledList>
             <li>
-              <StyledLink to="/">Coins</StyledLink>
+              <StyledLink exact activeClassName="selected" to="/">Coins</StyledLink>
             </li>
             <li>
-              <StyledLink to="/portfolio">Portfolio</StyledLink>
+              <StyledLink exact activeClassName="selected" to="/portfolio">Portfolio</StyledLink>
             </li>
           </StyledList>
           <Currency currency={currency} />

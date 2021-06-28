@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { isEmpty } from "lodash";
 import queryString from "query-string";
+import LoadingBar from "react-top-loading-bar";
 import { Coins, TableHeader } from "components";
 import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
 
@@ -40,7 +41,9 @@ export default class Home extends React.Component {
   };
 
   toggleOrder = (sortBy, descending) => {
-    this.setState({ pageConfig: { ...this.state.pageConfig, sortBy, descending } });
+    this.setState({
+      pageConfig: { ...this.state.pageConfig, sortBy, descending },
+    });
     const query = queryString.stringify(this.state.pageConfig);
     this.props.history.push(`/?${query}`);
   };
@@ -50,7 +53,7 @@ export default class Home extends React.Component {
       const parsed = queryString.parse(this.props.location.search, {
         parseBooleans: true,
       });
-      this.setState({ pageConfig: {...this.state.pageConfig, ...parsed} });
+      this.setState({ pageConfig: { ...this.state.pageConfig, ...parsed } });
       this.getCoins();
     } else {
       const query = queryString.stringify(this.state.pageConfig);
@@ -63,7 +66,7 @@ export default class Home extends React.Component {
       const parsed = queryString.parse(this.props.location.search, {
         parseBooleans: true,
       });
-      this.setState({ pageConfig: {...this.state.pageConfig, ...parsed} });
+      this.setState({ pageConfig: { ...this.state.pageConfig, ...parsed } });
       this.getCoins();
     }
     if (
@@ -77,10 +80,17 @@ export default class Home extends React.Component {
   render() {
     const { coinList, isLoading, hasError } = this.state;
     const hasResponse = !isEmpty(coinList) && !isLoading && !hasError;
+
+    // Use ref for Loading bar component
+
     return (
       <>
         <StyledTitle>Market Overview</StyledTitle>
         <Container>
+          <LoadingBar
+            progress={this.state.progress}
+            onLoaderFinished={() => this.setState({ progress: 0 })}
+          />
           <StyledRow>
             <StyledCol span={1}>
               <TableHeader
