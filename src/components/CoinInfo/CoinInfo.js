@@ -13,7 +13,7 @@ import {
   StyledRow,
 } from "./CoinInfo.styles";
 import { increaseArrow, decreaseArrow } from "assets";
-import { ColorBar } from "components";
+import { Chart, ColorBar } from "components";
 
 function MarketInfo(props) {
   const { numerator, denominator, logoUrl, currency } = props;
@@ -49,6 +49,9 @@ export default class CoinInfo extends React.Component {
     const increase1h = coin.price_change_percentage_1h_in_currency > 0;
     const increase24h = coin.price_change_percentage_24h_in_currency > 0;
     const increase7d = coin.price_change_percentage_7d_in_currency > 0;
+
+    // The 7-day price change
+    const { price } = coin.sparkline_in_7d;
 
     return (
       <StyledRow key={coin}>
@@ -106,7 +109,9 @@ export default class CoinInfo extends React.Component {
             currency={this.props.currency}
           />
         </StyledCol>
-        <StyledCol span={4}>Chart coming soon...</StyledCol>
+        <StyledCol span={4}>
+          <Chart increase={increase7d} data={price} />
+        </StyledCol>
       </StyledRow>
     );
   }
