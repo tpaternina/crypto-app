@@ -29,32 +29,26 @@ export const ChartContainer = styled.div`
   
 `;
 
-export const StyledLoading = styled(LoadingOutlined)`
-  font-size: 3rem;
+export const ChartInfo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `
 
-export const StyledTitle = styled.h2`
+export const StyledLoading = styled(LoadingOutlined)`
+  font-size: 3rem;
+  text-align:center;
+`
+
+export const StyledInfo = styled.p`
+color: #fff;
+margin: 0;
+`
+
+export const StyledPrice = styled.h1`
   color: #fff;
-`;
-
-export const StyledCol = styled(Col)`
-  padding: 1.5rem 0.75rem 0 0.75rem;
-`;
-
-export const StyledRow = styled(Row)`
-  font-weight: 900;
-`;
-
-export const Container = styled.div`
-  text-align: left;
-  font-size: 0.9rem;
-
-  margin: 1rem 0;
-  width: 100%;
-  box-sizing: border-box;
-
-  border-radius: 15px;
-  border-collapse: collapse;
-  background-color: #191b1f;
-`;
-
+  font-weight: bold;
+  margin: .5rem 0;
+` 

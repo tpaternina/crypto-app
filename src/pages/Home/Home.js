@@ -3,8 +3,17 @@ import axios from "axios";
 import { isEmpty } from "lodash";
 import queryString from "query-string";
 import LoadingBar from "react-top-loading-bar";
-import { Coins, TableHeader } from "components";
-import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
+import { ChartOverview, Coins, TableHeader } from "components";
+import {
+  ChartCol,
+  ChartContainer,
+  ChartRow,
+  Container,
+  StyledCol,
+  StyledLoading,
+  StyledRow,
+  StyledTitle,
+} from "./Home.styles";
 
 export default class Home extends React.Component {
   state = {
@@ -20,16 +29,21 @@ export default class Home extends React.Component {
     },
   };
 
+  loadingBar = React.createRef();
+
   getCoins = async () => {
     const { perPage, page, queryOrder } = this.state.pageConfig;
     try {
       this.setState({ isLoading: true });
+      this.loadingBar.current.continuousStart();
       const { data } = await axios(`
       https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&order=${queryOrder}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d&sparkline=true
       `);
       this.setState({ coinList: data, isLoading: false, hasError: false });
+      this.loadingBar.current.complete();
     } catch (err) {
       this.setState({ isLoading: false, hasError: err });
+      this.loadingBar.current.complete();
     }
   };
 
@@ -85,12 +99,26 @@ export default class Home extends React.Component {
 
     return (
       <>
+        {isLoading && (
+          <ChartRow>
+            <ChartCol span={12}>
+              <ChartContainer><StyledLoading /></ChartContainer>
+            </ChartCol>
+            <ChartCol span={12}>
+              <ChartContainer><StyledLoading /></ChartContainer>
+            </ChartCol>
+          </ChartRow>
+        )}
         <StyledTitle>Market Overview</StyledTitle>
-        <Container>
-          <LoadingBar
-            progress={this.state.progress}
-            onLoaderFinished={() => this.setState({ progress: 0 })}
+        <LoadingBar ref={this.loadingBar} />
+        {hasResponse && (
+          <ChartOverview
+            topCoin={this.state.coinList[0]}
+            currency={this.props.currency}
           />
+        )}
+
+        <Container>
           <StyledRow>
             <StyledCol span={1}>
               <TableHeader
