@@ -1,5 +1,8 @@
-export function formatLongNumber(number, currency) {
+import { snakeCase } from "lodash";
+
+export function formatLongNumber(number, currency, decimals) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
+  decimals = decimals || 2;
 
   if (!number) return "∞";
 
@@ -17,5 +20,25 @@ export function formatLongNumber(number, currency) {
   })[0];
 
   // Scale the number and add suffix
-  return currencySymbol + (number / scale).toFixed(2) + suffix;
+  return currencySymbol + (number / scale).toFixed(decimals) + suffix;
 }
+
+export const formatDate = (date) => {
+  let currentDate = new Date(date);
+  currentDate = currentDate.toDateString().split(" ").slice(1).join(" ");
+  return currentDate;
+};
+
+export const formatOverviewChart = (array) => {
+  // chart data
+  const data = {
+    x: formatDate(array[0]).split(" ").slice(0, 2).join(" "),
+    y: array[1].toFixed(2),
+  };
+  return data;
+};
+
+export const keysToSnakeCase = (obj) =>
+  Object.entries(obj).reduce((acc, [key, val]) => {
+    return { ...acc, [snakeCase(key)]: val };
+  }, {});

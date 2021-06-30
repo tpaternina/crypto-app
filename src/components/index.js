@@ -1,3 +1,7 @@
+export { default as Chart } from "./Chart";
+export { default as ChartOverview } from "./ChartOverview";
+export { default as ChartPriceOverview } from "./ChartPriceOverview";
+export { default as ChartVolumeOverview } from "./ChartVolumeOverview";
 export { default as Currency } from "./Currency";
 export { default as CoinInfo } from "./CoinInfo";
 export { default as Coins } from "./Coins";
