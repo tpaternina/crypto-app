@@ -14,6 +14,7 @@ import {
   StyledRow,
   StyledTitle,
 } from "./Home.styles";
+import { keysToSnakeCase } from "utils";
 
 export default class Home extends React.Component {
   state = {
@@ -21,29 +22,52 @@ export default class Home extends React.Component {
     hasError: false,
     coinList: [],
     pageConfig: {
+      sortBy: "marketCap",
+      descending: true, // if true, sort in descending order, if false sort in ascending order
+    },
+    queryConfig: {
+      vsCurrency: this.props.currency,
       perPage: 10,
       page: 1,
-      queryOrder: "market_cap_desc",
-      sortBy: "market_cap",
-      descending: true, // if true, sort in descending order, if false sort in ascending order
     },
   };
 
   loadingBar = React.createRef();
 
   getCoins = async () => {
-    const { perPage, page, queryOrder } = this.state.pageConfig;
     try {
-      this.setState({ isLoading: true });
+      this.setState({
+        isLoading: true,
+      });
       this.loadingBar.current.continuousStart();
-      const { data } = await axios(`
-      https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&order=${queryOrder}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d&sparkline=true
-      `);
-      this.setState({ coinList: data, isLoading: false, hasError: false });
+
+      const query = {
+        ...keysToSnakeCase(this.state.queryConfig),
+        price_change_percentage: "1h%2C24h%2C7d",
+        sparkline: true,
+      };
+
+      const { data } = await axios(
+        queryString.stringifyUrl({
+          url: process.env.REACT_APP_COINS_ENDPOINT,
+          query: query,
+        })
+      );
+
+      keysToSnakeCase(this.state.queryConfig);
+      this.setState({
+        coinList: data,
+        isLoading: false,
+        hasError: false,
+      });
       this.loadingBar.current.complete();
     } catch (err) {
-      this.setState({ isLoading: false, hasError: err });
+      this.setState({
+        isLoading: false,
+        hasError: err,
+      });
       this.loadingBar.current.complete();
+      console.log(err);
     }
   };
 
@@ -67,7 +91,9 @@ export default class Home extends React.Component {
       const parsed = queryString.parse(this.props.location.search, {
         parseBooleans: true,
       });
-      this.setState({ pageConfig: { ...this.state.pageConfig, ...parsed } });
+      this.setState({
+        pageConfig: { ...this.state.pageConfig, ...parsed },
+      });
       this.getCoins();
     } else {
       const query = queryString.stringify(this.state.pageConfig);
@@ -80,7 +106,9 @@ export default class Home extends React.Component {
       const parsed = queryString.parse(this.props.location.search, {
         parseBooleans: true,
       });
-      this.setState({ pageConfig: { ...this.state.pageConfig, ...parsed } });
+      this.setState({
+        pageConfig: { ...this.state.pageConfig, ...parsed },
+      });
       this.getCoins();
     }
     if (
@@ -102,22 +130,27 @@ export default class Home extends React.Component {
         {isLoading && (
           <ChartRow>
             <ChartCol span={12}>
-              <ChartContainer><StyledLoading /></ChartContainer>
-            </ChartCol>
+              <ChartContainer>
+                {" "}
+                <StyledLoading />{" "}
+              </ChartContainer>{" "}
+            </ChartCol>{" "}
             <ChartCol span={12}>
-              <ChartContainer><StyledLoading /></ChartContainer>
-            </ChartCol>
+              <ChartContainer>
+                {" "}
+                <StyledLoading />{" "}
+              </ChartContainer>{" "}
+            </ChartCol>{" "}
           </ChartRow>
-        )}
-        <StyledTitle>Market Overview</StyledTitle>
-        <LoadingBar ref={this.loadingBar} />
+        )}{" "}
+        <StyledTitle> Market Overview </StyledTitle>{" "}
+        <LoadingBar ref={this.loadingBar} />{" "}
         {hasResponse && (
           <ChartOverview
             topCoin={this.state.coinList[0]}
             currency={this.props.currency}
           />
         )}
-
         <Container>
           <StyledRow>
             <StyledCol span={1}>
@@ -125,43 +158,43 @@ export default class Home extends React.Component {
                 text="#"
                 sortBy="market_cap_rank"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={3}>
               <TableHeader
                 text="Name"
                 sortBy="id"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="Price"
                 sortBy="current_price"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="1h"
                 sortBy="price_change_percentage_1h_in_currency"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="24h"
                 sortBy="price_change_percentage_24h_in_currency"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="7d"
                 sortBy="price_change_percentage_7d_in_currency"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={4}>
               <TableHeader
                 text="24h Volume"
@@ -173,8 +206,8 @@ export default class Home extends React.Component {
                 text="Market Cap"
                 sortBy="market_cap"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
+              />{" "}
+            </StyledCol>{" "}
             <StyledCol span={4}>
               <TableHeader
                 text="Circulating"
@@ -186,17 +219,17 @@ export default class Home extends React.Component {
                 text="Total Supply"
                 sortBy="total_supply"
                 toggleOrder={this.toggleOrder}
-              />
-            </StyledCol>
-            <StyledCol span={4}>Last 7d</StyledCol>
-          </StyledRow>
+              />{" "}
+            </StyledCol>{" "}
+            <StyledCol span={4}> Last 7 d </StyledCol>{" "}
+          </StyledRow>{" "}
           {hasResponse && (
             <Coins
               currency={this.props.currency}
               coinList={this.state.coinList.sort(this.sortCoins)}
             />
-          )}
-        </Container>
+          )}{" "}
+        </Container>{" "}
       </>
     );
   }

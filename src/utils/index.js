@@ -1,3 +1,5 @@
+import { snakeCase } from "lodash";
+
 export function formatLongNumber(number, currency, decimals) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
   decimals = decimals || 2;
@@ -30,8 +32,13 @@ export const formatDate = (date) => {
 export const formatOverviewChart = (array) => {
   // chart data
   const data = {
-    x: formatDate(array[0]).split(" ").slice(0,2).join(" "),
+    x: formatDate(array[0]).split(" ").slice(0, 2).join(" "),
     y: array[1].toFixed(2),
   };
   return data;
 };
+
+export const keysToSnakeCase = (obj) =>
+  Object.entries(obj).reduce((acc, [key, val]) => {
+    return { ...acc, [snakeCase(key)]: val };
+  }, {});

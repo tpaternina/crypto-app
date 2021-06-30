@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import queryString from "query-string";
 import { isEmpty } from "lodash";
 import { ChartPriceOverview } from "components";
 import { formatDate, formatLongNumber } from "utils";
@@ -25,15 +26,31 @@ export default class ChartOverview extends React.Component {
   getPrices = async () => {
     try {
       const { topCoin, currency } = this.props;
-      this.setState({ isLoading: true });
-      const query = `https://api.coingecko.com/api/v3/coins/${topCoin.id}/market_chart?vs_currency=${currency}&days=30&interval=daily`;
-      console.log(query);
+      this.setState({
+        isLoading: true,
+      });
+      const query = queryString.stringifyUrl({
+        url: `${process.env.REACT_APP_COIN_HISTORY_ENDPOINT}/${topCoin.id}/market_chart`,
+        query: {
+          vs_currency: currency,
+          days: 30,
+          interval: "daily",
+        },
+      });
       const {
         data: { prices, total_volumes },
       } = await axios(query);
-      this.setState({ prices, total_volumes, isLoading: false });
+      this.setState({
+        prices,
+        total_volumes,
+        isLoading: false,
+      });
     } catch (err) {
-      this.setState({ isLoading: false, hasError: err });
+      this.setState({
+        isLoading: false,
+        hasError: true,
+      });
+      console.log(err);
     }
   };
 
@@ -48,47 +65,56 @@ export default class ChartOverview extends React.Component {
       !isEmpty(prices) && !isEmpty(total_volumes) && !isLoading && !hasError;
     return (
       <>
+        {" "}
         {isLoading && (
           <ChartRow>
             <ChartCol span={12}>
-              <ChartContainer><StyledLoading /></ChartContainer>
-            </ChartCol>
+              <ChartContainer>
+                {" "}
+                <StyledLoading />{" "}
+              </ChartContainer>{" "}
+            </ChartCol>{" "}
             <ChartCol span={12}>
-              <ChartContainer><StyledLoading /></ChartContainer>
-            </ChartCol>
+              <ChartContainer>
+                {" "}
+                <StyledLoading />{" "}
+              </ChartContainer>{" "}
+            </ChartCol>{" "}
           </ChartRow>
-        )}
+        )}{" "}
         {hasResponse && (
           <ChartRow>
             <ChartCol span={12}>
               <ChartContainer>
                 <ChartInfo>
-                  <StyledInfo>{topCoin.symbol.toUpperCase()}</StyledInfo>
+                  <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>{" "}
                   <StyledPrice>
-                    {formatLongNumber(prices[29][1], currency, 3)}
-                  </StyledPrice>
-                  <StyledInfo>{formatDate(prices[29][0])}</StyledInfo>
-                </ChartInfo>
-                <ChartPriceOverview prices={prices} currency={currency} />
-              </ChartContainer>
-            </ChartCol>
+                    {" "}
+                    {formatLongNumber(prices[29][1], currency, 3)}{" "}
+                  </StyledPrice>{" "}
+                  <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>{" "}
+                </ChartInfo>{" "}
+                <ChartPriceOverview prices={prices} currency={currency} />{" "}
+              </ChartContainer>{" "}
+            </ChartCol>{" "}
             <ChartCol span={12}>
               <ChartContainer>
                 <ChartInfo>
-                  <StyledInfo>Volume 24h</StyledInfo>
+                  <StyledInfo> Volume 24 h </StyledInfo>{" "}
                   <StyledPrice>
-                    {formatLongNumber(total_volumes[29][1], currency, 3)}
-                  </StyledPrice>
-                  <StyledInfo>{formatDate(total_volumes[29][0])}</StyledInfo>
-                </ChartInfo>
+                    {" "}
+                    {formatLongNumber(total_volumes[29][1], currency, 3)}{" "}
+                  </StyledPrice>{" "}
+                  <StyledInfo> {formatDate(total_volumes[29][0])} </StyledInfo>{" "}
+                </ChartInfo>{" "}
                 <ChartVolumeOverview
                   total_volumes={total_volumes}
                   currency={currency}
-                />
-              </ChartContainer>
-            </ChartCol>
+                />{" "}
+              </ChartContainer>{" "}
+            </ChartCol>{" "}
           </ChartRow>
-        )}
+        )}{" "}
       </>
     );
   }

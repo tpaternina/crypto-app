@@ -11,11 +11,7 @@ export default function ChartPriceOverview(props) {
   const data = {
     datasets: [
       {
-        data: prices.map((item, index, array) => {
-          if (index !== array.length - 1) {
-            return formatOverviewChart(item);
-          }
-        }),
+        data: prices.filter((item, index, array) => index !== array.length - 1).map(formatOverviewChart),
         borderColor: increase ? "#00fc2a" : "#fe1040",
         fill: true,
         backgroundColor: increase ? "#00fc2a44" : "#fe104044"
@@ -36,7 +32,8 @@ export default function ChartPriceOverview(props) {
     },
     elements: {
       point: {
-        backgroundColor: increase ? "#00fc2a" : "#fe1040",
+        radius: 1,
+        backgroundColor: increase ? "#00fc2aff" : "#fe1040ff",
       },
     },
     scales: {

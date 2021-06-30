@@ -6,7 +6,7 @@ export default function Chart(props) {
   const yAxisMin = Math.min(...props.data);
 
   const data = {
-    labels: [...Array(props.data.length).keys()],
+    labels: props.data,
     datasets: [
       {
         data: props.data,
