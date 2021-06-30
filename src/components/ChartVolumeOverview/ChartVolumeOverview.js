@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { isEmpty } from "lodash";
 import { formatOverviewChart } from "utils";
@@ -10,11 +9,7 @@ export default function ChartPriceOverview(props) {
   const data = {
     datasets: [
       {
-        data: total_volumes.map((item, index, array) => {
-          if (index !== array.length - 1) {
-            return formatOverviewChart(item);
-          }
-        }),
+        data: total_volumes.filter((item, index, array) => index !== array.length - 1).map(formatOverviewChart),
         borderColor: "#2172e5",
         fill: true,
         backgroundColor: "#2172e5"
