@@ -47,13 +47,6 @@ export default class Home extends React.Component {
         sparkline: true,
       };
 
-      console.log(
-        queryString.stringifyUrl({
-          url: process.env.REACT_APP_COINS_ENDPOINT,
-          query: query,
-        })
-      );
-
       const { data } = await axios(
         queryString.stringifyUrl({
           url: process.env.REACT_APP_COINS_ENDPOINT,
