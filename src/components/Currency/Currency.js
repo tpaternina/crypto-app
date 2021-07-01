@@ -33,6 +33,7 @@ export default class Currency extends React.Component {
 
   toggleActive = () => {
     this.setState({ searchTerm: "", isActive: !this.state.isActive });
+    console.log(this.currencyInput);
   };
 
   handleSelect = ({ key }) => {
@@ -47,10 +48,7 @@ export default class Currency extends React.Component {
     this.props.handleCurrency(this.state.searchTerm);
   };
 
-  handleChange = (e) => {
-    const {
-      target: { value },
-    } = e;
+  handleChange = ({ target: { value } }) => {
     this.setState({ searchTerm: value.toUpperCase() });
   };
 
@@ -73,6 +71,7 @@ export default class Currency extends React.Component {
                 onBlur={this.toggleActive}
                 value={searchTerm}
                 placeholder="search..."
+                autofocus
               />
             </form>
           )}

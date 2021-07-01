@@ -14,7 +14,7 @@ import {
   StyledRow,
   StyledTitle,
 } from "./Home.styles";
-import { keysToSnakeCase } from "utils";
+import { keysToCamelCase, keysToSnakeCase } from "utils";
 
 export default class Home extends React.Component {
   state = {
@@ -22,8 +22,8 @@ export default class Home extends React.Component {
     hasError: false,
     coinList: [],
     pageConfig: {
-      sortBy: "marketCap",
-      descending: true, // if true, sort in descending order, if false sort in ascending order
+      sortBy: "marketCapRank",
+      descending: false, // if true, sort in descending order, if false sort in ascending order
     },
     queryConfig: {
       vsCurrency: this.props.currency,
@@ -47,14 +47,16 @@ export default class Home extends React.Component {
         sparkline: true,
       };
 
-      const { data } = await axios(
+      let { data } = await axios(
         queryString.stringifyUrl({
           url: process.env.REACT_APP_COINS_ENDPOINT,
           query: query,
         })
       );
 
-      keysToSnakeCase(this.state.queryConfig);
+      // Convert keys from API to camelCase
+      data = data.map(keysToCamelCase);
+
       this.setState({
         coinList: data,
         isLoading: false,
@@ -112,15 +114,18 @@ export default class Home extends React.Component {
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
       });
-      this.getCoins();
+      //this.getCoins();
     }
     if (
       JSON.stringify(prevState.pageConfig) !==
       JSON.stringify(this.state.pageConfig)
     ) {
-      this.getCoins();
+      const query = queryString.stringify({
+        ...this.state.pageConfig,
+        currency: this.props.currency,
+      });
+      this.props.history.push(`/?${query}`);
     }
-
   }
 
   render() {
@@ -160,7 +165,7 @@ export default class Home extends React.Component {
             <StyledCol span={1}>
               <TableHeader
                 text="#"
-                sortBy="market_cap_rank"
+                sortBy="marketCapRank"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
@@ -174,54 +179,54 @@ export default class Home extends React.Component {
             <StyledCol span={2}>
               <TableHeader
                 text="Price"
-                sortBy="current_price"
+                sortBy="currentPrice"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="1h"
-                sortBy="price_change_percentage_1h_in_currency"
+                sortBy="priceChangePercentage1HInCurrency"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="24h"
-                sortBy="price_change_percentage_24h_in_currency"
+                sortBy="priceChangePercentage24HInCurrency"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
             <StyledCol span={2}>
               <TableHeader
                 text="7d"
-                sortBy="price_change_percentage_7d_in_currency"
+                sortBy="priceChangePercentage7DInCurrency"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
             <StyledCol span={4}>
               <TableHeader
                 text="24h Volume"
-                sortBy="total_volume"
+                sortBy="totalVolume"
                 toggleOrder={this.toggleOrder}
               />{" "}
               /{" "}
               <TableHeader
                 text="Market Cap"
-                sortBy="market_cap"
+                sortBy="marketCap"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
             <StyledCol span={4}>
               <TableHeader
                 text="Circulating"
-                sortBy="circulating_supply"
+                sortBy="circulatingSupply"
                 toggleOrder={this.toggleOrder}
               />{" "}
               /{" "}
               <TableHeader
                 text="Total Supply"
-                sortBy="total_supply"
+                sortBy="totalSupply"
                 toggleOrder={this.toggleOrder}
               />{" "}
             </StyledCol>{" "}
