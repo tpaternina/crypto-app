@@ -17,7 +17,7 @@ export function formatLongNumber(number, currency, decimals) {
   const currencySymbol = Number().toLocaleString(undefined, {
     style: "currency",
     currency: currency.toUpperCase(),
-  })[0];
+  }).slice(0,-4);
 
   // Scale the number and add suffix
   return currencySymbol + (number / scale).toFixed(decimals) + suffix;

@@ -43,9 +43,16 @@ export default class Home extends React.Component {
 
       const query = {
         ...keysToSnakeCase(this.state.queryConfig),
-        price_change_percentage: "1h%2C24h%2C7d",
+        price_change_percentage: "1h,24h,7d",
         sparkline: true,
       };
+
+      console.log(
+        queryString.stringifyUrl({
+          url: process.env.REACT_APP_COINS_ENDPOINT,
+          query: query,
+        })
+      );
 
       const { data } = await axios(
         queryString.stringifyUrl({
@@ -64,7 +71,7 @@ export default class Home extends React.Component {
     } catch (err) {
       this.setState({
         isLoading: false,
-        hasError: err,
+        hasError: true,
       });
       this.loadingBar.current.complete();
       console.log(err);
@@ -96,7 +103,10 @@ export default class Home extends React.Component {
       });
       this.getCoins();
     } else {
-      const query = queryString.stringify(this.state.pageConfig);
+      const query = queryString.stringify({
+        ...this.state.pageConfig,
+        currency: this.props.currency,
+      });
       this.props.history.push(`/?${query}`);
     }
   }
@@ -117,6 +127,7 @@ export default class Home extends React.Component {
     ) {
       this.getCoins();
     }
+
   }
 
   render() {

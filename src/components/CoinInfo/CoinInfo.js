@@ -44,11 +44,16 @@ function MarketInfo(props) {
 export default class CoinInfo extends React.Component {
   render() {
     const { coin } = this.props;
+    const {
+      price_change_percentage_1h_in_currency,
+      price_change_percentage_24h_in_currency,
+      price_change_percentage_7d_in_currency,
+    } = coin;
 
     // Whether the price increased or decreased
-    const increase1h = coin.price_change_percentage_1h_in_currency > 0;
-    const increase24h = coin.price_change_percentage_24h_in_currency > 0;
-    const increase7d = coin.price_change_percentage_7d_in_currency > 0;
+    const increase1h = price_change_percentage_1h_in_currency > 0;
+    const increase24h = price_change_percentage_24h_in_currency > 0;
+    const increase7d = price_change_percentage_7d_in_currency > 0;
 
     // The 7-day price change
     const { price } = coin.sparkline_in_7d;
