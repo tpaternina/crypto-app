@@ -14,7 +14,7 @@ console.clear();
 
 export default class App extends React.Component {
   state = {
-    currency: "eur",
+    currency: "EUR",
   };
 
   handleCurrency = (newCurrency) => {

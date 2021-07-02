@@ -103,6 +103,7 @@ export default class Home extends React.Component {
         currency: this.props.currency,
       });
       this.props.history.push(`/?${query}`);
+      this.getCoins()
     }
   }
 
@@ -114,7 +115,6 @@ export default class Home extends React.Component {
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
       });
-      //this.getCoins();
     }
     if (
       JSON.stringify(prevState.pageConfig) !==
@@ -125,6 +125,7 @@ export default class Home extends React.Component {
         currency: this.props.currency,
       });
       this.props.history.push(`/?${query}`);
+
     }
   }
 

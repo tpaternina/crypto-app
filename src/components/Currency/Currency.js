@@ -38,8 +38,7 @@ export default class Currency extends React.Component {
 
   handleSelect = ({ key }) => {
     this.setState({ isActive: false, searchTerm: "" });
-    console.log(key);
-    this.props.handleCurrency(key);
+    this.props.handleCurrency(key.toUpperCase());
   };
 
   handleSubmit = (e) => {
