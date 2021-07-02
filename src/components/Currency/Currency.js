@@ -20,6 +20,7 @@ export default class Currency extends React.Component {
   };
 
   currencyInput = React.createRef();
+  currencyWrapper = React.createRef();
 
   getCurrencies = async () => {
     try {
@@ -33,7 +34,6 @@ export default class Currency extends React.Component {
 
   toggleActive = () => {
     this.setState({ searchTerm: "", isActive: !this.state.isActive });
-    console.log(this.currencyInput);
   };
 
   handleSelect = ({ key }) => {
@@ -41,43 +41,64 @@ export default class Currency extends React.Component {
     this.props.handleCurrency(key.toUpperCase());
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.setState({ isActive: false });
-    this.props.handleCurrency(this.state.searchTerm);
-  };
+  handleClickOutside = ({target}) => {
+    if (this.currencyWrapper && !this.currencyWrapper.current.contains(target)) {
+      this.setState({ isActive: false, searchTerm: "" });
+    }
+  }
 
   handleChange = ({ target: { value } }) => {
     this.setState({ searchTerm: value.toUpperCase() });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.handleCurrency(this.state.searchTerm);
+    this.setState({ isActive: false, searchTerm: "" });
+  };
+
   componentDidMount() {
     this.getCurrencies();
+
+    // Add event listener for click outside event
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    // Remove event listener for click outside event
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isActive !== this.state.isActive && this.state.isActive) {
+      this.currencyInput.current.focus();
+    }
   }
 
   render() {
     const { currencyList, isActive, searchTerm } = this.state;
 
     return (
-      <>
-        <StyledCurrency>
+      <div ref={this.currencyWrapper}>
+        <StyledCurrency onClick={this.toggleActive}>
           <StyledDollar />
           {!isActive && <span>{this.props.currency}</span>}
           {isActive && (
             <form onSubmit={this.handleSubmit}>
               <StyledInput
+                ref={this.currencyInput}
                 onChange={this.handleChange}
-                onBlur={this.toggleActive}
                 value={searchTerm}
                 placeholder="search..."
-                autofocus
               />
             </form>
           )}
-          <StyledArrow onClick={this.toggleActive} />
+          <StyledArrow />
         </StyledCurrency>
         {isActive && (
-          <StyledMenu onClick={this.handleSelect}>
+          <StyledMenu
+            onClick={this.handleSelect}
+          >
             {!isEmpty(currencyList) && (
               <>
                 {currencyList
@@ -90,7 +111,7 @@ export default class Currency extends React.Component {
             )}
           </StyledMenu>
         )}
-      </>
+      </div>
     );
   }
 }

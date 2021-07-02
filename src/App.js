@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import queryString from "query-string";
 import {
   AppContainer,
   Container,
@@ -21,6 +22,15 @@ export default class App extends React.Component {
     this.setState({ currency: newCurrency });
   };
 
+  componentDidMount() {
+    if (window.location.search) {
+      const { currency } = queryString.parse(window.location.search);
+      this.setState({ currency });
+    } else {
+      this.setState({ currency: "EUR" });
+    }
+  }
+
   render() {
     const { currency } = this.state;
     return (
@@ -39,7 +49,10 @@ export default class App extends React.Component {
                 </StyledLink>
               </li>
             </StyledList>
-            <Currency currency={currency} handleCurrency={this.handleCurrency} />
+            <Currency
+              currency={currency}
+              handleCurrency={this.handleCurrency}
+            />
           </StyledNav>
           <Container>
             <Switch>

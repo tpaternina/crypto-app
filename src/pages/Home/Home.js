@@ -68,7 +68,7 @@ export default class Home extends React.Component {
         isLoading: false,
         hasError: true,
       });
-      this.loadingBar.current.complete();
+      //this.loadingBar.current.complete();
       console.log(err);
     }
   };
@@ -95,6 +95,7 @@ export default class Home extends React.Component {
       });
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
+        //queryConfig: {vsCurrency: parsed.currency}
       });
       this.getCoins();
     } else {
@@ -105,6 +106,7 @@ export default class Home extends React.Component {
       this.props.history.push(`/?${query}`);
       this.getCoins()
     }
+    this.mounted = true;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -114,6 +116,7 @@ export default class Home extends React.Component {
       });
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
+        //queryConfig: {vsCurrency: parsed.currency}
       });
     }
     if (
@@ -127,6 +130,10 @@ export default class Home extends React.Component {
       this.props.history.push(`/?${query}`);
 
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
