@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
-import { ColorBar } from "components";
 
 export const BarContainer = styled.div`
   width: 35px;
@@ -13,6 +12,11 @@ export const IncreaseArrow = styled(CaretUpFilled).attrs((props) => ({
   width: 13px;
   margin-right: 5px;
   color: ${(props) => props.color};
+`;
+
+export const CoinLogo = styled.img`
+  width: 15px;
+  
 `;
 
 export const DecreaseArrow = styled(CaretDownFilled).attrs((props) => ({

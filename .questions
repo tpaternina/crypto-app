@@ -7,3 +7,5 @@ QUESTIONS
 3. handle currency in query string if it's a prop from parent component --> set it as state?
 
 4. What is Exchange? Is it markets? What dos that mean?
+
+5. Market Cap total?

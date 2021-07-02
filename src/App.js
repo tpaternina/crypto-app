@@ -33,7 +33,7 @@ export default function App() {
           <Currency currency={currency} />
         </StyledNav>
         <Container>
-          <GlobalInfo />
+          <GlobalInfo currency={currency} />
           <Switch>
             <Route path="/portfolio">
               <Portfolio />
