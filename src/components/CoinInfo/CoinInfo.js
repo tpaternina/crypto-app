@@ -1,45 +1,14 @@
 import React from "react";
-import { usePalette } from "react-palette";
-import { formatLongNumber } from "utils";
 import {
   CoinLogo,
   IncreaseArrow,
-  MarketDiv,
-  MarketInfoRow,
   StyledCoinName,
   StyledCol,
-  StyledInfo,
   StyledPercentage,
   StyledRow,
 } from "./CoinInfo.styles";
 import { increaseArrow, decreaseArrow } from "assets";
-import { Chart, ColorBar } from "components";
-
-function MarketInfo(props) {
-  const { numerator, denominator, logoUrl, currency } = props;
-  const { data } = usePalette(logoUrl.split("/").splice(3).join("/"));
-
-  return (
-    <StyledInfo>
-      <MarketInfoRow>
-        <MarketDiv color={data.vibrant}>
-          • {formatLongNumber(numerator, currency)}
-        </MarketDiv>
-        <MarketDiv color={data.lightMuted}>
-          • {formatLongNumber(denominator, currency)}
-        </MarketDiv>
-      </MarketInfoRow>
-      <MarketInfoRow>
-        <ColorBar
-          numerator={numerator}
-          denominator={denominator}
-          numeratorColor={data.vibrant}
-          denominatorColor={data.lightMuted}
-        />
-      </MarketInfoRow>
-    </StyledInfo>
-  );
-}
+import { Chart, ColorBar, MarketInfo } from "components";
 
 export default class CoinInfo extends React.Component {
   render() {

@@ -23,7 +23,7 @@ export const ChartContainer = styled.div`
   width: 90%;
   box-sizing: border-box;
 
-  border-radius: 15px;
+  border-radius: 10px;
   border-collapse: collapse;
   background-color: #191b1f;
   
@@ -53,7 +53,7 @@ export const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
 
-  border-radius: 15px;
+  border-radius: 10px;
   border-collapse: collapse;
   background-color: #191b1f;
 `;

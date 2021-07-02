@@ -38,21 +38,3 @@ export const IncreaseArrow = styled.img`
   width: 13px;
   margin-right: 5px;
 `;
-
-export const MarketInfoRow = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export const StyledInfo = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const MarketDiv = styled.div`
-  color: ${(props) => props.color};
-`;

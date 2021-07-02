@@ -14,6 +14,7 @@ export const Container = styled.div`
   width: 100%;
   height: fit-content;
   padding: 2rem 2.5rem;
+  padding-top: 0;
 `;
 
 export const StyledLink = styled(NavLink)`

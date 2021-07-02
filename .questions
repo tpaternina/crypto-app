@@ -1,0 +1,9 @@
+QUESTIONS
+
+1. Dropdown menu not changing currency when filtering (only clicking default list or submitting)
+
+2. Ref not working to autofocus input
+
+3. handle currency in query string if it's a prop from parent component --> set it as state?
+
+4. What is Exchange? Is it markets? What dos that mean?

@@ -9,8 +9,8 @@ export default class ColorBar extends React.Component {
     const fraction = (denominator && (100 * numerator) / denominator) || 100;
 
     return (
-      <StyledBar width={100} color={denominatorColor} bottom>
-        <StyledBar width={clamp(fraction, 0, 100)} color={numeratorColor} />
+      <StyledBar width="100%" color={denominatorColor} bottom>
+        <StyledBar width={`${clamp(fraction, 0, 100)}%`} color={numeratorColor} />
       </StyledBar>
     );
   }
