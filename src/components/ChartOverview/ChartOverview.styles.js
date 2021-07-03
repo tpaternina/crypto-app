@@ -40,6 +40,7 @@ export const ChartInfo = styled.div`
 export const StyledLoading = styled(LoadingOutlined)`
   font-size: 3rem;
   text-align:center;
+  color: #33363e;
 `
 
 export const StyledInfo = styled.p`

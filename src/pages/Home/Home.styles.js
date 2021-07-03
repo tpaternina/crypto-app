@@ -23,7 +23,7 @@ export const ChartContainer = styled.div`
   width: 90%;
   box-sizing: border-box;
 
-  border-radius: 15px;
+  border-radius: 10px;
   border-collapse: collapse;
   background-color: #191b1f;
   
@@ -31,6 +31,7 @@ export const ChartContainer = styled.div`
 
 export const StyledLoading = styled(LoadingOutlined)`
   font-size: 3rem;
+  color: #33363e;
 `
 
 export const StyledTitle = styled.h2`
@@ -53,7 +54,7 @@ export const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
 
-  border-radius: 15px;
+  border-radius: 10px;
   border-collapse: collapse;
   background-color: #191b1f;
 `;
