@@ -31,6 +31,7 @@ export const ChartContainer = styled.div`
 
 export const StyledLoading = styled(LoadingOutlined)`
   font-size: 3rem;
+  color: #33363e;
 `
 
 export const StyledTitle = styled.h2`

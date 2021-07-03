@@ -7,6 +7,7 @@ import { formatLongNumber } from "utils";
 import {
   BarContainer,
   CoinLogo,
+  ContentLoading,
   IncreaseArrow,
   DecreaseArrow,
   GlobalInfoContainer,
@@ -109,71 +110,76 @@ export default class GlobalInfo extends React.Component {
     const totalVolume = hasResponse
       ? Object.values(data.total_volume).reduce((acc, val) => (acc += val), 0)
       : 1;
-    console.log(totalMarketCap);
     return (
       <StyledContainer>
-        {hasResponse && (
-          <>
-            <div title="Active coins">
-              Coins: <StyledNumber>{data.active_cryptocurrencies}</StyledNumber>
-            </div>
-            <div title="Total exchanges">
-              Exchange: <StyledNumber>{data.markets}</StyledNumber>
-            </div>
+        <>
+          {isLoading && <ContentLoading />}
+          {hasResponse && (
+            <>
+              <div title="Active coins">
+                Coins:{" "}
+                <StyledNumber>{data.active_cryptocurrencies}</StyledNumber>
+              </div>
+              <div title="Total exchanges">
+                Exchange: <StyledNumber>{data.markets}</StyledNumber>
+              </div>
 
-            <div title="Market Capitalization">
-              <StyledNumber>
-                • {formatLongNumber(totalMarketCap, currency)}
-              </StyledNumber>{" "}
-              <span title="24-hour change percentage relative to USD">
-                {increase ? (
-                  <IncreaseArrow color="#00ff5f" />
-                ) : (
-                  <DecreaseArrow color="#fe1040" />
-                )}
-              </span>
-            </div>
-            <GlobalInfoContainer title="Total volume in the last 24h">
-              <StyledNumber>
-                • {formatLongNumber(totalVolume, currency)}
-              </StyledNumber>{" "}
-              <BarContainer>
-                <ColorBar
-                  numerator={data.total_volume[symbol1]}
-                  denominator={totalVolume}
-                  numeratorColor="#fff"
-                  denominatorColor="#2172e5"
-                />
-              </BarContainer>
-            </GlobalInfoContainer>
-            <GlobalInfoContainer title={`Market Cap Dominance ${name1}`}>
-              <StyledNumber>
-                <CoinLogo src={icon1} alt={name1} /> {data.market_cap_percentage[symbol1].toFixed(2)}%
-              </StyledNumber>{" "}
-              <BarContainer>
-                <ColorBar
-                  numerator={data.market_cap_percentage[symbol1]}
-                  denominator={100}
-                  numeratorColor="#fff"
-                  denominatorColor="#2172e5"
-                />
-              </BarContainer>
-            </GlobalInfoContainer>
-            <GlobalInfoContainer title={`Market Cap Dominance ${name2}`}>
-              <StyledNumber>
-                <CoinLogo src={icon2} alt={name2} /> {data.market_cap_percentage[symbol2].toFixed(2)}%
-              </StyledNumber>{" "}
-              <BarContainer>
-                <ColorBar
-                  numerator={data.market_cap_percentage[symbol2]}
-                  denominator={100}
-                  numeratorColor="#fff"
-                  denominatorColor="#2172e5"
-                />
-              </BarContainer>
-            </GlobalInfoContainer>
-          </>
-        )}
+              <div title="Market Capitalization">
+                <StyledNumber>
+                  • {formatLongNumber(totalMarketCap, currency)}
+                </StyledNumber>{" "}
+                <span title="24-hour change percentage relative to USD">
+                  {increase ? (
+                    <IncreaseArrow color="#00ff5f" />
+                  ) : (
+                    <DecreaseArrow color="#fe1040" />
+                  )}
+                </span>
+              </div>
+              <GlobalInfoContainer title="Total volume in the last 24h">
+                <StyledNumber>
+                  • {formatLongNumber(totalVolume, currency)}
+                </StyledNumber>{" "}
+                <BarContainer>
+                  <ColorBar
+                    numerator={data.total_volume[symbol1]}
+                    denominator={totalVolume}
+                    numeratorColor="#fff"
+                    denominatorColor="#2172e5"
+                  />
+                </BarContainer>
+              </GlobalInfoContainer>
+              <GlobalInfoContainer title={`Market Cap Dominance ${name1}`}>
+                <StyledNumber>
+                  <CoinLogo src={icon1} alt={name1} />{" "}
+                  {data.market_cap_percentage[symbol1].toFixed(2)}%
+                </StyledNumber>{" "}
+                <BarContainer>
+                  <ColorBar
+                    numerator={data.market_cap_percentage[symbol1]}
+                    denominator={100}
+                    numeratorColor="#fff"
+                    denominatorColor="#2172e5"
+                  />
+                </BarContainer>
+              </GlobalInfoContainer>
+              <GlobalInfoContainer title={`Market Cap Dominance ${name2}`}>
+                <StyledNumber>
+                  <CoinLogo src={icon2} alt={name2} />{" "}
+                  {data.market_cap_percentage[symbol2].toFixed(2)}%
+                </StyledNumber>{" "}
+                <BarContainer>
+                  <ColorBar
+                    numerator={data.market_cap_percentage[symbol2]}
+                    denominator={100}
+                    numeratorColor="#fff"
+                    denominatorColor="#2172e5"
+                  />
+                </BarContainer>
+              </GlobalInfoContainer>
+            </>
+          )}
+        </>
       </StyledContainer>
     );
   }

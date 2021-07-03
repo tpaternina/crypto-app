@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
 
 export const BarContainer = styled.div`
   width: 35px;
-  margin-left: .25rem;
+  margin-left: 0.25rem;
 `;
 
 export const IncreaseArrow = styled(CaretUpFilled).attrs((props) => ({
@@ -16,7 +17,6 @@ export const IncreaseArrow = styled(CaretUpFilled).attrs((props) => ({
 
 export const CoinLogo = styled.img`
   width: 15px;
-  
 `;
 
 export const DecreaseArrow = styled(CaretDownFilled).attrs((props) => ({
@@ -32,6 +32,25 @@ export const GlobalInfoContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   align-content: center;
+`;
+
+const gradient = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .25;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+export const ContentLoading = styled.div`
+  background: #33363e;
+  animation: ${gradient} 1s ease infinite;
+  width: 100%;
+  height: 25%;
 `;
 
 export const StyledContainer = styled.div`
