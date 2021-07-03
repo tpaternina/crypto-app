@@ -19,6 +19,7 @@
 .env.production.local
 .questions
 pdf-1.pdf*
+pdf-1.svg
 
 npm-debug.log*
 yarn-debug.log*
