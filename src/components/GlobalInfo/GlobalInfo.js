@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import { isEmpty } from "lodash";
 import { ColorBar } from "components";
-import { formatLongNumber } from "utils";
-// import { keysToCamelCase } from "utils";
+import { formatLongNumber, keysToCamelCase } from "utils";
 import {
   BarContainer,
   CoinLogo,
@@ -31,14 +30,14 @@ export default class GlobalInfo extends React.Component {
   getInfo = async () => {
     try {
       this.setState({ isLoading: true });
-      const {
+      let {
         data: { data },
       } = await axios(`${process.env.REACT_APP_GLOBAL_ENDPOINT}`);
-      // data = keysToCamelCase(data);
+      data = keysToCamelCase(data);
 
       // Get symbols of the top 2 coins
-      const top1 = Object.keys(data.total_market_cap)[0];
-      const top2 = Object.keys(data.total_market_cap)[1];
+      const top1 = Object.keys(data.totalMarketCap)[0];
+      const top2 = Object.keys(data.totalMarketCap)[1];
 
       //  Get API ids
       let { data: list } = await axios(
@@ -102,13 +101,13 @@ export default class GlobalInfo extends React.Component {
     } = this.state;
     const hasResponse = !isEmpty(data) && !isLoading && !hasError;
     const totalMarketCap = hasResponse
-      ? Object.values(data.total_market_cap).reduce(
+      ? Object.values(data.totalMarketCap).reduce(
           (acc, val) => (acc += val),
           0
         )
       : 1;
     const totalVolume = hasResponse
-      ? Object.values(data.total_volume).reduce((acc, val) => (acc += val), 0)
+      ? Object.values(data.totalVolume).reduce((acc, val) => (acc += val), 0)
       : 1;
     return (
       <StyledContainer>
@@ -118,7 +117,7 @@ export default class GlobalInfo extends React.Component {
             <>
               <div title="Active coins">
                 Coins:{" "}
-                <StyledNumber>{data.active_cryptocurrencies}</StyledNumber>
+                <StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
               </div>
               <div title="Total exchanges">
                 Exchange: <StyledNumber>{data.markets}</StyledNumber>
@@ -142,7 +141,7 @@ export default class GlobalInfo extends React.Component {
                 </StyledNumber>{" "}
                 <BarContainer>
                   <ColorBar
-                    numerator={data.total_volume[symbol1]}
+                    numerator={data.totalVolume[symbol1]}
                     denominator={totalVolume}
                     numeratorColor="#fff"
                     denominatorColor="#2172e5"
@@ -152,11 +151,11 @@ export default class GlobalInfo extends React.Component {
               <GlobalInfoContainer title={`Market Cap Dominance ${name1}`}>
                 <StyledNumber>
                   <CoinLogo src={icon1} alt={name1} />{" "}
-                  {data.market_cap_percentage[symbol1].toFixed(2)}%
+                  {data.marketCapPercentage[symbol1].toFixed(2)}%
                 </StyledNumber>{" "}
                 <BarContainer>
                   <ColorBar
-                    numerator={data.market_cap_percentage[symbol1]}
+                    numerator={data.marketCapPercentage[symbol1]}
                     denominator={100}
                     numeratorColor="#fff"
                     denominatorColor="#2172e5"
@@ -166,11 +165,11 @@ export default class GlobalInfo extends React.Component {
               <GlobalInfoContainer title={`Market Cap Dominance ${name2}`}>
                 <StyledNumber>
                   <CoinLogo src={icon2} alt={name2} />{" "}
-                  {data.market_cap_percentage[symbol2].toFixed(2)}%
+                  {data.marketCapPercentage[symbol2].toFixed(2)}%
                 </StyledNumber>{" "}
                 <BarContainer>
                   <ColorBar
-                    numerator={data.market_cap_percentage[symbol2]}
+                    numerator={data.marketCapPercentage[symbol2]}
                     denominator={100}
                     numeratorColor="#fff"
                     denominatorColor="#2172e5"
