@@ -9,7 +9,6 @@ export default class TableHeader extends React.Component {
   toggleOrder = () => {
     // toggle descending order
     this.setState({ descending: !this.state.descending });
-    console.log(this.props.sortBy, !this.state.descending)
     this.props.toggleOrder(this.props.sortBy, !this.state.descending);
   };
 

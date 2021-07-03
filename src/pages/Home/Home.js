@@ -68,7 +68,6 @@ export default class Home extends React.Component {
         isLoading: false,
         hasError: true,
       });
-      //this.loadingBar.current.complete();
       console.log(err);
     }
   };
@@ -95,7 +94,6 @@ export default class Home extends React.Component {
       });
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
-        //queryConfig: {vsCurrency: parsed.currency}
       });
       this.getCoins();
     } else {
@@ -116,7 +114,6 @@ export default class Home extends React.Component {
       });
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
-        //queryConfig: {vsCurrency: parsed.currency}
       });
     }
     if (
