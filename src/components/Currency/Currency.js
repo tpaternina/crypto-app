@@ -5,7 +5,6 @@ import {
   StyledArrow,
   StyledCurrency,
   StyledDollar,
-  StyledDropdownLink,
   StyledItem,
   StyledMenu,
   StyledInput,

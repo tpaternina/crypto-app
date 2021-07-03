@@ -3,7 +3,7 @@ import axios from "axios";
 import { isEmpty } from "lodash";
 import queryString from "query-string";
 import LoadingBar from "react-top-loading-bar";
-import { ChartOverview, Coins, TableHeader } from "components";
+import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
 import {
   ChartCol,
   ChartContainer,
@@ -39,7 +39,6 @@ export default class Home extends React.Component {
       this.setState({
         isLoading: true,
       });
-      this.loadingBar.current.continuousStart();
 
       const query = {
         ...keysToSnakeCase(this.state.queryConfig),
@@ -62,7 +61,6 @@ export default class Home extends React.Component {
         isLoading: false,
         hasError: false,
       });
-      this.loadingBar.current.complete();
     } catch (err) {
       this.setState({
         isLoading: false,
@@ -125,8 +123,13 @@ export default class Home extends React.Component {
         currency: this.props.currency,
       });
       this.props.history.push(`/?${query}`);
-
     }
+    if (prevState.isLoading !== this.state.isLoading && this.state.isLoading) {
+      this.loadingBar.current.continuousStart();
+    }
+    if (prevState.isLoading !== this.state.isLoading && !this.state.isLoading) {
+      this.loadingBar.current.complete();
+    } 
   }
 
   componentWillUnmount() {
@@ -136,8 +139,6 @@ export default class Home extends React.Component {
   render() {
     const { coinList, isLoading, hasError } = this.state;
     const hasResponse = !isEmpty(coinList) && !isLoading && !hasError;
-
-    // Use ref for Loading bar component
 
     return (
       <>
@@ -172,43 +173,43 @@ export default class Home extends React.Component {
                 text="#"
                 sortBy="marketCapRank"
                 toggleOrder={this.toggleOrder}
-              />{" "}
-            </StyledCol>{" "}
+              />
+            </StyledCol>
             <StyledCol span={3}>
               <TableHeader
                 text="Name"
                 sortBy="id"
                 toggleOrder={this.toggleOrder}
-              />{" "}
-            </StyledCol>{" "}
+              />
+            </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="Price"
                 sortBy="currentPrice"
                 toggleOrder={this.toggleOrder}
-              />{" "}
-            </StyledCol>{" "}
+              />
+            </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="1h"
                 sortBy="priceChangePercentage1HInCurrency"
                 toggleOrder={this.toggleOrder}
-              />{" "}
-            </StyledCol>{" "}
+              />
+            </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="24h"
                 sortBy="priceChangePercentage24HInCurrency"
                 toggleOrder={this.toggleOrder}
-              />{" "}
-            </StyledCol>{" "}
+              />
+            </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="7d"
                 sortBy="priceChangePercentage7DInCurrency"
                 toggleOrder={this.toggleOrder}
-              />{" "}
-            </StyledCol>{" "}
+              />
+            </StyledCol>
             <StyledCol span={4}>
               <TableHeader
                 text="24h Volume"
@@ -221,7 +222,7 @@ export default class Home extends React.Component {
                 sortBy="marketCap"
                 toggleOrder={this.toggleOrder}
               />{" "}
-            </StyledCol>{" "}
+            </StyledCol>
             <StyledCol span={4}>
               <TableHeader
                 text="Circulating"
@@ -234,16 +235,17 @@ export default class Home extends React.Component {
                 sortBy="totalSupply"
                 toggleOrder={this.toggleOrder}
               />{" "}
-            </StyledCol>{" "}
-            <StyledCol span={4}> Last 7 d </StyledCol>{" "}
-          </StyledRow>{" "}
+            </StyledCol>
+            <StyledCol span={4}> Last 7 d </StyledCol>
+          </StyledRow>
+          {isLoading && <LoadingCoins />}
           {hasResponse && (
             <Coins
               currency={this.props.currency}
               coinList={this.state.coinList.sort(this.sortCoins)}
             />
-          )}{" "}
-        </Container>{" "}
+          )}
+        </Container>
       </>
     );
   }

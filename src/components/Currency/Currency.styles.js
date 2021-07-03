@@ -38,13 +38,6 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const StyledDropdownLink = styled.a`
-  color: #fff;
-
-  &:hover {
-    color: #00ff5f;
-  }
-`;
 
 export const StyledMenu = styled(Menu)`
   background-color: #2c2f36;

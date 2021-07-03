@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"; 
 import { Col, Row } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -14,6 +14,7 @@ export const ChartCol = styled(Col)`
   display: flex;
   justify-content: center;
 `;
+
 export const ChartContainer = styled.div`
   text-align: center;
   font-size: 0.9rem;

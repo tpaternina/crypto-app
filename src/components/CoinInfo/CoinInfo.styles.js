@@ -10,7 +10,7 @@ export const StyledCol = styled(Col)`
 `;
 
 export const StyledRow = styled(Row)`
-  border-bottom: solid 1px #fff;
+  border-bottom: solid 1px #707070;
   vertical-align: bottom;
   &:last-of-type {
     border: none;
