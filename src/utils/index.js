@@ -1,4 +1,4 @@
-import { snakeCase } from "lodash";
+import { camelCase, snakeCase } from "lodash";
 
 export function formatLongNumber(number, currency, decimals) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
@@ -17,7 +17,7 @@ export function formatLongNumber(number, currency, decimals) {
   const currencySymbol = Number().toLocaleString(undefined, {
     style: "currency",
     currency: currency.toUpperCase(),
-  })[0];
+  }).slice(0,-4);
 
   // Scale the number and add suffix
   return currencySymbol + (number / scale).toFixed(decimals) + suffix;
@@ -41,4 +41,9 @@ export const formatOverviewChart = (array) => {
 export const keysToSnakeCase = (obj) =>
   Object.entries(obj).reduce((acc, [key, val]) => {
     return { ...acc, [snakeCase(key)]: val };
+  }, {});
+
+export const keysToCamelCase = (obj) =>
+  Object.entries(obj).reduce((acc, [key, val]) => {
+    return { ...acc, [camelCase(key)]: val };
   }, {});

@@ -6,6 +6,7 @@ export const StyledCol = styled(Col)`
   padding: 1.5rem 0.75rem;
   display: flex;
   align-items: flex-end;
+  width: fit-content;
 `;
 
 export const StyledRow = styled(Row)`
@@ -27,9 +28,11 @@ export const StyledCoinName = styled.div`
   align-items: center;
 `;
 
-export const StyledPercentage = styled.span`
+export const StyledPercentage = styled.span.attrs((props) => ({
+  color: props.increase ? "#00fc2a" : "#fe1040",
+}))`
   min-width: 65px;
-  color: ${(props) => (props.increase ? "#00fc2a" : "#fe1040")};
+  color: ${(props) => props.color};
   display: flex;
   align-items: center;
 `;
@@ -53,6 +56,8 @@ export const StyledInfo = styled.div`
   justify-content: space-between;
 `;
 
-export const MarketDiv = styled.div`
+export const MarketDiv = styled.div.attrs(props => ({
+  color: props.color,
+}))`
   color: ${(props) => props.color};
 `;
