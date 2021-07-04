@@ -23,18 +23,21 @@ export const StyledRow = styled(Row)`
 `;
 
 const gradient = keyframes`
-  from {
-    background-position: 150% 50%;
+  0% {
+    opacity: 1;
   }
-  to {
-    background-position: -50% 50%;
+  50% {
+    opacity: .25;
+  }
+  100% {
+    opacity: 1;
   }
 `;
 
 export const ContentLoading = styled.div`
-  background: linear-gradient(45deg, #1f2128, #1f2128, #33363e, #1f2128, #1f2128);
+  background: #33363e;
   background-size: 200% 200%;
-  animation: ${gradient} 1s ease infinite;
+  animation: ${gradient} 2s ease infinite;
   width: 100%;
   height: 1rem;
 `;
