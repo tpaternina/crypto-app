@@ -8,16 +8,30 @@ export default function ChartPriceOverview(props) {
   // Whether coin price increased the last 30 days
   // Exclude 31st element which corresponds to ... average?
   const increase = !isEmpty(prices) && prices[29][1] - prices[0][1] > 0;
-  const data = {
-    datasets: [
-      {
-        data: prices.filter((item, index, array) => index !== array.length - 1).map(formatOverviewChart),
-        borderColor: increase ? "#00fc2a" : "#fe1040",
-        fill: true,
-        backgroundColor: increase ? "#00fc2a44" : "#fe104044"
-      },
-    ],
+
+  const data = (canvas) => {
+    const ctx = canvas.getContext("2d");
+    const gradient = ctx.createLinearGradient(0, 0, 0, 230);
+
+    // Add three color stops
+    gradient.addColorStop(0, increase ? "#007113" : "#81011b");
+    gradient.addColorStop(1, "#191b1f");
+
+    return {
+      datasets: [
+        {
+          data: prices
+            .filter((item, index, array) => index !== array.length - 1)
+            .map(formatOverviewChart),
+          borderWidth: 1,
+          borderColor: increase ? "#00fc2a" : "#fe1040",
+          fill: true,
+          backgroundColor: gradient,
+        },
+      ],
+    };
   };
+  
   const options = {
     layout: {
       padding: 16,
@@ -32,7 +46,7 @@ export default function ChartPriceOverview(props) {
     },
     elements: {
       point: {
-        radius: 1,
+        radius: 0,
         backgroundColor: increase ? "#00fc2aff" : "#fe1040ff",
       },
     },
@@ -43,9 +57,9 @@ export default function ChartPriceOverview(props) {
         },
         ticks: {
           font: {
-            size: 16
-          }
-        }
+            size: 16,
+          },
+        },
       },
       y: {
         display: false,

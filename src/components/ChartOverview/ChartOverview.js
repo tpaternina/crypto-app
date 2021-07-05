@@ -65,56 +65,53 @@ export default class ChartOverview extends React.Component {
       !isEmpty(prices) && !isEmpty(total_volumes) && !isLoading && !hasError;
     return (
       <>
-        {" "}
+        
         {isLoading && (
           <ChartRow>
             <ChartCol span={12}>
               <ChartContainer>
-                {" "}
-                <StyledLoading />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
+                <StyledLoading />
+              </ChartContainer>
+            </ChartCol>
             <ChartCol span={12}>
               <ChartContainer>
-                {" "}
-                <StyledLoading />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
+                
+                <StyledLoading />
+              </ChartContainer>
+            </ChartCol>
           </ChartRow>
-        )}{" "}
+        )}
         {hasResponse && (
           <ChartRow>
             <ChartCol span={12}>
               <ChartContainer>
                 <ChartInfo>
-                  <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>{" "}
+                  <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
                   <StyledPrice>
-                    {" "}
-                    {formatLongNumber(prices[29][1], currency, 3)}{" "}
-                  </StyledPrice>{" "}
-                  <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>{" "}
-                </ChartInfo>{" "}
-                <ChartPriceOverview prices={prices} currency={currency} />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
+                    {formatLongNumber(prices[29][1], currency, 3)}
+                  </StyledPrice>
+                  <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
+                </ChartInfo>
+                <ChartPriceOverview prices={prices} currency={currency} />
+              </ChartContainer>
+            </ChartCol>
             <ChartCol span={12}>
               <ChartContainer>
                 <ChartInfo>
-                  <StyledInfo> Volume 24 h </StyledInfo>{" "}
+                  <StyledInfo> Volume 24 h </StyledInfo>
                   <StyledPrice>
-                    {" "}
-                    {formatLongNumber(total_volumes[29][1], currency, 3)}{" "}
-                  </StyledPrice>{" "}
-                  <StyledInfo> {formatDate(total_volumes[29][0])} </StyledInfo>{" "}
-                </ChartInfo>{" "}
+                    {formatLongNumber(total_volumes[29][1], currency, 3)}
+                  </StyledPrice>
+                  <StyledInfo> {formatDate(total_volumes[29][0])} </StyledInfo>
+                </ChartInfo>
                 <ChartVolumeOverview
                   total_volumes={total_volumes}
                   currency={currency}
-                />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
+                />
+              </ChartContainer>
+            </ChartCol>
           </ChartRow>
-        )}{" "}
+        )}
       </>
     );
   }
