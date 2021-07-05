@@ -87,7 +87,7 @@ export default class GlobalInfo extends React.Component {
 
   render() {
     const increase = true;
-    const { currency } = this.props;
+    const currency = this.props.currency.toLowerCase();
     const {
       data,
       isLoading,
@@ -100,15 +100,7 @@ export default class GlobalInfo extends React.Component {
       symbol2,
     } = this.state;
     const hasResponse = !isEmpty(data) && !isLoading && !hasError;
-    const totalMarketCap = hasResponse
-      ? Object.values(data.totalMarketCap).reduce(
-          (acc, val) => (acc += val),
-          0
-        )
-      : 1;
-    const totalVolume = hasResponse
-      ? Object.values(data.totalVolume).reduce((acc, val) => (acc += val), 0)
-      : 1;
+    
     return (
       <StyledContainer>
         <>
@@ -125,7 +117,7 @@ export default class GlobalInfo extends React.Component {
 
               <div title="Market Capitalization">
                 <StyledNumber>
-                  • {formatLongNumber(totalMarketCap, currency)}
+                  • {formatLongNumber(data.totalMarketCap[currency], currency)}
                 </StyledNumber>{" "}
                 <span title="24-hour change percentage relative to USD">
                   {increase ? (
@@ -137,12 +129,12 @@ export default class GlobalInfo extends React.Component {
               </div>
               <GlobalInfoContainer title="Total volume in the last 24h">
                 <StyledNumber>
-                  • {formatLongNumber(totalVolume, currency)}
+                  • {formatLongNumber(data.totalVolume[currency], currency)}
                 </StyledNumber>{" "}
                 <BarContainer>
                   <ColorBar
-                    numerator={data.totalVolume[symbol1]}
-                    denominator={totalVolume}
+                    numerator={data.totalVolume[currency]}
+                    denominator={data.totalMarketCap[currency]}
                     numeratorColor="#fff"
                     denominatorColor="#2172e5"
                   />
