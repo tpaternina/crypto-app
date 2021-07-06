@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Col, Row } from "antd";
-import { LinkOutlined, LoadingOutlined } from "@ant-design/icons";
+import { Row } from "antd";
+import { LinkOutlined } from "@ant-design/icons";
 
 export const LogoContainer = styled.img`
   background-color: #1f2128;
@@ -9,20 +9,6 @@ export const LogoContainer = styled.img`
   padding: 1.25rem;
   box-sizing: border-box;
   margin: 2rem auto 0 auto;
-`;
-
-export const StyledRow = styled(Row)`
-  display: flex;
-  justify-content: space-between;
-
-  border: 1px solid white;
-`;
-
-export const StyledCol = styled(Col)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid white;
 `;
 
 export const StyledContainer = styled.div`
@@ -64,18 +50,14 @@ export const StyledLink = styled.a`
   color: #fff;
   font-size: 0.65rem;
 `;
-
-export const StyledLoading = styled(LoadingOutlined)`
-  font-size: 3rem;
-  text-align: center;
-  color: #33363e;
-`;
-
 export const StyledName = styled.h2`
   color: #fff;
   margin: 1.5rem auto 2rem auto;
 `;
 
-export const StyledTitle = styled.h3`
-  color: #fff;
+export const StyledRow = styled(Row)`
+  display: flex;
+  justify-content: space-between;
+
+  border: 1px solid white;
 `;

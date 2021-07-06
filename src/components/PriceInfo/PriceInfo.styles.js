@@ -35,16 +35,7 @@ export const StyledContainer = styled.div`
   box-sizing: border-box;
 
   border-radius: 15px;
-  border-collapse: collapse;
   background-color: #191b1f;
-
-  &:first-of-type {
-    margin-bottom: 0.75rem;
-  }
-
-  &:only-child {
-    margin-bottom: 0;
-  }
 `;
 
 export const StyledIncrease = styled.span.attrs((props) => ({

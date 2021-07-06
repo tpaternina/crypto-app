@@ -4,16 +4,10 @@ import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
 import { usePalette } from "react-palette";
 import { keysToCamelCase } from "utils";
-import { PriceInfo } from "components";
+import { CoinTitle, PriceInfo } from "components";
 import {
-  LogoContainer,
   StyledCol,
-  StyledContainer,
   StyledRow,
-  StyledLink,
-  StyledLinkIcon,
-  StyledLoading,
-  StyledName,
   StyledTitle,
 } from "./Coin.styles";
 
@@ -75,20 +69,7 @@ export default class Coin extends React.Component {
           <>
             <StyledRow>
               <StyledCol span={4}>
-                <StyledContainer>
-                  <LogoContainer src={data.image.small} alt={data.name} />
-                  <StyledName>
-                    {data.name} ({data.symbol.toUpperCase()})
-                  </StyledName>
-                </StyledContainer>
-                <StyledContainer>
-                  <StyledRow>
-                    <StyledLinkIcon />
-                    <StyledLink href={data.links.homepage}>
-                      {data.links.homepage}
-                    </StyledLink>
-                  </StyledRow>
-                </StyledContainer>
+                <CoinTitle data={data} />
               </StyledCol>
               <StyledCol span={8}>
                 <PriceInfo
