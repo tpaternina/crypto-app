@@ -9,4 +9,5 @@ export { default as ColorBar } from "./ColorBar";
 export { default as GlobalInfo } from "./GlobalInfo";
 export { default as LoadingCoins } from "./LoadingCoins";
 export { default as MarketInfo } from "./MarketInfo";
+export { default as PriceInfo } from "./PriceInfo";
 export { default as TableHeader } from "./TableHeader";
