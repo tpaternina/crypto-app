@@ -5,8 +5,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 export const ChartRow = styled(Row)`
   display: flex;
   justify-content: space-between;
-  display: flex;
-  justify-content: space-between;
 `;
 
 export const ChartCol = styled(Col)`
