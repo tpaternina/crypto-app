@@ -1,4 +1,4 @@
-import { camelCase, snakeCase } from "lodash";
+import { camelCase, snakeCase, isPlainObject } from "lodash";
 
 export function formatLongNumber(number, currency, decimals) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
@@ -44,6 +44,11 @@ export const keysToSnakeCase = (obj) =>
   }, {});
 
 export const keysToCamelCase = (obj) =>
+  
   Object.entries(obj).reduce((acc, [key, val]) => {
+    // Check if it is nested object
+    if (isPlainObject(val)) {
+      val = keysToCamelCase(val);
+    }
     return { ...acc, [camelCase(key)]: val };
   }, {});
