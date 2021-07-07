@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const InvisibleLogo = styled.img`
   width: 0;
-`
+`;
 
 export const MarketInfoRow = styled.div.attrs((props) => ({
   bottom: props.bottom,
@@ -14,8 +14,10 @@ export const MarketInfoRow = styled.div.attrs((props) => ({
   ${(props) => (props.bottom ? "margin-top: .5rem" : "margin-top: 0;")}
 `;
 
-export const StyledInfo = styled.div`
-  width: 100%;
+export const StyledInfo = styled.div.attrs((props) => ({
+  width: props.width,
+}))`
+  width: ${(props) => props.width};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
