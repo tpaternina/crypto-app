@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-export const MarketInfoRow = styled.div`
+export const InvisibleLogo = styled.img`
+  width: 0;
+`
+
+export const MarketInfoRow = styled.div.attrs((props) => ({
+  bottom: props.bottom,
+}))`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -15,6 +21,8 @@ export const StyledInfo = styled.div`
   justify-content: space-between;
 `;
 
-export const MarketDiv = styled.div`
+export const MarketDiv = styled.div.attrs((props) => ({
+  color: props.color,
+}))`
   color: ${(props) => props.color};
 `;
