@@ -24,7 +24,7 @@ export const StyledDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  border: 1px solid white;
+  width: 100%;
 `;
 
 export const StyledInfo = styled.div`

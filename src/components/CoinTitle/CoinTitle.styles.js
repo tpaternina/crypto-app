@@ -50,6 +50,7 @@ export const StyledLink = styled.a`
   color: #fff;
   font-size: 0.65rem;
 `;
+
 export const StyledName = styled.h2`
   color: #fff;
   margin: 1.5rem auto 2rem auto;

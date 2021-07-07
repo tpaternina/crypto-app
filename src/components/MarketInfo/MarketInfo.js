@@ -4,18 +4,34 @@ import { MarketDiv, MarketInfoRow, StyledInfo } from "./MarketInfo.styles";
 import { ColorBar } from "components";
 
 export default function MarketInfo(props) {
-  const { numerator, denominator, logoUrl, currency, percentage, singleCoin, width } = props;
-  const url = singleCoin ? logoUrl.split("/").splice(4).join("/") : logoUrl.split("/").splice(3).join("/")
+  const {
+    numerator,
+    denominator,
+    logoUrl,
+    currency,
+    percentage,
+    singleCoin,
+    width,
+  } = props;
+  const url = singleCoin
+    ? logoUrl.split("/").splice(4).join("/")
+    : logoUrl.split("/").splice(3).join("/");
   const { data } = usePalette(url);
-  const fraction = numerator * 100 / denominator
+  const fraction = (numerator * 100) / denominator;
   return (
     <StyledInfo width={width || "100%"}>
       <MarketInfoRow>
         <MarketDiv color={data.vibrant}>
-          • {percentage ? `${fraction.toFixed(2)}%` : formatLongNumber(numerator, currency)}
+          •{" "}
+          {percentage
+            ? `${fraction.toFixed(2)}%`
+            : formatLongNumber(numerator, currency)}
         </MarketDiv>
         <MarketDiv color={data.lightVibrant}>
-          • {percentage ?  `${(100 - fraction).toFixed(2)}%` : formatLongNumber(denominator, currency)}
+          •{" "}
+          {percentage
+            ? `${(100 - fraction).toFixed(2)}%`
+            : formatLongNumber(denominator, currency)}
         </MarketDiv>
       </MarketInfoRow>
       <MarketInfoRow bottom>

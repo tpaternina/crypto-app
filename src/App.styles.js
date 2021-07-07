@@ -13,7 +13,7 @@ export const Container = styled.div`
   color: #ffffff;
   width: 100%;
   height: fit-content;
-  padding: 2rem 2.5rem;
+  padding: 2rem 5.5rem;
   padding-top: 0;
 `;
 

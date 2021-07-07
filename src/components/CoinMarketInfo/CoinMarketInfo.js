@@ -13,7 +13,6 @@ import {
 
 export default function CoinMarketInfo(props) {
   const { currency, data } = props;
-  console.log(data.image.small);
   return (
     <StyledContainer>
       <StyledDiv>
@@ -78,7 +77,7 @@ export default function CoinMarketInfo(props) {
             : "∞"}
         </StyledInfo>
         <MarketInfo
-          width="55%"
+          width="65%"
           percentage={true}
           singleCoin={true}
           numerator={data.marketData.totalVolume[currency]}
