@@ -7,8 +7,6 @@ export const StyledRow = styled(Row)`
   justify-content: space-between;
 
   margin: 2.25rem 0;
-
-  border: 1px solid white;
 `;
 
 
@@ -17,7 +15,6 @@ export const StyledCol = styled(Col)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid white;
 `;
 
 export const StyledContainer = styled.div`
