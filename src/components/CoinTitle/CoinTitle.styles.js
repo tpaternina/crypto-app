@@ -58,6 +58,4 @@ export const StyledName = styled.h2`
 export const StyledRow = styled(Row)`
   display: flex;
   justify-content: space-between;
-
-  border: 1px solid white;
 `;

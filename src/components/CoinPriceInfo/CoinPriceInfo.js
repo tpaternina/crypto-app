@@ -8,9 +8,9 @@ import {
   StyledIncrease,
   StyledLayerIcon,
   StyledPrice,
-} from "./PriceInfo.styles";
+} from "./CoinPriceInfo.styles";
 
-export default function PriceInfo(props) {
+export default function CoinPriceInfo(props) {
   const { currency, data, increase } = props;
   return (
     <StyledContainer>

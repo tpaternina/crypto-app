@@ -2,14 +2,9 @@ import React from "react";
 import axios from "axios";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
-import { usePalette } from "react-palette";
 import { keysToCamelCase } from "utils";
-import { CoinTitle, PriceInfo } from "components";
-import {
-  StyledCol,
-  StyledRow,
-  StyledTitle,
-} from "./Coin.styles";
+import { CoinMarketInfo, CoinPriceInfo, CoinTitle } from "components";
+import { StyledCol, StyledRow, StyledTitle } from "./Coin.styles";
 
 export default class Coin extends React.Component {
   state = {
@@ -72,13 +67,15 @@ export default class Coin extends React.Component {
                 <CoinTitle data={data} />
               </StyledCol>
               <StyledCol span={8}>
-                <PriceInfo
+                <CoinPriceInfo
                   currency={currency}
                   data={data}
                   increase={increase}
                 />
               </StyledCol>
-              <StyledCol span={10}></StyledCol>
+              <StyledCol span={10}>
+                <CoinMarketInfo currency={currency} data={data} />
+              </StyledCol>
             </StyledRow>
           </>
         )}
