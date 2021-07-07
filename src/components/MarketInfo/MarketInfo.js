@@ -9,7 +9,7 @@ export default function MarketInfo(props) {
   const { data } = usePalette(url);
   const fraction = numerator * 100 / denominator
   return (
-    <StyledInfo width={width}>
+    <StyledInfo width={width || "100%"}>
       <MarketInfoRow>
         <MarketDiv color={data.vibrant}>
           • {percentage ? `${fraction.toFixed(2)}%` : formatLongNumber(numerator, currency)}
