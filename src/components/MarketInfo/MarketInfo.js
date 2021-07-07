@@ -14,7 +14,7 @@ export default function MarketInfo(props) {
         <MarketDiv color={data.vibrant}>
           • {percentage ? `${fraction.toFixed(2)}%` : formatLongNumber(numerator, currency)}
         </MarketDiv>
-        <MarketDiv color={data.lightMuted}>
+        <MarketDiv color={data.lightVibrant}>
           • {percentage ?  `${(100 - fraction).toFixed(2)}%` : formatLongNumber(denominator, currency)}
         </MarketDiv>
       </MarketInfoRow>
@@ -23,7 +23,7 @@ export default function MarketInfo(props) {
           numerator={numerator}
           denominator={denominator}
           numeratorColor={data.vibrant}
-          denominatorColor={data.lightMuted}
+          denominatorColor={data.lightVibrant}
           width="100%"
         />
       </MarketInfoRow>
