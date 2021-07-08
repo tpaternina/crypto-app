@@ -31,10 +31,10 @@ export default function ChartPriceOverview(props) {
       ],
     };
   };
-  
+
   const options = {
     layout: {
-      padding: 16,
+      padding: { top: 50 },
     },
     plugins: {
       legend: {
@@ -73,5 +73,9 @@ export default function ChartPriceOverview(props) {
     },
   };
 
-  return <>{!isEmpty(prices) && <Line data={data} options={options} />}</>;
+  return (
+    <div className="chart">
+      {!isEmpty(prices) && <Line data={data} options={options} />}
+    </div>
+  );
 }

@@ -40,7 +40,7 @@ export const StyledList = styled.ul`
 
 export const StyledNav = styled.nav`
   width: 100%;
-  padding: 1rem 2.5rem;
+  padding: 1rem 5.5rem;
   background-color: #191b1f;
   display: flex;
   align-items: center;

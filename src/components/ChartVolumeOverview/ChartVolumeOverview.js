@@ -9,16 +9,18 @@ export default function ChartPriceOverview(props) {
   const data = {
     datasets: [
       {
-        data: total_volumes.filter((item, index, array) => index !== array.length - 1).map(formatOverviewChart),
+        data: total_volumes
+          .filter((item, index, array) => index !== array.length - 1)
+          .map(formatOverviewChart),
         borderColor: "#2172e5",
         fill: true,
-        backgroundColor: "#2172e5"
+        backgroundColor: "#2172e5",
       },
     ],
   };
   const options = {
     layout: {
-      padding: 16,
+      padding: { top: 50 },
     },
     plugins: {
       legend: {
@@ -35,9 +37,9 @@ export default function ChartPriceOverview(props) {
         },
         ticks: {
           font: {
-            size: 16
-          }
-        }
+            size: 16,
+          },
+        },
       },
       y: {
         display: false,
@@ -51,5 +53,9 @@ export default function ChartPriceOverview(props) {
     },
   };
 
-  return <>{!isEmpty(total_volumes) && <Bar data={data} options={options} />}</>;
+  return (
+    <div className="chart">
+      {!isEmpty(total_volumes) && <Bar data={data} options={options} />}
+    </div>
+  );
 }

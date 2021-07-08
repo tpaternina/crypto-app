@@ -5,12 +5,13 @@ import { LoadingOutlined } from "@ant-design/icons";
 export const ChartRow = styled(Row)`
   display: flex;
   justify-content: space-between;
+  border: 1px solid white;
 `;
 
 export const ChartCol = styled(Col)`
-  padding: 0.75rem;
   display: flex;
   justify-content: center;
+  border: 1px solid white;
 `;
 export const ChartContainer = styled.div`
   text-align: center;
@@ -18,13 +19,28 @@ export const ChartContainer = styled.div`
 
   margin: 0;
   padding: 1.5rem;
-  width: 90%;
+  width: 100%;
+  padding-top: 50%;
+  position: relative;
   box-sizing: border-box;
 
   border-radius: 15px;
   border-collapse: collapse;
   background-color: #191b1f;
   
+  & > .chart-info {
+    position: absolute;
+    top: 0;
+  }
+
+  & > .chart { 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border: 1px solid white;
+    width: 100%;
+    
+  }
 `;
 
 export const ChartInfo = styled.div`

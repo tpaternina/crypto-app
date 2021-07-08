@@ -68,14 +68,13 @@ export default class ChartOverview extends React.Component {
         
         {isLoading && (
           <ChartRow>
-            <ChartCol span={12}>
+            <ChartCol span={11}>
               <ChartContainer>
                 <StyledLoading />
               </ChartContainer>
             </ChartCol>
-            <ChartCol span={12}>
+            <ChartCol span={11}>
               <ChartContainer>
-                
                 <StyledLoading />
               </ChartContainer>
             </ChartCol>
@@ -83,9 +82,9 @@ export default class ChartOverview extends React.Component {
         )}
         {hasResponse && (
           <ChartRow>
-            <ChartCol span={12}>
+            <ChartCol span={11}>
               <ChartContainer>
-                <ChartInfo>
+                <ChartInfo className="chart-info">
                   <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
                   <StyledPrice>
                     {formatLongNumber(prices[29][1], currency, 3)}
@@ -95,9 +94,9 @@ export default class ChartOverview extends React.Component {
                 <ChartPriceOverview prices={prices} currency={currency} />
               </ChartContainer>
             </ChartCol>
-            <ChartCol span={12}>
+            <ChartCol span={11}>
               <ChartContainer>
-                <ChartInfo>
+                <ChartInfo className="chart-info">
                   <StyledInfo> Volume 24 h </StyledInfo>
                   <StyledPrice>
                     {formatLongNumber(total_volumes[29][1], currency, 3)}
