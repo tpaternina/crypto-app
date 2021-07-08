@@ -2,4 +2,4 @@ QUESTIONS
 
 3. handle currency in query string if it's a prop from parent component --> set it as state?
 
-4. Plus sign in coin page show info?
+4. currencyWrapper null when I click outside throws exception!!

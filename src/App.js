@@ -9,7 +9,7 @@ import {
   StyledNav,
 } from "./App.styles";
 import { Coin, Home, Portfolio } from "pages";
-import { Currency, GlobalInfo } from "components";
+import { Currency, GlobalInfo, SearchCoin } from "components";
 
 console.clear();
 
@@ -49,10 +49,13 @@ export default class App extends React.Component {
                 </StyledLink>
               </li>
             </StyledList>
-            <Currency
-              currency={currency}
-              handleCurrency={this.handleCurrency}
-            />
+            <StyledList>
+              <SearchCoin />
+              <Currency
+                currency={currency}
+                handleCurrency={this.handleCurrency}
+              />
+            </StyledList>
           </StyledNav>
           <Container>
             <GlobalInfo currency={currency} />

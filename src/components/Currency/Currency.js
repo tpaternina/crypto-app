@@ -40,11 +40,14 @@ export default class Currency extends React.Component {
     this.props.handleCurrency(key.toUpperCase());
   };
 
-  handleClickOutside = ({target}) => {
-    if (this.currencyWrapper && !this.currencyWrapper.current.contains(target)) {
+  handleClickOutside = ({ target }) => {
+    if (
+      this.currencyWrapper &&
+      !this.currencyWrapper.current.contains(target)
+    ) {
       this.setState({ isActive: false, searchTerm: "" });
     }
-  }
+  };
 
   handleChange = ({ target: { value } }) => {
     this.setState({ searchTerm: value.toUpperCase() });
@@ -60,12 +63,12 @@ export default class Currency extends React.Component {
     this.getCurrencies();
 
     // Add event listener for click outside event
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
     // Remove event listener for click outside event
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -95,9 +98,7 @@ export default class Currency extends React.Component {
           <StyledArrow />
         </StyledCurrency>
         {isActive && (
-          <StyledMenu
-            onClick={this.handleSelect}
-          >
+          <StyledMenu onClick={this.handleSelect}>
             {!isEmpty(currencyList) && (
               <>
                 {currencyList

@@ -22,13 +22,13 @@ export const ChartContainer = styled.div`
   position: relative;
   box-sizing: border-box;
 
-  border-radius: 15px;
+  border-radius: 6px;
   border-collapse: collapse;
   background-color: #191b1f;
   
   & > .chart-info {
     position: absolute;
-    top: 0;
+    top: 5%;
   }
 
   & > .chart { 
@@ -52,6 +52,10 @@ export const StyledLoading = styled(LoadingOutlined)`
   font-size: 3rem;
   text-align:center;
   color: #33363e;
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  
 `
 
 export const StyledInfo = styled.p`

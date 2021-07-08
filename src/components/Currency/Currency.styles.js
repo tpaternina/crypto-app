@@ -4,8 +4,8 @@ import { DollarCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 
 export const StyledCurrency = styled.button`
   background-color: #2c2f36;
-  border-radius: 15px;
-  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  padding: .75rem 1rem;
   font-size: 1rem;
   color: #fff;
   border: none;

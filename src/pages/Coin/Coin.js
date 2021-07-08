@@ -56,6 +56,11 @@ export default class Coin extends React.Component {
     if (prevState.isLoading !== this.state.isLoading && !this.state.isLoading) {
       this.loadingBar.current.complete();
     }
+
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+
+      this.getCoinInfo();
+    }
   }
 
   render() {
