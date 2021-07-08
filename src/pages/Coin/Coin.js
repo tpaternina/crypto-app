@@ -108,14 +108,13 @@ export default class Coin extends React.Component {
               </StyledCol>
             </StyledRow>
             <StyledRow>
-              {data.links.blockchainSite.map(
-                (link) =>
-                  link && (
-                    <StyledCol key={link} span={24 / linkNumber - 1}>
-                      <BlockchainLink link={link} />
-                    </StyledCol>
-                  )
-              )}
+              {data.links.blockchainSite
+                .filter((link) => link !== "")
+                .map((link) => (
+                  <StyledCol key={link} span={24 / linkNumber - 1}>
+                    <BlockchainLink link={link} />
+                  </StyledCol>
+                ))}
             </StyledRow>
           </>
         )}
