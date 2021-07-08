@@ -5,13 +5,11 @@ import { LoadingOutlined } from "@ant-design/icons";
 export const ChartRow = styled(Row)`
   display: flex;
   justify-content: space-between;
-  border: 1px solid white;
 `;
 
 export const ChartCol = styled(Col)`
   display: flex;
   justify-content: center;
-  border: 1px solid white;
 `;
 export const ChartContainer = styled.div`
   text-align: center;
@@ -37,7 +35,6 @@ export const ChartContainer = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    border: 1px solid white;
     width: 100%;
     
   }
