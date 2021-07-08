@@ -35,7 +35,7 @@ export const StyledLoading = styled(LoadingOutlined)`
   color: #33363e;
 `
 
-export const StyledTitle = styled.h2`
+export const StyledTitle = styled.h3`
   color: #fff;
 `;
 
