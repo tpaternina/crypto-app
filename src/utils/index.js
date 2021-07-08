@@ -1,4 +1,4 @@
-import { camelCase, snakeCase } from "lodash";
+import { camelCase, snakeCase, isPlainObject } from "lodash";
 
 export function formatLongNumber(number, currency, decimals) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
@@ -14,10 +14,12 @@ export function formatLongNumber(number, currency, decimals) {
   const scale = 10 ** (tier * 3);
 
   // Get the currency symbol (with a shameless StackOverflow hack)
-  const currencySymbol = Number().toLocaleString(undefined, {
-    style: "currency",
-    currency: currency.toUpperCase(),
-  }).slice(0,-4);
+  const currencySymbol = Number()
+    .toLocaleString(undefined, {
+      style: "currency",
+      currency: currency.toUpperCase(),
+    })
+    .slice(0, -4);
 
   // Scale the number and add suffix
   return currencySymbol + (number / scale).toFixed(decimals) + suffix;
@@ -29,6 +31,11 @@ export const formatDate = (date) => {
   return currentDate;
 };
 
+export const formatLongDate = (date) => {
+  date = new Date(date);
+  return date.toUTCString();
+};
+
 export const formatOverviewChart = (array) => {
   // chart data
   const data = {
@@ -38,6 +45,15 @@ export const formatOverviewChart = (array) => {
   return data;
 };
 
+export const formatCurrency = (number, currency) => {
+  return number.toLocaleString("en-UK", {
+    style: "currency",
+    currency: currency,
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+  });
+};
+
 export const keysToSnakeCase = (obj) =>
   Object.entries(obj).reduce((acc, [key, val]) => {
     return { ...acc, [snakeCase(key)]: val };
@@ -45,5 +61,9 @@ export const keysToSnakeCase = (obj) =>
 
 export const keysToCamelCase = (obj) =>
   Object.entries(obj).reduce((acc, [key, val]) => {
+    // Check if it is nested object
+    if (isPlainObject(val)) {
+      val = keysToCamelCase(val);
+    }
     return { ...acc, [camelCase(key)]: val };
   }, {});

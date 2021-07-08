@@ -8,7 +8,7 @@ import {
   StyledList,
   StyledNav,
 } from "./App.styles";
-import { Home, Portfolio } from "pages";
+import { Coin, Home, Portfolio } from "pages";
 import { Currency, GlobalInfo } from "components";
 
 console.clear();
@@ -57,6 +57,10 @@ export default class App extends React.Component {
           <Container>
             <GlobalInfo currency={currency} />
             <Switch>
+              <Route
+                path="/coins/:id"
+                component={(props) => <Coin currency={currency} {...props} />}
+              />
               <Route path="/portfolio">
                 <Portfolio />
               </Route>

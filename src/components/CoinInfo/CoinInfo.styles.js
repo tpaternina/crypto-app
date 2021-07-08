@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Col, Row } from "antd";
 
 export const StyledCol = styled(Col)`
@@ -16,6 +17,16 @@ export const StyledRow = styled(Row)`
     border: none;
   }
 `;
+
+export const StyledLink = styled(Link)`
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+  &:visited {
+    color: #fff;
+  }
+`
 
 export const CoinLogo = styled.img`
   width: 20px;

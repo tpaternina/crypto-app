@@ -30,7 +30,7 @@ export default class ChartOverview extends React.Component {
         isLoading: true,
       });
       const query = queryString.stringifyUrl({
-        url: `${process.env.REACT_APP_COIN_HISTORY_ENDPOINT}/${topCoin.id}/market_chart`,
+        url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${topCoin.id}/market_chart`,
         query: {
           vs_currency: currency,
           days: 30,
