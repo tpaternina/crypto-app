@@ -22,13 +22,13 @@ export default function MarketInfo(props) {
     <StyledInfo width={width || "100%"}>
       <MarketInfoRow>
         <MarketDiv color={data.vibrant}>
-          •{" "}
+          •
           {percentage
             ? `${fraction.toFixed(2)}%`
             : formatLongNumber(numerator, currency)}
         </MarketDiv>
         <MarketDiv color={data.lightVibrant}>
-          •{" "}
+          •
           {percentage
             ? `${(100 - fraction).toFixed(2)}%`
             : formatLongNumber(denominator, currency)}

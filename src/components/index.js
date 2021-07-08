@@ -1,4 +1,4 @@
-export {default as BlockchainLink} from "./BlockchainLink";
+export { default as BlockchainLink } from "./BlockchainLink";
 export { default as Chart } from "./Chart";
 export { default as ChartOverview } from "./ChartOverview";
 export { default as ChartPriceOverview } from "./ChartPriceOverview";
@@ -13,4 +13,5 @@ export { default as ColorBar } from "./ColorBar";
 export { default as GlobalInfo } from "./GlobalInfo";
 export { default as LoadingCoins } from "./LoadingCoins";
 export { default as MarketInfo } from "./MarketInfo";
+export { default as SearchCoin } from "./SearchCoin";
 export { default as TableHeader } from "./TableHeader";

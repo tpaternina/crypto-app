@@ -19,7 +19,7 @@ export default function CoinMarketInfo(props) {
         <StyledInfo>
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
           <StyledSectionTitle>Market Cap: </StyledSectionTitle>
-          {formatCurrency(data.marketData.marketCap[currency], currency)}{" "}
+          {formatCurrency(data.marketData.marketCap[currency], currency)}
           <StyledPercentage>
             {data.marketData.marketCapChangePercentage24H.toFixed(2)}%
           </StyledPercentage>

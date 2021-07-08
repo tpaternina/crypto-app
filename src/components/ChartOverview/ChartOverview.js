@@ -65,7 +65,6 @@ export default class ChartOverview extends React.Component {
       !isEmpty(prices) && !isEmpty(total_volumes) && !isLoading && !hasError;
     return (
       <>
-        
         {isLoading && (
           <ChartRow>
             <ChartCol span={11}>
@@ -84,6 +83,7 @@ export default class ChartOverview extends React.Component {
           <ChartRow>
             <ChartCol span={11}>
               <ChartContainer>
+                <ChartPriceOverview prices={prices} currency={currency} />
                 <ChartInfo className="chart-info">
                   <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
                   <StyledPrice>
@@ -91,11 +91,14 @@ export default class ChartOverview extends React.Component {
                   </StyledPrice>
                   <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
                 </ChartInfo>
-                <ChartPriceOverview prices={prices} currency={currency} />
               </ChartContainer>
             </ChartCol>
             <ChartCol span={11}>
               <ChartContainer>
+                <ChartVolumeOverview
+                  total_volumes={total_volumes}
+                  currency={currency}
+                />
                 <ChartInfo className="chart-info">
                   <StyledInfo> Volume 24 h </StyledInfo>
                   <StyledPrice>
@@ -103,10 +106,6 @@ export default class ChartOverview extends React.Component {
                   </StyledPrice>
                   <StyledInfo> {formatDate(total_volumes[29][0])} </StyledInfo>
                 </ChartInfo>
-                <ChartVolumeOverview
-                  total_volumes={total_volumes}
-                  currency={currency}
-                />
               </ChartContainer>
             </ChartCol>
           </ChartRow>

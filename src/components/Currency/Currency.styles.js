@@ -5,7 +5,7 @@ import { DollarCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 export const StyledCurrency = styled.button`
   background-color: #2c2f36;
   border-radius: 15px;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
   color: #fff;
   border: none;
@@ -30,7 +30,7 @@ export const StyledInput = styled.input`
   border: none;
   width: 2.5rem;
   margin: 0;
-  padding: 0;
+  padding: 0.5 0;
   font-size: 0.75rem;
 
   &:focus {
@@ -45,7 +45,7 @@ export const StyledMenu = styled(Menu)`
   flex-direction: column;
   justify-content: flex-start;
   position: absolute;
-  right: 3rem;
+  right: 5.5rem;
   top: 3.5rem;
   z-index: 999;
   border: none;
@@ -58,7 +58,7 @@ export const StyledItem = styled(Menu.Item)`
     padding: 0 1.75rem;
   }
   border: solid 0 #fff;
-  border-radius: 10px;
+  border-radius: 6px;
   color: #fff;
 
   &::hover {
