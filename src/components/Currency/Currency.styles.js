@@ -45,7 +45,7 @@ export const StyledMenu = styled(Menu)`
   flex-direction: column;
   justify-content: flex-start;
   position: absolute;
-  right: 3rem;
+  right: 5.5rem;
   top: 3.5rem;
   z-index: 999;
   border: none;
@@ -53,15 +53,17 @@ export const StyledMenu = styled(Menu)`
 
 export const StyledItem = styled(Menu.Item)`
 
-  &.ant-menu-item, &.ant-menu-item-only-child {
-    margin: 0;
-    padding: 0 1.75rem;
-  }
+  
   border: solid 0 #fff;
-  border-radius: 10px;
+  border-radius: 6px;
   color: #fff;
 
-  &::hover {
+  &.ant-menu-item, &.ant-menu-item-only-child {
+    margin: 0;
+    padding: 0 2.80rem;
+  }
+
+  &.ant-menu-item-active:hover {
     background-color: #0b9b43;
     color: #fff;
   }

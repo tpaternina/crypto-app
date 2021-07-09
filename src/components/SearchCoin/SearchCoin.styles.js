@@ -16,7 +16,6 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledLink = styled(Link)`
-  color: #fff;
 `
 
 export const StyledMenu = styled(Menu)`
@@ -34,15 +33,17 @@ export const StyledMenu = styled(Menu)`
 
 export const StyledItem = styled(Menu.Item)`
 
+  border: solid 0 #fff;
+  border-radius: 6px;
+  color: #fff;
+  
   &.ant-menu-item, &.ant-menu-item-only-child {
     margin: 0;
     padding: 0 1rem;
+    color: #fff;
   }
-  border: solid 0 #fff;
-  border-radius: 10px;
-  color: #fff;
 
-  &::hover {
+  &.ant-menu-item-active:hover {
     background-color: #0b9b43;
     color: #fff;
   }

@@ -72,7 +72,7 @@ export default class SearchCoin extends React.Component {
       prevState.searchValue !== this.state.searchValue &&
       this.state.searchValue === ""
     ) {
-      console.log("emtpy")
+      console.log("emtpy");
       this.setState({ data: [] });
     }
   }
@@ -92,9 +92,9 @@ export default class SearchCoin extends React.Component {
         />
         <StyledMenu onClick={this.handleSelect}>
           {data.map((coin) => (
-            <StyledItem key={coin.id}>
-              <StyledLink to={`/coins/${coin.id}`}>{coin.name}</StyledLink>
-            </StyledItem>
+            <StyledLink key={coin.id} to={`/coins/${coin.id}`}>
+              <StyledItem>{coin.name}</StyledItem>
+            </StyledLink>
           ))}
         </StyledMenu>
       </div>
