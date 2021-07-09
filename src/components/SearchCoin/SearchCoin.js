@@ -28,7 +28,7 @@ export default class SearchCoin extends React.Component {
       this.searchWrapper !== null &&
       !this.searchWrapper.current.contains(target)
     ) {
-      console.log("outside");
+      
       this.setState({ searchValue: "", data: [] });
     }
   };
@@ -72,7 +72,7 @@ export default class SearchCoin extends React.Component {
       prevState.searchValue !== this.state.searchValue &&
       this.state.searchValue === ""
     ) {
-      console.log("emtpy");
+      
       this.setState({ data: [] });
     }
   }

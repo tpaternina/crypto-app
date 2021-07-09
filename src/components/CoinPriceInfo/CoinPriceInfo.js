@@ -13,7 +13,6 @@ import {
 
 export default function CoinPriceInfo(props) {
   const { currency, data, increase } = props;
-  console.log(data.marketData.priceChangePercentage24H);
   return (
     !isEmpty(data) && (
       <StyledContainer>
