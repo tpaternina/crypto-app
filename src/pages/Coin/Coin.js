@@ -79,7 +79,6 @@ export default class Coin extends React.Component {
           0
         )
       : 0;
-    console.log(data.marketData)
     return ( 
       <>
         <StyledTitle>Coin summary</StyledTitle>
@@ -107,7 +106,7 @@ export default class Coin extends React.Component {
                 <StyledContainer>
                   <StyledLayerIcon src={layers} />
                   <StyledDescription>
-                    {parse(data.description["en"])}
+                    {data.description["en"] ? parse(data.description["en"]) : <small>Description unavailable</small>}
                   </StyledDescription>
                 </StyledContainer>
               </StyledCol>
