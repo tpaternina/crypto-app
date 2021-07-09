@@ -58,6 +58,7 @@ export const StyledContainer = styled.div`
 
   height: 2.5rem;
   width: 57%;
+  min-width: 535px;
   box-sizing: border-box;
 
   display: flex;

@@ -21,7 +21,11 @@ export default function CoinMarketInfo(props) {
           <StyledSectionTitle>Market Cap: </StyledSectionTitle>
           {formatCurrency(data.marketData.marketCap[currency], currency)}{" "}
           <StyledPercentage>
-            {data.marketData.marketCapChangePercentage24H.toFixed(2)}%
+            {data.marketData.marketCapChangePercentage24H ? (
+              `${data.marketData.marketCapChangePercentage24H.toFixed(2)}%`
+            ) : (
+              <small>unavailable</small>
+            )}
           </StyledPercentage>
         </StyledInfo>
         {!isEmpty(data.marketData.fullyDilutedValuation) && (
@@ -42,14 +46,14 @@ export default function CoinMarketInfo(props) {
         <StyledInfo>
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
           <StyledSectionTitle>Volume / Market: </StyledSectionTitle>
-          {(
+          {data.marketData.marketCap[currency] &&(
             data.marketData.totalVolume[currency] /
             data.marketData.marketCap[currency]
-          ).toFixed(5)}
+          ).toFixed(5) || "∞"}
         </StyledInfo>
       </StyledDiv>
       <StyledDiv>
-        {!isEmpty(data.marketData.totalVolume[data.symbol]) && (
+        {(!isEmpty(data.marketData.totalVolume[data.symbol]) && (
           <StyledInfo>
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
             <StyledSectionTitle>Total volume: </StyledSectionTitle>
@@ -57,8 +61,8 @@ export default function CoinMarketInfo(props) {
               "en-UK"
             )} ${data.symbol.toUpperCase()}`}
           </StyledInfo>
-        )}
-        {data.marketData.circulatingSupply && (
+        )) || <></>}
+        {(typeof data.marketData.circulatingSupply === "number" && (
           <StyledInfo>
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
             <StyledSectionTitle>Circulating supply: </StyledSectionTitle>
@@ -66,7 +70,7 @@ export default function CoinMarketInfo(props) {
               "en-UK"
             )} ${data.symbol.toUpperCase()}`}
           </StyledInfo>
-        )}
+        )) || <></>}
         <StyledInfo>
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
           <StyledSectionTitle>Max supply: </StyledSectionTitle>
@@ -76,14 +80,16 @@ export default function CoinMarketInfo(props) {
               )} ${data.symbol.toUpperCase()}`
             : "∞"}
         </StyledInfo>
-        <MarketInfo
-          width="65%"
-          percentage={true}
-          singleCoin={true}
-          numerator={data.marketData.totalVolume[currency]}
-          denominator={data.marketData.marketCap[currency]}
-          logoUrl={data.image.large}
-        />
+        {(data.marketData.marketCap[currency] && (
+          <MarketInfo
+            width="65%"
+            percentage={true}
+            singleCoin={true}
+            numerator={data.marketData.totalVolume[currency]}
+            denominator={data.marketData.marketCap[currency]}
+            logoUrl={data.image.large}
+          />
+        )) || <></>}
       </StyledDiv>
     </StyledContainer>
   );

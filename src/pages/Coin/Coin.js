@@ -79,8 +79,8 @@ export default class Coin extends React.Component {
           0
         )
       : 0;
-
-    return (
+    console.log(data.marketData)
+    return ( 
       <>
         <StyledTitle>Coin summary</StyledTitle>
         <LoadingBar ref={this.loadingBar} />
