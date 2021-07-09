@@ -89,14 +89,14 @@ export default class Coin extends React.Component {
               <StyledCol span={6}>
                 <CoinTitle data={data} />
               </StyledCol>
-              <StyledCol span={8}>
+              <StyledCol span={7}>
                 <CoinPriceInfo
                   currency={currency}
                   data={data}
                   increase={increase}
                 />
               </StyledCol>
-              <StyledCol span={8}>
+              <StyledCol span={10}>
                 <CoinMarketInfo currency={currency} data={data} />
               </StyledCol>
             </StyledRow>
