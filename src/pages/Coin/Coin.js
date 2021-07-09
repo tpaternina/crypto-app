@@ -86,7 +86,7 @@ export default class Coin extends React.Component {
         {hasResponse && (
           <>
             <StyledRow>
-              <StyledCol span={4}>
+              <StyledCol span={6}>
                 <CoinTitle data={data} />
               </StyledCol>
               <StyledCol span={8}>
@@ -96,7 +96,7 @@ export default class Coin extends React.Component {
                   increase={increase}
                 />
               </StyledCol>
-              <StyledCol span={10}>
+              <StyledCol span={8}>
                 <CoinMarketInfo currency={currency} data={data} />
               </StyledCol>
             </StyledRow>
