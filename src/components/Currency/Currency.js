@@ -41,11 +41,11 @@ export default class Currency extends React.Component {
   };
 
   handleClickOutside = ({ target }) => {
-    if (this.currencyWrapper) {
-      console.log(this.currencyWrapper);
-      if (!this.currencyWrapper.current.contains(target)) {
-        this.setState({ isActive: false, searchTerm: "" });
-      }
+    if (
+      this.currencyWrapper &&
+      !this.currencyWrapper.current.contains(target)
+    ) {
+      this.setState({ isActive: false, searchTerm: "" });
     }
   };
 
@@ -69,7 +69,7 @@ export default class Currency extends React.Component {
 
   componentWillUnmount() {
     // Remove event listener for click outside event
-    document.addEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   componentDidUpdate(prevProps, prevState) {

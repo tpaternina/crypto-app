@@ -12,6 +12,7 @@ export { default as Currency } from "./Currency";
 export { default as ColorBar } from "./ColorBar";
 export { default as GlobalInfo } from "./GlobalInfo";
 export { default as LoadingCoins } from "./LoadingCoins";
+export { default as PortfolioAsset } from "./PortfolioAsset";
 export { default as MarketInfo } from "./MarketInfo";
 export { default as SearchCoin } from "./SearchCoin";
 export { default as TableHeader } from "./TableHeader";

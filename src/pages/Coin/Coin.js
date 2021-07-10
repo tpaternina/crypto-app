@@ -56,6 +56,11 @@ export default class Coin extends React.Component {
     if (prevState.isLoading !== this.state.isLoading && !this.state.isLoading) {
       this.loadingBar.current.complete();
     }
+
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+
+      this.getCoinInfo();
+    }
   }
 
   render() {
@@ -74,18 +79,17 @@ export default class Coin extends React.Component {
           0
         )
       : 0;
-
-    return (
+    return ( 
       <>
         <StyledTitle>Coin summary</StyledTitle>
         <LoadingBar ref={this.loadingBar} />
         {hasResponse && (
           <>
             <StyledRow>
-              <StyledCol span={4}>
+              <StyledCol span={6}>
                 <CoinTitle data={data} />
               </StyledCol>
-              <StyledCol span={8}>
+              <StyledCol span={7}>
                 <CoinPriceInfo
                   currency={currency}
                   data={data}
@@ -102,7 +106,7 @@ export default class Coin extends React.Component {
                 <StyledContainer>
                   <StyledLayerIcon src={layers} />
                   <StyledDescription>
-                    {parse(data.description["en"])}
+                    {data.description["en"] ? parse(data.description["en"]) : <small>Description unavailable</small>}
                   </StyledDescription>
                 </StyledContainer>
               </StyledCol>

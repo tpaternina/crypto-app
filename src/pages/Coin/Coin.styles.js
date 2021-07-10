@@ -31,7 +31,7 @@ export const StyledContainer = styled.div`
   height: 100%;
   box-sizing: border-box;
 
-  border-radius: 15px;
+  border-radius: 6px;
   background-color: #191b1f;
 `;
 

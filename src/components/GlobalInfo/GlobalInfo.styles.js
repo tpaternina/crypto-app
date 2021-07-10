@@ -58,6 +58,7 @@ export const StyledContainer = styled.div`
 
   height: 2.5rem;
   width: 57%;
+  min-width: 632px;
   box-sizing: border-box;
 
   display: flex;
@@ -68,7 +69,7 @@ export const StyledContainer = styled.div`
   font-size: 0.8rem;
 
   background-color: #191b1f;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 6px 6px;
 `;
 
 export const StyledNumber = styled.span`
