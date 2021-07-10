@@ -1,4 +1,3 @@
-export { default as AddAsset } from "./AddAsset";
 export { default as BlockchainLink } from "./BlockchainLink";
 export { default as Chart } from "./Chart";
 export { default as ChartOverview } from "./ChartOverview";

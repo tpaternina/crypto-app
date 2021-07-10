@@ -36,6 +36,8 @@ export const StyledLink = styled(NavLink)`
 
 export const StyledList = styled.ul`
   margin: 0;
+  display: flex;
+  align-items: center;
 `
 
 export const StyledNav = styled.nav`

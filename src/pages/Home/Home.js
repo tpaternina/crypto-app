@@ -144,21 +144,20 @@ export default class Home extends React.Component {
       <>
         {isLoading && (
           <ChartRow>
-            <ChartCol span={12}>
+            <ChartCol span={11}>
               <ChartContainer>
                 {" "}
                 <StyledLoading />{" "}
               </ChartContainer>{" "}
             </ChartCol>{" "}
-            <ChartCol span={12}>
+            <ChartCol span={11}>
               <ChartContainer>
                 {" "}
                 <StyledLoading />{" "}
               </ChartContainer>{" "}
             </ChartCol>{" "}
           </ChartRow>
-        )}{" "}
-        <StyledTitle> Market Overview </StyledTitle>{" "}
+        )}
         <LoadingBar ref={this.loadingBar} />{" "}
         {hasResponse && (
           <ChartOverview
@@ -166,6 +165,7 @@ export default class Home extends React.Component {
             currency={this.props.currency}
           />
         )}
+        <StyledTitle> Market Overview </StyledTitle>
         <Container>
           <StyledRow>
             <StyledCol span={1}>

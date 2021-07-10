@@ -100,7 +100,7 @@ export default class GlobalInfo extends React.Component {
       symbol2,
     } = this.state;
     const hasResponse = !isEmpty(data) && !isLoading && !hasError;
-    
+
     return (
       <StyledContainer>
         <>
@@ -108,8 +108,7 @@ export default class GlobalInfo extends React.Component {
           {hasResponse && (
             <>
               <div title="Active coins">
-                Coins:{" "}
-                <StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
+                Coins: <StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
               </div>
               <div title="Total exchanges">
                 Exchange: <StyledNumber>{data.markets}</StyledNumber>
@@ -118,7 +117,7 @@ export default class GlobalInfo extends React.Component {
               <div title="Market Capitalization">
                 <StyledNumber>
                   • {formatLongNumber(data.totalMarketCap[currency], currency)}
-                </StyledNumber>{" "}
+                </StyledNumber>
                 <span title="24-hour change percentage relative to USD">
                   {increase ? (
                     <IncreaseArrow color="#00ff5f" />
@@ -130,7 +129,7 @@ export default class GlobalInfo extends React.Component {
               <GlobalInfoContainer title="Total volume in the last 24h">
                 <StyledNumber>
                   • {formatLongNumber(data.totalVolume[currency], currency)}
-                </StyledNumber>{" "}
+                </StyledNumber>
                 <BarContainer>
                   <ColorBar
                     numerator={data.totalVolume[currency]}
@@ -142,9 +141,9 @@ export default class GlobalInfo extends React.Component {
               </GlobalInfoContainer>
               <GlobalInfoContainer title={`Market Cap Dominance ${name1}`}>
                 <StyledNumber>
-                  <CoinLogo src={icon1} alt={name1} />{" "}
+                  <CoinLogo src={icon1} alt={name1} />
                   {data.marketCapPercentage[symbol1].toFixed(2)}%
-                </StyledNumber>{" "}
+                </StyledNumber>
                 <BarContainer>
                   <ColorBar
                     numerator={data.marketCapPercentage[symbol1]}
@@ -156,9 +155,9 @@ export default class GlobalInfo extends React.Component {
               </GlobalInfoContainer>
               <GlobalInfoContainer title={`Market Cap Dominance ${name2}`}>
                 <StyledNumber>
-                  <CoinLogo src={icon2} alt={name2} />{" "}
+                  <CoinLogo src={icon2} alt={name2} />
                   {data.marketCapPercentage[symbol2].toFixed(2)}%
-                </StyledNumber>{" "}
+                </StyledNumber>
                 <BarContainer>
                   <ColorBar
                     numerator={data.marketCapPercentage[symbol2]}

@@ -4,7 +4,7 @@ import { LinkOutlined } from "@ant-design/icons";
 
 export const LogoContainer = styled.img`
   background-color: #1f2128;
-  border-radius: 10px;
+  border-radius: 6px;
 
   padding: 1.25rem;
   box-sizing: border-box;

@@ -30,7 +30,7 @@ export const StyledInput = styled.input`
   border: none;
   width: 2.5rem;
   margin: 0;
-  padding: 0;
+  padding: 0.5 0;
   font-size: 0.75rem;
 
   &:focus {
