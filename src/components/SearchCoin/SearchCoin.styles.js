@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
 
 export const StyledInput = styled.input`
   margin-right: 0.85rem;
@@ -14,9 +13,6 @@ export const StyledInput = styled.input`
     outline: none;
   }
 `;
-
-export const StyledLink = styled(Link)`
-`
 
 export const StyledMenu = styled(Menu)`
   background-color: #2c2f36;

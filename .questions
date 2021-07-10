@@ -3,3 +3,5 @@ QUESTIONS
 3. handle currency in query string if it's a prop from parent component --> set it as state?
 
 4. currencyWrapper null when I click outside throws exception!!
+
+5. Search coin in add asset is almost the same as navbar search --> how to avoid redundant?

@@ -15,6 +15,7 @@ export default class Portfolio extends React.Component {
 
   render() {
     const { assetList, isActive } = this.state;
+    const {currency} = this.props
     return (
       <>
         <Row justify="center">
@@ -23,7 +24,7 @@ export default class Portfolio extends React.Component {
           </Col>
         </Row>
         <StyledTitle>Your statistics</StyledTitle>
-        {isActive && <AddAsset />}
+        {isActive && <AddAsset currency={currency} />}
         {assetList.map((coin) => (
           <PortfolioAsset coin={coin} />
         ))}

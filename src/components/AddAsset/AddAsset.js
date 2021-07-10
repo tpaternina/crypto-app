@@ -1,32 +1,93 @@
 import React from "react";
-import { Form, Input, InputNumber, DatePicker } from "antd";
+import axios from "axios";
+import { DatePicker, Form, InputNumber, Select } from "antd";
+import { keysToCamelCase } from "utils";
 import { StyledButton } from "./AddAsset.styles";
 
 export default class AddAsset extends React.Component {
   state = {
     id: "",
-    searchValue: "",
     purchasedAmount: 0,
     purchasedDate: "",
     coin: {},
+    coinList: [],
+    isListLoading: false,
+    isCoinLoading: false,
   };
 
-  handleSubmit = (values) => {
-    console.log("Success:", values);
-    this.setState({ ...values });
-  };
-
-  onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  handleChange = ({ target: { name, value } }) => {
-    if (value && typeof value === "number" && value > 0) {
-      this.setState({ [name]: value });
+  getCoinInfo = async () => {
+    try {
+      this.setState({ isCoinLoading: true });
+      const { id } = this.state;
+      const { currency } = this.props;
+      let { data: coin } = await axios(
+        `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
+      );
+      coin = keysToCamelCase(coin);
+      const {
+        marketData: {
+          currentPrice,
+          priceChange24H,
+          priceChangePercentage24H,
+          marketCap,
+          totalVolume,
+          circlatingSupply,
+          maxSupply,
+        },
+      } = coin;
+      this.setState({
+        coin: {
+          currentPrice: currentPrice[currency.toLowerCase()],
+          priceChange24H,
+          priceChangePercentage24H,
+          marketCap: marketCap[currency.toLowerCase()],
+          totalVolume: totalVolume[currency.toLowerCase()],
+          circlatingSupply,
+          maxSupply,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      this.setState({ isCoinLoading: false });
     }
   };
 
+  getCoinList = async (val) => {
+    try {
+      this.setState({ isListLoading: true });
+      const { data: coinList } = await axios(
+        `${process.env.REACT_APP_SEARCH_LIST}/${val}`
+      );
+      this.setState({ coinList, isListLoading: false });
+    } catch (err) {
+      console.log(err);
+      this.setState({ isListLoading: false });
+    }
+  };
+
+  handleSearch = (val) => {
+    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] });
+  };
+
+  handleSubmit = (values) => {
+    this.setState({ ...values });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.id !== this.state.id) {
+      this.getCoinInfo();
+    }
+    if (
+      prevState.coin &&
+      JSON.stringify(prevState.coin) !== JSON.stringify(this.state.coin)
+    ) {
+      console.log(this.state.coin);
+    }
+  }
   render() {
+    const { coinList } = this.state;
+    const { Item } = Form;
+    const { Option } = Select;
     return (
       <Form
         name="basic"
@@ -39,23 +100,33 @@ export default class AddAsset extends React.Component {
         initialValues={{
           remember: true,
         }}
-        onFinish={this.onFinish}
-        onFinishFailed={this.onFinishFailed}
+        onFinish={this.handleSubmit}
       >
-        <Form.Item
+        <Item
           aria-label="Select coin"
           name="id"
           rules={[
             {
               required: true,
-              message: "This field is required.",
+              message: "Please select a cryptocoin from the list.",
             },
           ]}
         >
-          <Input placeholder="Select Coin..." />
-        </Form.Item>
-
-        <Form.Item
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder="Search coin..."
+            optionFilterProp="children"
+            onSearch={this.handleSearch}
+          >
+            {coinList.map((coin) => (
+              <Option key={coin.id} value={coin.id}>
+                {coin.name}, ({coin.symbol.toUpperCase()})
+              </Option>
+            ))}
+          </Select>
+        </Item>
+        <Item
           aria-label="Purchased amount"
           name="purchasedAmount"
           rules={[
@@ -65,10 +136,9 @@ export default class AddAsset extends React.Component {
             },
           ]}
         >
-          <InputNumber placeholder="Purchased Amount..." />
-        </Form.Item>
-
-        <Form.Item
+          <InputNumber min={0} placeholder="Purchased Amount..." />
+        </Item>
+        <Item
           aria-label="Purchased date"
           name="purchasedDate"
           rules={[
@@ -79,7 +149,7 @@ export default class AddAsset extends React.Component {
           ]}
         >
           <DatePicker />
-        </Form.Item>
+        </Item>
         <StyledButton type="submit">Submit</StyledButton>
       </Form>
     );

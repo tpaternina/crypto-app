@@ -64,9 +64,12 @@ export default class App extends React.Component {
                 path="/coins/:id"
                 component={(props) => <Coin currency={currency} {...props} />}
               />
-              <Route path="/portfolio">
-                <Portfolio />
-              </Route>
+              <Route
+                path="/portfolio"
+                component={(props) => (
+                  <Portfolio {...props} currency={currency} />
+                )}
+              />
               <Route
                 path="/"
                 component={(props) => <Home currency={currency} {...props} />}

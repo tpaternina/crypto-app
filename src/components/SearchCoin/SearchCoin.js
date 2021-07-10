@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { isEmpty } from "lodash";
 import {
   StyledInput,
-  StyledLink,
   StyledItem,
   StyledMenu,
 } from "./SearchCoin.styles";
@@ -12,7 +12,7 @@ export default class SearchCoin extends React.Component {
   state = {
     data: [],
     searchValue: "",
-    isLoading: true,
+    isLoading: false,
     hasError: false,
   };
 
@@ -28,7 +28,6 @@ export default class SearchCoin extends React.Component {
       this.searchWrapper !== null &&
       !this.searchWrapper.current.contains(target)
     ) {
-      
       this.setState({ searchValue: "", data: [] });
     }
   };
@@ -72,14 +71,13 @@ export default class SearchCoin extends React.Component {
       prevState.searchValue !== this.state.searchValue &&
       this.state.searchValue === ""
     ) {
-      
       this.setState({ data: [] });
     }
   }
 
   render() {
     const { isLoading, hasError, data, searchValue } = this.state;
-    const hasResponse = !isEmpty(data) && !isLoading && !hasError;
+
     return (
       <div ref={this.searchWrapper}>
         <StyledInput
@@ -92,9 +90,9 @@ export default class SearchCoin extends React.Component {
         />
         <StyledMenu onClick={this.handleSelect}>
           {data.map((coin) => (
-            <StyledLink key={coin.id} to={`/coins/${coin.id}`}>
+            <Link key={coin.id} to={`/coins/${coin.id}`}>
               <StyledItem>{coin.name}</StyledItem>
-            </StyledLink>
+            </Link>
           ))}
         </StyledMenu>
       </div>

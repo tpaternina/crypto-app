@@ -46,10 +46,10 @@ export default function CoinMarketInfo(props) {
         <StyledInfo>
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
           <StyledSectionTitle>Volume / Market: </StyledSectionTitle>
-          {data.marketData.marketCap[currency] &&(
+          {data.marketData.marketCap[currency] ? (
             data.marketData.totalVolume[currency] /
             data.marketData.marketCap[currency]
-          ).toFixed(5) || "∞"}
+          ).toFixed(5) : "∞"}
         </StyledInfo>
       </StyledDiv>
       <StyledDiv>
