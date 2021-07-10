@@ -1,8 +1,33 @@
 import React from "react";
-
+import { Col, Row } from "antd";
+import { AddAsset, PortfolioAsset } from "components";
+import { StyledButton, StyledTitle } from "./Portfolio.styles";
 
 export default class Portfolio extends React.Component {
+  state = {
+    assetList: [],
+    isActive: false,
+  };
+
+  toggleActive = () => {
+    this.setState({ isActive: !this.state.isActive });
+  };
+
   render() {
-    return <h2>Portfolio</h2>
+    const { assetList, isActive } = this.state;
+    return (
+      <>
+        <Row justify="center">
+          <Col span={6}>
+            <StyledButton onClick={this.toggleActive}>Add Asset</StyledButton>
+          </Col>
+        </Row>
+        <StyledTitle>Your statistics</StyledTitle>
+        {isActive && <AddAsset />}
+        {assetList.map((coin) => (
+          <PortfolioAsset coin={coin} />
+        ))}
+      </>
+    );
   }
 }

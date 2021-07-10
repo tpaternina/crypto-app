@@ -53,7 +53,7 @@ export default function CoinMarketInfo(props) {
         </StyledInfo>
       </StyledDiv>
       <StyledDiv>
-        {(!isEmpty(data.marketData.totalVolume[data.symbol]) && (
+        {(data.marketData.totalVolume[data.symbol] && (
           <StyledInfo>
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
             <StyledSectionTitle>Total volume: </StyledSectionTitle>
@@ -61,8 +61,8 @@ export default function CoinMarketInfo(props) {
               "en-UK"
             )} ${data.symbol.toUpperCase()}`}
           </StyledInfo>
-        )) || <></>}
-        {(typeof data.marketData.circulatingSupply === "number" && (
+        ))}
+        {typeof data.marketData.circulatingSupply === "number" ? (
           <StyledInfo>
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
             <StyledSectionTitle>Circulating supply: </StyledSectionTitle>
@@ -70,7 +70,7 @@ export default function CoinMarketInfo(props) {
               "en-UK"
             )} ${data.symbol.toUpperCase()}`}
           </StyledInfo>
-        )) || <></>}
+        ) : <></>}
         <StyledInfo>
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
           <StyledSectionTitle>Max supply: </StyledSectionTitle>
@@ -89,7 +89,7 @@ export default function CoinMarketInfo(props) {
             denominator={data.marketData.marketCap[currency]}
             logoUrl={data.image.large}
           />
-        )) || <></>}
+        ))}
       </StyledDiv>
     </StyledContainer>
   );
