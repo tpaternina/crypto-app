@@ -86,7 +86,10 @@ export const StyledDatePicker = styled(DatePicker)`
   border-radius: 6px;
   border: 1px solid #191b1f;
   background-color: #191b1f;
-  color: #fff;
+
+  .ant-picker-input > input  {
+    color: #fff;
+  }
 
   & > div > .ant-picker-suffix .anticon-calendar {
     color: #06d554;
@@ -130,6 +133,10 @@ export const StyledSelect = styled(Select)`
     border-radius: 6px;
     border: 1px solid #191b1f;
     background-color: #191b1f;
+  }
+
+  .ant-select-selector.ant-select-selector:hover {
+    border: 1px solid #191b1f;
   }
 
   & > .ant-select-arrow {

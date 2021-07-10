@@ -214,6 +214,7 @@ export default class AddAsset extends React.Component {
                   ]}
                 >
                   <StyledDatePicker
+                    allowClear={false}
                     disabledDate={(date) => date && date > moment()}
                   />
                 </StyledItem>
