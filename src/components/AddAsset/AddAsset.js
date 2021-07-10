@@ -1,14 +1,38 @@
 import React from "react";
 import axios from "axios";
-import { DatePicker, Form, InputNumber, Select } from "antd";
+import moment from "moment";
+import { isEmpty } from "lodash";
+import { Form, InputNumber, Row, Select } from "antd";
+import { FileImageOutlined } from "@ant-design/icons";
 import { keysToCamelCase } from "utils";
-import { StyledButton } from "./AddAsset.styles";
+import {
+  Background,
+  CoinContainer,
+  Container,
+  dropDownStyles,
+  LogoContainer,
+  PlaceholderText,
+  StyledButton,
+  StyledCoinName,
+  StyledCol,
+  StyledClose,
+  StyledDatePicker,
+  StyledForm,
+  StyledFileImageIcon,
+  StyledInputNumber,
+  StyledItem,
+  StyledSelect,
+  StyledTitle,
+} from "./AddAsset.styles";
 
 export default class AddAsset extends React.Component {
   state = {
     id: "",
     purchasedAmount: 0,
     purchasedDate: "",
+    coinLogo: "",
+    coinName: "",
+    coinSymbol: "",
     coin: {},
     coinList: [],
     isListLoading: false,
@@ -25,6 +49,8 @@ export default class AddAsset extends React.Component {
       );
       coin = keysToCamelCase(coin);
       const {
+        name,
+        image: { large },
         marketData: {
           currentPrice,
           priceChange24H,
@@ -37,6 +63,9 @@ export default class AddAsset extends React.Component {
       } = coin;
       this.setState({
         coin: {
+          id,
+          name,
+          logoUrl: large,
           currentPrice: currentPrice[currency.toLowerCase()],
           priceChange24H,
           priceChangePercentage24H,
@@ -69,6 +98,15 @@ export default class AddAsset extends React.Component {
     val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] });
   };
 
+  handleSelect = (value) => {
+    const {
+      large: coinLogo,
+      name: coinName,
+      symbol: coinSymbol,
+    } = this.state.coinList.filter((coin) => coin.id === value)[0];
+    this.setState({ coinLogo, coinName, coinSymbol, coinList: [] });
+  };
+
   handleSubmit = (values) => {
     this.setState({ ...values });
   };
@@ -81,77 +119,117 @@ export default class AddAsset extends React.Component {
       prevState.coin &&
       JSON.stringify(prevState.coin) !== JSON.stringify(this.state.coin)
     ) {
-      console.log(this.state.coin);
     }
   }
+
   render() {
-    const { coinList } = this.state;
+    const { coin, coinList, coinLogo, coinName, coinSymbol, id } = this.state;
     const { Item } = Form;
     const { Option } = Select;
+    console.log(coinLogo);
     return (
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={this.handleSubmit}
-      >
-        <Item
-          aria-label="Select coin"
-          name="id"
-          rules={[
-            {
-              required: true,
-              message: "Please select a cryptocoin from the list.",
-            },
-          ]}
-        >
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Search coin..."
-            optionFilterProp="children"
-            onSearch={this.handleSearch}
-          >
-            {coinList.map((coin) => (
-              <Option key={coin.id} value={coin.id}>
-                {coin.name}, ({coin.symbol.toUpperCase()})
-              </Option>
-            ))}
-          </Select>
-        </Item>
-        <Item
-          aria-label="Purchased amount"
-          name="purchasedAmount"
-          rules={[
-            {
-              required: true,
-              message: "This field is required.",
-            },
-          ]}
-        >
-          <InputNumber min={0} placeholder="Purchased Amount..." />
-        </Item>
-        <Item
-          aria-label="Purchased date"
-          name="purchasedDate"
-          rules={[
-            {
-              required: true,
-              message: "Please pick a date.",
-            },
-          ]}
-        >
-          <DatePicker />
-        </Item>
-        <StyledButton type="submit">Submit</StyledButton>
-      </Form>
+      <Background>
+        <Container width="57%">
+          <Row>
+            <StyledCol span={24}>
+              <StyledTitle>Select Coins</StyledTitle>
+              <StyledClose
+                onClick={() => {
+                  this.props.toggleActive();
+                }}
+              />
+            </StyledCol>
+          </Row>
+          <Row justify="center">
+            <StyledCol span={6}>
+              {coinLogo ? (
+                <CoinContainer>
+                  <LogoContainer src={coinLogo} />
+                  <StyledCoinName>
+                    {coinName} ({coinSymbol})
+                  </StyledCoinName>
+                </CoinContainer>
+              ) : (
+                <CoinContainer>
+                  <StyledFileImageIcon />
+                  <PlaceholderText>Select Coin</PlaceholderText>
+                </CoinContainer>
+              )}
+            </StyledCol>
+            <StyledCol span={15}>
+              <StyledForm
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={this.handleSubmit}
+              >
+                <StyledItem
+                  aria-label="Select coin"
+                  name="id"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a cryptocoin from the list.",
+                    },
+                  ]}
+                >
+                  <StyledSelect
+                    showSearch
+                    className="select-coin"
+                    placeholder="Search coin..."
+                    optionFilterProp="children"
+                    onSearch={this.handleSearch}
+                    onChange={this.handleSelect}
+                  >
+                    {coinList.map((coin) => (
+                      <Option key={coin.id} value={coin.id}>
+                        {coin.name} ({coin.symbol.toUpperCase()})
+                      </Option>
+                    ))}
+                  </StyledSelect>
+                </StyledItem>
+                <StyledItem
+                  aria-label="Purchased amount"
+                  name="purchasedAmount"
+                  rules={[
+                    {
+                      required: true,
+                      message: "This field is required.",
+                    },
+                  ]}
+                >
+                  <StyledInputNumber
+                    min={0}
+                    placeholder="Purchased Amount..."
+                  />
+                </StyledItem>
+                <StyledItem
+                  aria-label="Purchased date"
+                  name="purchasedDate"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please pick a date.",
+                    },
+                  ]}
+                >
+                  <StyledDatePicker
+                    disabledDate={(date) => date && date > moment()}
+                  />
+                </StyledItem>
+              </StyledForm>
+            </StyledCol>
+          </Row>
+          <Row>
+            <StyledButton onClick={() => this.props.toggleActive()}>
+              Close
+            </StyledButton>
+            <StyledButton type="submit" primary>
+              Save and Continue
+            </StyledButton>
+          </Row>
+        </Container>
+      </Background>
     );
   }
 }

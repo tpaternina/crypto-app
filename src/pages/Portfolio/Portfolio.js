@@ -24,7 +24,7 @@ export default class Portfolio extends React.Component {
           </Col>
         </Row>
         <StyledTitle>Your statistics</StyledTitle>
-        {isActive && <AddAsset currency={currency} />}
+        {isActive && <AddAsset currency={currency} toggleActive={this.toggleActive} />}
         {assetList.map((coin) => (
           <PortfolioAsset coin={coin} />
         ))}
