@@ -1,5 +1,5 @@
-import {default as styled, keyframes} from "styled-components";
-import { Col, DatePicker, Form, InputNumber, Select } from "antd";
+import { default as styled, keyframes } from "styled-components";
+import { Col, DatePicker, Form, InputNumber, Row, Select } from "antd";
 import { CloseOutlined, FileImageOutlined } from "@ant-design/icons";
 
 const fadeIn = keyframes`
@@ -10,7 +10,7 @@ const fadeIn = keyframes`
   to {
     opacity: 1;
   }
-`
+`;
 
 export const Background = styled.div`
   position: absolute;
@@ -24,7 +24,7 @@ export const Background = styled.div`
   justify-content: center;
   align-items: center;
 
-  animation: ${fadeIn} .25s linear 1;
+  animation: ${fadeIn} 0.25s linear 1;
 `;
 
 export const CoinContainer = styled.div`
@@ -40,10 +40,13 @@ export const CoinContainer = styled.div`
 `;
 
 export const Container = styled.div.attrs((props) => ({ width: props.width }))`
+  min-width: 418px;
   width: ${(props) => props.width};
   border-radius: 6px;
 
   background-color: #2c2f36;
+  padding: 2rem;
+  box-sizing: content-box;
 `;
 
 export const LogoContainer = styled.img`
@@ -68,7 +71,7 @@ export const StyledButton = styled.button.attrs((props) => ({
   padding: 0.5rem 3.5rem;
   border: 1px solid ${(props) => (props.primary ? "#06d554" : "#fff")};
   border-radius: 6px;
-  margin: 2rem auto;
+  margin: 0 .25rem;
 
   &:hover {
     cursor: pointer;
@@ -81,13 +84,20 @@ export const StyledCoinName = styled.h4`
 
 export const StyledCol = styled(Col)`
   text-align: center;
-  padding: 1rem;
+`;
+
+export const StyledRow = styled(Row)`
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 `;
 
 export const StyledClose = styled(CloseOutlined)`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0;
+  right: 0;
   color: #06d554;
   font-weight: bold;
   font-size: 1.25rem;
@@ -99,14 +109,14 @@ export const StyledDatePicker = styled(DatePicker)`
   border: 1px solid #191b1f;
   background-color: #191b1f;
 
-  .ant-picker-input > input  {
+  .ant-picker-input > input {
     color: #fff;
   }
 
   & > div > .ant-picker-suffix .anticon-calendar {
     color: #06d554;
   }
-`
+`;
 
 export const StyledFileImageIcon = styled(FileImageOutlined)`
   color: #2c2f36;
@@ -121,7 +131,7 @@ export const StyledForm = styled(Form)`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 export const StyledInputNumber = styled(InputNumber)`
   width: 100%;
@@ -133,7 +143,7 @@ export const StyledInputNumber = styled(InputNumber)`
 
 export const StyledItem = styled(Form.Item)`
   width: 100%;
-`
+`;
 
 export const StyledSelect = styled(Select)`
   width: 100%;

@@ -174,3 +174,45 @@ code {
 .ant-picker-today-btn {
   color: #06d554;
 }
+
+/* Add padding to input fields */
+.ant-input-number,
+.ant-picker {
+  padding: .25rem;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search {
+  display: flex;
+  align-items: center;
+}
+
+.ant-picker input {
+  padding: 0 11px;
+}
+
+.ant-picker-suffix {
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+/* Form error styles */
+.ant-form-item-has-error
+  .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input)
+  .ant-select-selector,
+.ant-form-item-has-error .ant-input-number,
+.ant-form-item-has-error .ant-picker {
+  background-color: #191b1f;
+}
+
+.ant-form-item-has-error .ant-input-number:not([disabled]):hover,
+.ant-form-item-has-error .ant-picker:not([disabled]):hover {
+  background-color: #191b1f;
+}
+
