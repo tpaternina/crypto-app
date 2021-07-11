@@ -1,6 +1,16 @@
-import styled from "styled-components";
+import {default as styled, keyframes} from "styled-components";
 import { Col, DatePicker, Form, InputNumber, Select } from "antd";
 import { CloseOutlined, FileImageOutlined } from "@ant-design/icons";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`
 
 export const Background = styled.div`
   position: absolute;
@@ -13,6 +23,8 @@ export const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  animation: ${fadeIn} .25s linear 1;
 `;
 
 export const CoinContainer = styled.div`
