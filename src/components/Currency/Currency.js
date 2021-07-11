@@ -60,7 +60,6 @@ export default class Currency extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.currencyWrapper);
     this.getCurrencies();
 
     // Add event listener for click outside event

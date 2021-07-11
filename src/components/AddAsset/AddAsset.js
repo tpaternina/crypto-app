@@ -74,6 +74,7 @@ export default class AddAsset extends React.Component {
           maxSupply,
         },
       });
+      this.setState({ isCoinLoading: false });
     } catch (err) {
       console.log(err);
       this.setState({ isCoinLoading: false });
@@ -99,15 +100,18 @@ export default class AddAsset extends React.Component {
 
   handleSelect = (value) => {
     const {
+      id,
       large: coinLogo,
       name: coinName,
       symbol: coinSymbol,
     } = this.state.coinList.filter((coin) => coin.id === value)[0];
-    this.setState({ coinLogo, coinName, coinSymbol, coinList: [] });
+    this.setState({ id, coinLogo, coinName, coinSymbol, coinList: [] });
   };
 
   handleSubmit = (values) => {
-    this.setState({ ...values });
+    const { coin } = this.state;
+    this.props.handleSubmit({ ...values, coin });
+    this.props.toggleActive();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -118,6 +122,7 @@ export default class AddAsset extends React.Component {
       prevState.coin &&
       JSON.stringify(prevState.coin) !== JSON.stringify(this.state.coin)
     ) {
+      console.log(this.state.coin);
     }
   }
 
