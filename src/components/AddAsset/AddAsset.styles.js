@@ -136,7 +136,7 @@ export const StyledSelect = styled(Select)`
   }
 
   .ant-select-selector.ant-select-selector:hover {
-    border: 1px solid #191b1f;
+    border-color: #06d554;
   }
 
   & > .ant-select-arrow {

@@ -126,7 +126,6 @@ export default class AddAsset extends React.Component {
     const { coin, coinList, coinLogo, coinName, coinSymbol, id } = this.state;
     const { Item } = Form;
     const { Option } = Select;
-    console.log(coinLogo);
     return (
       <Background>
         <Container width="57%">
@@ -180,6 +179,7 @@ export default class AddAsset extends React.Component {
                     optionFilterProp="children"
                     onSearch={this.handleSearch}
                     onChange={this.handleSelect}
+                    aria-expanded="true"
                   >
                     {coinList.map((coin) => (
                       <Option key={coin.id} value={coin.id}>
