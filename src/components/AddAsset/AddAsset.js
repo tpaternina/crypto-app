@@ -4,6 +4,7 @@ import moment from "moment";
 import { isEmpty } from "lodash";
 import { Form, InputNumber, Select } from "antd";
 import { FileImageOutlined } from "@ant-design/icons";
+import { LoadingList } from "components";
 import { keysToCamelCase } from "utils";
 import {
   Background,
@@ -127,7 +128,16 @@ export default class AddAsset extends React.Component {
   }
 
   render() {
-    const { coin, coinList, coinLogo, coinName, coinSymbol, id } = this.state;
+    const {
+      coin,
+      coinList,
+      coinLogo,
+      coinName,
+      coinSymbol,
+      id,
+      isListLoading,
+      isCoinLoading,
+    } = this.state;
     const { Item } = Form;
     const { Option } = Select;
     return (
@@ -160,6 +170,8 @@ export default class AddAsset extends React.Component {
                           {coinName} ({coinSymbol})
                         </StyledCoinName>
                       </CoinContainer>
+                    ) : isCoinLoading ? (
+                      <LoadingList />
                     ) : (
                       <CoinContainer>
                         <StyledFileImageIcon />
@@ -185,10 +197,15 @@ export default class AddAsset extends React.Component {
                         optionFilterProp="children"
                         onSearch={this.handleSearch}
                         onChange={this.handleSelect}
+                        notFoundContent={isListLoading ? <LoadingList /> : null}
                         aria-expanded="true"
                       >
                         {coinList.map((coin) => (
-                          <Option className="select-option" key={coin.id} value={coin.id}>
+                          <Option
+                            className="select-option"
+                            key={coin.id}
+                            value={coin.id}
+                          >
                             {coin.name} ({coin.symbol.toUpperCase()})
                           </Option>
                         ))}

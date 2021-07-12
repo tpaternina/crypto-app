@@ -60,7 +60,8 @@ export const LogoContainer = styled.img`
 `;
 
 export const PlaceholderText = styled.h4`
-  color: #2c2f36;
+  color: #40454f;
+  font-weight: bold;
 `;
 
 export const StyledButton = styled.button.attrs((props) => ({
@@ -119,7 +120,7 @@ export const StyledDatePicker = styled(DatePicker)`
 `;
 
 export const StyledFileImageIcon = styled(FileImageOutlined)`
-  color: #2c2f36;
+  color: #40454f;
   font-size: 2.5rem;
   margin-bottom: 1rem;
 `;
