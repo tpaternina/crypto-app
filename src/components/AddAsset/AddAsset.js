@@ -1,16 +1,13 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
-import { isEmpty } from "lodash";
-import { Form, InputNumber, Select } from "antd";
-import { FileImageOutlined } from "@ant-design/icons";
+import { Form, Select } from "antd";
 import { LoadingList } from "components";
 import { keysToCamelCase } from "utils";
 import {
   Background,
   CoinContainer,
   Container,
-  dropDownStyles,
   LogoContainer,
   PlaceholderText,
   StyledButton,
@@ -18,7 +15,6 @@ import {
   StyledCol,
   StyledClose,
   StyledDatePicker,
-  StyledForm,
   StyledFileImageIcon,
   StyledInputNumber,
   StyledItem,
@@ -50,6 +46,7 @@ export default class AddAsset extends React.Component {
       coin = keysToCamelCase(coin);
       const {
         name,
+        symbol,
         image: { large },
         marketData: {
           currentPrice,
@@ -57,7 +54,7 @@ export default class AddAsset extends React.Component {
           priceChangePercentage24H,
           marketCap,
           totalVolume,
-          circlatingSupply,
+          circulatingSupply,
           maxSupply,
         },
       } = coin;
@@ -65,13 +62,14 @@ export default class AddAsset extends React.Component {
         coin: {
           id,
           name,
+          symbol,
           logoUrl: large,
           currentPrice: currentPrice[currency.toLowerCase()],
           priceChange24H,
           priceChangePercentage24H,
           marketCap: marketCap[currency.toLowerCase()],
           totalVolume: totalVolume[currency.toLowerCase()],
-          circlatingSupply,
+          circulatingSupply,
           maxSupply,
         },
       });
@@ -111,7 +109,7 @@ export default class AddAsset extends React.Component {
 
   handleSubmit = (values) => {
     const { coin } = this.state;
-    this.props.handleSubmit({ ...values, coin });
+    this.props.handleSubmit({ ...values, coin,  });
     this.props.toggleActive();
   };
 
@@ -123,22 +121,19 @@ export default class AddAsset extends React.Component {
       prevState.coin &&
       JSON.stringify(prevState.coin) !== JSON.stringify(this.state.coin)
     ) {
-      console.log(this.state.coin);
+      
     }
   }
 
   render() {
     const {
-      coin,
       coinList,
       coinLogo,
       coinName,
       coinSymbol,
-      id,
       isListLoading,
       isCoinLoading,
     } = this.state;
-    const { Item } = Form;
     const { Option } = Select;
     return (
       <Background>

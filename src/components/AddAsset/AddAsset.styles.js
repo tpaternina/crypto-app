@@ -57,6 +57,7 @@ export const LogoContainer = styled.img`
   padding: 1rem;
   box-sizing: border-box;
   margin-bottom: 1rem;
+  box-sizing: border-box;
 `;
 
 export const PlaceholderText = styled.h4`
