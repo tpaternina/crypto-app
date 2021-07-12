@@ -181,7 +181,6 @@ export default class AddAsset extends React.Component {
                     >
                       <StyledSelect
                         showSearch
-                        className="select-coin"
                         placeholder="Search coin..."
                         optionFilterProp="children"
                         onSearch={this.handleSearch}
@@ -189,7 +188,7 @@ export default class AddAsset extends React.Component {
                         aria-expanded="true"
                       >
                         {coinList.map((coin) => (
-                          <Option key={coin.id} value={coin.id}>
+                          <Option className="select-option" key={coin.id} value={coin.id}>
                             {coin.name} ({coin.symbol.toUpperCase()})
                           </Option>
                         ))}

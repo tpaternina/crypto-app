@@ -38,6 +38,10 @@ code {
   background-color: #191b1f;
 }
 
+.ant-select-item {
+  color:  #fff;
+}
+
 .ant-select-item-option-content {
   display: flex;
   align-items: center;
