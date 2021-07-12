@@ -27,7 +27,7 @@ export default class Portfolio extends React.Component {
         }/${id}/history?date=${formatQueryDate(date)}&localization=false`
       );
       data = keysToCamelCase(data);
-      
+
       const {
         marketData: { currentPrice: priceAtPurchase },
       } = data;
@@ -37,7 +37,7 @@ export default class Portfolio extends React.Component {
       const newList = this.state.assetList.map((coin) => {
         if (coin.id === id) {
           coin.priceAtPurchase = priceAtPurchase[currency.toLowerCase()];
-          console.log({coinWithPriceAtPur: coin})
+          console.log({ coinWithPriceAtPur: coin });
           return coin;
         }
         return coin;
@@ -62,12 +62,11 @@ export default class Portfolio extends React.Component {
     this.setState({ isAddActive: !this.state.isAddActive });
   };
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.assetList.length !== this.state.assetList.length) {
-      const newList = this.state.assetList.map((coin) =>
+      this.state.assetList.map((coin) =>
         this.getPriceAtDate(coin.id, coin.purchasedDate, this.props.currency)
       );
     }
