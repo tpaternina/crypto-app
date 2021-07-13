@@ -57,11 +57,10 @@ export const StyledCol = styled(Col).attrs((props) => ({
   height: props.height,
 }))`
   height: ${(props) => props.height};
-  
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
 `;
 
 export const StyledRow = styled(Row).attrs((props) => ({
@@ -72,11 +71,15 @@ export const StyledRow = styled(Row).attrs((props) => ({
 
 export const StyledCoinName = styled.h4`
   color: #fff;
+  text-align: center;
 `;
 
-export const StyledInfo = styled.span.attrs((props) => ({
-  color: props.color || props.increase ? "#06d554" : "#fe1040",
-}))`
+export const StyledInfo = styled.div.attrs((props) => {
+  console.log(props);
+  return {
+    color: props.color,
+  };
+})`
   color: ${(props) => props.color};
   margin-left: 0.45rem;
 `;

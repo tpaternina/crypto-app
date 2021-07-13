@@ -62,7 +62,7 @@ export default function PortfolioAsset(props) {
               </InfoContainer>
               <InfoContainer>
                 <InfoTitle>Price change 24h</InfoTitle>
-                <StyledInfo increase={increase}>
+                <StyledInfo color={increase ? "#06d554" : "#fe1040"}>
                   {increase ? <CaretUpOutlined /> : <CaretDownOutlined />}{" "}
                   {formatCurrency(priceChange24H, currency)}
                 </StyledInfo>
@@ -81,7 +81,7 @@ export default function PortfolioAsset(props) {
               </InfoContainer>
               <InfoContainer>
                 <InfoTitle>Circ. vs. Max. supply:</InfoTitle>
-                <StyledInfo color="#06d554">
+                <StyledInfo color="#fff" >
                   {formatLongNumber(circulatingSupply, currency)}
                 </StyledInfo>
                 <ColorBarContainer>
@@ -92,6 +92,9 @@ export default function PortfolioAsset(props) {
                     denominatorColor="#06d554"
                   />
                 </ColorBarContainer>
+                <StyledInfo color="#06d554">
+                  {formatLongNumber(maxSupply, currency)}
+                </StyledInfo>
               </InfoContainer>
             </Container>
           </StyledCol>
@@ -106,14 +109,18 @@ export default function PortfolioAsset(props) {
               </InfoContainer>
               <InfoContainer>
                 <InfoTitle>Amount value</InfoTitle>
-                <StyledInfo increase={increase}>
+                <StyledInfo color="#06d554">
                   {formatCurrency(purchasedAmount * currentPrice, currency)}
                 </StyledInfo>
               </InfoContainer>
               <InfoContainer>
                 <InfoTitle>Amount price change since purchase</InfoTitle>
-                <StyledInfo increase={increaseSincePurchase > 0}>
-                  {increaseSincePurchase > 0 ? <CaretUpOutlined /> : <CaretDownOutlined />}{" "}
+                <StyledInfo color={increaseSincePurchase > 0 ? "#06d554" : "#fe1040"}>
+                  {increaseSincePurchase > 0 ? (
+                    <CaretUpOutlined />
+                  ) : (
+                    <CaretDownOutlined />
+                  )}{" "}
                   {formatCurrency(increaseSincePurchase, currency)}
                 </StyledInfo>
               </InfoContainer>
