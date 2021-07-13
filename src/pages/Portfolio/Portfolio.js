@@ -16,7 +16,6 @@ export default class Portfolio extends React.Component {
   state = {
     assetList: JSON.parse(window.localStorage.getItem("assetList")) || [],
     isAddActive: false,
-    isEditActive: false,
   };
 
   getPriceAtDate = async (id, date, currency) => {
@@ -46,6 +45,22 @@ export default class Portfolio extends React.Component {
     }
   };
 
+  handleEdit = (coin) => {
+    const newList = this.state.assetList.map((item) => {
+      if (item.id === coin.id) {
+        // replace old coin with new coin
+        return coin;
+      }
+      return item;
+    });
+    this.setState({ assetList: newList });
+  };
+
+  handleDelete = (purchasedDate) => {
+    const newList = this.state.assetList.filter((item) => item.purchasedDate !== purchasedDate);
+    this.setState({ assetList: newList });
+  };
+
   handleSubmit = (coin) => {
     // Get price at purchased date
     this.getPriceAtDate(coin.id, coin.purchaseDate, this.props.currency);
@@ -65,7 +80,10 @@ export default class Portfolio extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.assetList.length !== this.state.assetList.length) {
+    if (
+      JSON.stringify(prevState.assetList) !==
+      JSON.stringify(this.state.assetList)
+    ) {
       this.state.assetList.map((coin) =>
         this.getPriceAtDate(coin.id, coin.purchasedDate, this.props.currency)
       );
@@ -92,8 +110,14 @@ export default class Portfolio extends React.Component {
           </Row>
         )}
         {!isEmpty(assetList) &&
-          assetList.map((coin) => (
-            <PortfolioAsset key={coin.id} coin={coin} currency={currency} />
+          assetList.sort((coin1, coin2) => coin2.purchasedAmount - coin1.purchasedAmount).map((coin) => (
+            <PortfolioAsset
+              key={coin.id}
+              coin={coin}
+              currency={currency}
+              handleEdit={this.handleEdit}
+              handleDelete={this.handleDelete}
+            />
           ))}
         {isAddActive && (
           <AddAsset

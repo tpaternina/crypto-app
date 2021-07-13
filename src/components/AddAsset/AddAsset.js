@@ -25,11 +25,19 @@ import {
 
 export default class AddAsset extends React.Component {
   state = {
-    id: "",
-    coinLogo: "",
-    coinName: "",
-    coinSymbol: "",
-    coin: {},
+    id: this.props.currentCoin ? this.props.currentCoin.id : "",
+    coinLogo: this.props.currentCoin ? this.props.currentCoin.coin.logoUrl : "",
+    coinName: this.props.currentCoin ? this.props.currentCoin.coin.name : "",
+    coinSymbol: this.props.currentCoin
+      ? this.props.currentCoin.coin.symbol
+      : "",
+    coin: this.props.currentCoin ? this.props.currentCoin.coin : {},
+    purchasedAmount: this.props.currentCoin
+      ? this.props.currentCoin.purchasedAmount
+      : 0,
+    purchasedDate: this.props.currentCoin
+      ? this.props.currentCoin.purchasedDate
+      : "",
     coinList: [],
     isListLoading: false,
     isCoinLoading: false,
@@ -109,7 +117,7 @@ export default class AddAsset extends React.Component {
 
   handleSubmit = (values) => {
     const { coin } = this.state;
-    this.props.handleSubmit({ ...values, coin,  });
+    this.props.handleSubmit({ ...values, coin });
     this.props.toggleActive();
   };
 
@@ -121,18 +129,20 @@ export default class AddAsset extends React.Component {
       prevState.coin &&
       JSON.stringify(prevState.coin) !== JSON.stringify(this.state.coin)
     ) {
-      
     }
   }
 
   render() {
     const {
+      id,
       coinList,
       coinLogo,
       coinName,
       coinSymbol,
       isListLoading,
       isCoinLoading,
+      purchasedAmount,
+      purchasedDate,
     } = this.state;
     const { Option } = Select;
     return (
@@ -152,7 +162,7 @@ export default class AddAsset extends React.Component {
             <StyledCol span={24}>
               <Form
                 initialValues={{
-                  remember: true,
+                  remember: false,
                 }}
                 onFinish={this.handleSubmit}
               >
@@ -162,7 +172,7 @@ export default class AddAsset extends React.Component {
                       <CoinContainer>
                         <LogoContainer src={coinLogo} />
                         <StyledCoinName>
-                          {coinName} ({coinSymbol})
+                          {coinName} ({coinSymbol.toUpperCase()})
                         </StyledCoinName>
                       </CoinContainer>
                     ) : isCoinLoading ? (
@@ -185,6 +195,7 @@ export default class AddAsset extends React.Component {
                           message: "Please select a cryptocoin from the list.",
                         },
                       ]}
+                      initialValue={id || undefined}
                     >
                       <StyledSelect
                         showSearch
@@ -215,6 +226,7 @@ export default class AddAsset extends React.Component {
                           message: "This field is required.",
                         },
                       ]}
+                      initialValue={id ? purchasedAmount : undefined}
                     >
                       <StyledInputNumber
                         min={0}
@@ -230,6 +242,9 @@ export default class AddAsset extends React.Component {
                           message: "Please pick a date.",
                         },
                       ]}
+                      initialValue={
+                        id ? moment(purchasedDate, "YYYY-MM-DD") : undefined
+                      }
                     >
                       <StyledDatePicker
                         allowClear={false}

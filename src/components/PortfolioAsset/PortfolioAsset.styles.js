@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Col, Row } from "antd";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 
 export const ColorBarContainer = styled.div`
   width: 35px;
@@ -21,6 +22,7 @@ export const Container = styled.div`
 export const CoinContainer = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0.5rem;
   border-radius: 6px;
   background-color: #191b1f;
 
@@ -74,12 +76,37 @@ export const StyledCoinName = styled.h4`
   text-align: center;
 `;
 
-export const StyledInfo = styled.div.attrs((props) => {
-  console.log(props);
-  return {
-    color: props.color,
-  };
-})`
+export const StyledEditIcon = styled(EditFilled)`
+  color: #ffb528;
+  border-radius: 6px;
+  background-color: #191b1f;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  &:hover {
+    cursor: pointer;
+    background-color: #ffb528;
+    color: #fff;
+  }
+`;
+
+export const StyledDeleteIcon = styled(DeleteFilled)`
+  color: #fe1040;
+  border-radius: 6px;
+  background-color: #191b1f;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  &:hover {
+    cursor: pointer;
+    background-color: #fe1040;
+    color: #fff;
+  }
+`;
+
+export const StyledInfo = styled.span.attrs((props) => ({
+  color: props.color,
+}))`
   color: ${(props) => props.color};
   margin-left: 0.45rem;
 `;
