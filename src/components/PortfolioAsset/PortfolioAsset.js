@@ -20,14 +20,23 @@ import {
 } from "./PortfolioAsset.styles";
 
 export default class PortfolioAsset extends React.Component {
-  state = { isEditActive: false };
+  state = {
+    openAddAsset: false,
+    destroyAddAsset: true,
+  };
 
-  toggleEdit = () => {
-    this.setState({ isEditActive: !this.state.isEditActive });
+  showEdit = () => {
+    this.setState({ destroyAddAsset: false });
+    setTimeout(() => this.setState({ openAddAsset: true }));
+  };
+
+  hideEdit = () => {
+    this.setState({ openAddAsset: false });
+    setTimeout(() => this.setState({ destroyAddAsset: true }), 250);
   };
 
   render() {
-    const { isEditActive } = this.state;
+    const { destroyAddAsset, openAddAsset } = this.state;
     const { coin, currency, handleEdit } = this.props;
 
     const {
@@ -85,10 +94,7 @@ export default class PortfolioAsset extends React.Component {
                     <InfoTitle>Price change 24h</InfoTitle>
                     <StyledInfo color={increase ? "#06d554" : "#fe1040"}>
                       {increase ? <CaretUpOutlined /> : <CaretDownOutlined />}{" "}
-                      {formatCurrency(
-                        priceChange,
-                        currency
-                      )}
+                      {formatCurrency(priceChange, currency)}
                     </StyledInfo>
                   </InfoContainer>
                   <InfoContainer>
@@ -128,7 +134,7 @@ export default class PortfolioAsset extends React.Component {
                 <StyledTitle>
                   Your coin{" "}
                   <StyledEditIcon
-                    onClick={this.toggleEdit}
+                    onClick={this.showEdit}
                     title="Edit coin"
                     role="button"
                   />
@@ -176,13 +182,13 @@ export default class PortfolioAsset extends React.Component {
             </StyledRow>
           </StyledCol>
         </StyledRow>
-        {isEditActive && (
-          <AddAsset
-            coin={coin}
-            toggleActive={this.toggleEdit}
-            handleSubmit={handleEdit}
-          />
-        )}
+        <AddAsset
+          coin={coin}
+          destroyAddAsset={destroyAddAsset}
+          openAddAsset={openAddAsset}
+          hideAddAsset={this.hideEdit}
+          handleSubmit={handleEdit}
+        />
       </>
     );
   }

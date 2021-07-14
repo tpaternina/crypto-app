@@ -1,16 +1,6 @@
-import { default as styled, keyframes } from "styled-components";
+import styled from "styled-components";
 import { Col, DatePicker, Form, InputNumber, Row, Select } from "antd";
 import { CloseOutlined, FileImageOutlined } from "@ant-design/icons";
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
 
 export const Background = styled.div`
   position: absolute;
@@ -20,11 +10,13 @@ export const Background = styled.div`
   height: 100%;
   background-color: #191b1f77;
 
-  display: flex;
+  display: ${(props) => (props.destroyAddAsset ? "none" : "flex")};
   justify-content: center;
   align-items: center;
 
-  animation: ${fadeIn} 0.25s linear 1;
+  opacity: ${(props) => (props.openAddAsset ? "1" : "0")};
+
+  transition: all 0.25s linear;
 `;
 
 export const CoinContainer = styled.div`
@@ -73,7 +65,7 @@ export const StyledButton = styled.button.attrs((props) => ({
   padding: 0.5rem 3.5rem;
   border: 1px solid ${(props) => (props.primary ? "#06d554" : "#fff")};
   border-radius: 6px;
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
 
   &:hover {
     cursor: pointer;

@@ -15,7 +15,8 @@ import {
 export default class Portfolio extends React.Component {
   state = {
     assetList: JSON.parse(window.localStorage.getItem("assetList")) || [],
-    isAddActive: false,
+    openAddAsset: false,
+    destroyAddAsset: true,
   };
 
   getPriceAtDate = async (id, date, currency) => {
@@ -49,17 +50,19 @@ export default class Portfolio extends React.Component {
     const newList = this.state.assetList.map((item) => {
       if (item.id === coin.id) {
         // replace old coin with new coin
-        console.log(coin)
+        console.log(coin);
         return coin;
       }
-      console.log("note coin")
+      console.log("note coin");
       return item;
     });
     this.setState({ assetList: newList });
   };
 
   handleDelete = (purchasedDate) => {
-    const newList = this.state.assetList.filter((item) => item.purchasedDate !== purchasedDate);
+    const newList = this.state.assetList.filter(
+      (item) => item.purchasedDate !== purchasedDate
+    );
     this.setState({ assetList: newList });
   };
 
@@ -67,13 +70,19 @@ export default class Portfolio extends React.Component {
     // Get price at purchased date
     this.getPriceAtDate(coin.id, coin.purchaseDate, this.props.currency);
     const newList = [...this.state.assetList, coin];
-    console.log(coin)
+    console.log(coin);
     this.setState({ assetList: newList });
     window.localStorage.setItem("assetList", JSON.stringify(newList));
   };
 
-  toggleActive = () => {
-    this.setState({ isAddActive: !this.state.isAddActive });
+  showAddAsset = () => {
+    this.setState({ destroyAddAsset: false });
+    setTimeout(() => this.setState({ openAddAsset: true }), 250);
+  };
+
+  hideAddAsset = () => {
+    this.setState({ openAddAsset: false });
+    setTimeout(() => this.setState({ destroyAddAsset: true }), 250);
   };
 
   componentDidMount() {
@@ -94,13 +103,13 @@ export default class Portfolio extends React.Component {
   }
 
   render() {
-    const { assetList, isAddActive } = this.state;
+    const { assetList, openAddAsset, destroyAddAsset } = this.state;
     const { currency } = this.props;
     return (
       <>
         <Row justify="center">
           <StyledCol span={6}>
-            <StyledButton onClick={this.toggleActive}>Add Asset</StyledButton>
+            <StyledButton onClick={this.showAddAsset}>Add Asset</StyledButton>
           </StyledCol>
         </Row>
         <StyledTitle>Your statistics</StyledTitle>
@@ -113,22 +122,26 @@ export default class Portfolio extends React.Component {
           </Row>
         )}
         {!!assetList.length &&
-          assetList.sort((coin1, coin2) => coin2.purchasedAmount - coin1.purchasedAmount).map((coin) => (
-            <PortfolioAsset
-              key={coin.id}
-              coin={coin}
-              currency={currency}
-              handleEdit={this.handleEdit}
-              handleDelete={this.handleDelete}
-            />
-          ))}
-        {isAddActive && (
-          <AddAsset
-            currency={currency}
-            toggleActive={this.toggleActive}
-            handleSubmit={this.handleSubmit}
-          />
-        )}
+          assetList
+            .sort(
+              (coin1, coin2) => coin2.purchasedAmount - coin1.purchasedAmount
+            )
+            .map((coin) => (
+              <PortfolioAsset
+                key={coin.id}
+                coin={coin}
+                currency={currency}
+                handleEdit={this.handleEdit}
+                handleDelete={this.handleDelete}
+              />
+            ))}
+        <AddAsset
+          currency={currency}
+          destroyAddAsset={destroyAddAsset}
+          openAddAsset={openAddAsset}
+          hideAddAsset={this.hideAddAsset}
+          handleSubmit={this.handleSubmit}
+        />
       </>
     );
   }

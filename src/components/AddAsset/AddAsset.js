@@ -33,6 +33,9 @@ export default class AddAsset extends React.Component {
     isCoinLoading: false,
   };
 
+  modal = React.createRef();
+  modalBackground = React.createRef();
+
   getCoinInfo = async () => {
     try {
       this.setState({ isCoinLoading: true });
@@ -62,6 +65,18 @@ export default class AddAsset extends React.Component {
     }
   };
 
+  handleClickOutside = ({ target }) => {
+    if (this.modal.current && !this.modal.current.contains(target)) {
+      console.log("ay");
+      this.props.hideAddAsset();
+    }
+  };
+
+  handleClose = (e) => {
+    e.preventDefault();
+    this.props.hideAddAsset();
+  };
+
   handleSearch = (val) => {
     val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] });
   };
@@ -80,8 +95,16 @@ export default class AddAsset extends React.Component {
     newCoin.purchasedAmount = values.purchasedAmount;
 
     this.props.handleSubmit(newCoin);
-    this.props.toggleActive();
+    this.props.hideAddAsset();
   };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.coin.id !== this.state.coin.id) {
@@ -96,13 +119,14 @@ export default class AddAsset extends React.Component {
       isListLoading,
       isCoinLoading,
     } = this.state;
+    const { destroyAddAsset, openAddAsset, hideAddAsset } = this.props;
     return (
-      <Background>
+      <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
         <Container width="57%">
           <StyledRow>
             <StyledCol span={24}>
               <StyledTitle>Select Coin</StyledTitle>
-              <StyledClose onClick={this.props.toggleActive} />
+              <StyledClose onClick={hideAddAsset} />
             </StyledCol>
           </StyledRow>
           <StyledRow>
@@ -202,7 +226,7 @@ export default class AddAsset extends React.Component {
                 </StyledRow>
                 <StyledRow>
                   <StyledCol span={24}>
-                    <StyledButton onClick={() => this.props.toggleActive()}>
+                    <StyledButton onClick={this.handleClose}>
                       Close
                     </StyledButton>
                     <StyledButton type="submit" primary>
