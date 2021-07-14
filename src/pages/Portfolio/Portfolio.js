@@ -49,8 +49,10 @@ export default class Portfolio extends React.Component {
     const newList = this.state.assetList.map((item) => {
       if (item.id === coin.id) {
         // replace old coin with new coin
+        console.log(coin)
         return coin;
       }
+      console.log("note coin")
       return item;
     });
     this.setState({ assetList: newList });
@@ -65,6 +67,7 @@ export default class Portfolio extends React.Component {
     // Get price at purchased date
     this.getPriceAtDate(coin.id, coin.purchaseDate, this.props.currency);
     const newList = [...this.state.assetList, coin];
+    console.log(coin)
     this.setState({ assetList: newList });
     window.localStorage.setItem("assetList", JSON.stringify(newList));
   };
@@ -109,7 +112,7 @@ export default class Portfolio extends React.Component {
             </StyledCol>
           </Row>
         )}
-        {!isEmpty(assetList) &&
+        {!!assetList.length &&
           assetList.sort((coin1, coin2) => coin2.purchasedAmount - coin1.purchasedAmount).map((coin) => (
             <PortfolioAsset
               key={coin.id}

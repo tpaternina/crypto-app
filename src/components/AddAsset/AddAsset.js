@@ -23,21 +23,11 @@ import {
   StyledTitle,
 } from "./AddAsset.styles";
 
+const { Option } = Select;
+
 export default class AddAsset extends React.Component {
   state = {
-    id: this.props.currentCoin ? this.props.currentCoin.id : "",
-    coinLogo: this.props.currentCoin ? this.props.currentCoin.coin.logoUrl : "",
-    coinName: this.props.currentCoin ? this.props.currentCoin.coin.name : "",
-    coinSymbol: this.props.currentCoin
-      ? this.props.currentCoin.coin.symbol
-      : "",
-    coin: this.props.currentCoin ? this.props.currentCoin.coin : {},
-    purchasedAmount: this.props.currentCoin
-      ? this.props.currentCoin.purchasedAmount
-      : 0,
-    purchasedDate: this.props.currentCoin
-      ? this.props.currentCoin.purchasedDate
-      : "",
+    coin: this.props.coin || {},
     coinList: [],
     isListLoading: false,
     isCoinLoading: false,
@@ -46,41 +36,12 @@ export default class AddAsset extends React.Component {
   getCoinInfo = async () => {
     try {
       this.setState({ isCoinLoading: true });
-      const { id } = this.state;
-      const { currency } = this.props;
+      const { id } = this.state.coin;
       let { data: coin } = await axios(
         `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
       );
       coin = keysToCamelCase(coin);
-      const {
-        name,
-        symbol,
-        image: { large },
-        marketData: {
-          currentPrice,
-          priceChange24H,
-          priceChangePercentage24H,
-          marketCap,
-          totalVolume,
-          circulatingSupply,
-          maxSupply,
-        },
-      } = coin;
-      this.setState({
-        coin: {
-          id,
-          name,
-          symbol,
-          logoUrl: large,
-          currentPrice: currentPrice[currency.toLowerCase()],
-          priceChange24H,
-          priceChangePercentage24H,
-          marketCap: marketCap[currency.toLowerCase()],
-          totalVolume: totalVolume[currency.toLowerCase()],
-          circulatingSupply,
-          maxSupply,
-        },
-      });
+      this.setState({ coin: { ...this.state.coin, ...coin } });
       this.setState({ isCoinLoading: false });
     } catch (err) {
       console.log(err);
@@ -106,56 +67,42 @@ export default class AddAsset extends React.Component {
   };
 
   handleSelect = (value) => {
-    const {
-      id,
-      large: coinLogo,
-      name: coinName,
-      symbol: coinSymbol,
-    } = this.state.coinList.filter((coin) => coin.id === value)[0];
-    this.setState({ id, coinLogo, coinName, coinSymbol, coinList: [] });
+    const { id, large, name, symbol } = this.state.coinList.filter(
+      (coin) => coin.id === value
+    )[0];
+    this.setState({ coin: { id, large, name, symbol }, coinList: [] });
   };
 
   handleSubmit = (values) => {
     const { coin } = this.state;
-    this.props.handleSubmit({ ...values, coin });
+    const newCoin = { ...coin };
+    newCoin.purchasedDate = values.purchasedDate;
+    newCoin.purchasedAmount = values.purchasedAmount;
+
+    this.props.handleSubmit(newCoin);
     this.props.toggleActive();
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.id !== this.state.id) {
+    if (prevState.coin.id !== this.state.coin.id) {
       this.getCoinInfo();
-    }
-    if (
-      prevState.coin &&
-      JSON.stringify(prevState.coin) !== JSON.stringify(this.state.coin)
-    ) {
     }
   }
 
   render() {
     const {
-      id,
+      coin: { id, large, name, symbol, purchasedAmount, purchasedDate },
       coinList,
-      coinLogo,
-      coinName,
-      coinSymbol,
       isListLoading,
       isCoinLoading,
-      purchasedAmount,
-      purchasedDate,
     } = this.state;
-    const { Option } = Select;
     return (
       <Background>
         <Container width="57%">
           <StyledRow>
             <StyledCol span={24}>
               <StyledTitle>Select Coin</StyledTitle>
-              <StyledClose
-                onClick={() => {
-                  this.props.toggleActive();
-                }}
-              />
+              <StyledClose onClick={this.props.toggleActive} />
             </StyledCol>
           </StyledRow>
           <StyledRow>
@@ -168,11 +115,11 @@ export default class AddAsset extends React.Component {
               >
                 <StyledRow justify="space-between">
                   <StyledCol span={7}>
-                    {coinLogo ? (
+                    {large ? (
                       <CoinContainer>
-                        <LogoContainer src={coinLogo} />
+                        <LogoContainer src={large} />
                         <StyledCoinName>
-                          {coinName} ({coinSymbol.toUpperCase()})
+                          {name} ({symbol.toUpperCase()})
                         </StyledCoinName>
                       </CoinContainer>
                     ) : isCoinLoading ? (
@@ -209,7 +156,7 @@ export default class AddAsset extends React.Component {
                         {coinList.map((coin) => (
                           <Option
                             className="select-option"
-                            key={coin.id}
+                            key={`${coin.id}-${Math.random()}`}
                             value={coin.id}
                           >
                             {coin.name} ({coin.symbol.toUpperCase()})

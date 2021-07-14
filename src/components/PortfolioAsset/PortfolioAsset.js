@@ -31,32 +31,37 @@ export default class PortfolioAsset extends React.Component {
     const { coin, currency, handleEdit } = this.props;
 
     const {
-      coin: {
-        id,
-        name,
-        symbol,
+      name,
+      symbol,
+      large,
+      marketData: {
         circulatingSupply,
         currentPrice,
-        logoUrl,
         marketCap,
         maxSupply,
-        priceChange24H,
-        priceChangePercentage24H,
+        priceChange24HInCurrency,
         totalVolume,
       },
+      priceAtPurchase,
+      purchasedAmount,
+      purchasedDate,
     } = coin;
-    const { priceAtPurchase, purchasedAmount, purchasedDate } = coin;
 
-    const increase = priceChangePercentage24H > 0;
-    const increaseSincePurchase = currentPrice - priceAtPurchase;
-    const volumePercentage = Math.round((100 * totalVolume) / marketCap);
+    const priceChange = priceChange24HInCurrency[currency.toLowerCase()];
+    const increase = priceChange > 0;
+    const increaseSincePurchase =
+      currentPrice[currency.toLowerCase()] - priceAtPurchase;
+    const volumePercentage = Math.round(
+      (100 * totalVolume[currency.toLowerCase()]) /
+        marketCap[currency.toLowerCase()]
+    );
 
     return (
       <>
         <StyledRow justify="space-between" margin="0 0 2rem 0">
           <StyledCol height="190px" span={4}>
             <CoinContainer>
-              <LogoContainer width="45%" src={logoUrl} />
+              <LogoContainer width="45%" src={large} />
               <StyledCoinName>
                 {name} ({symbol.toUpperCase()})
               </StyledCoinName>
@@ -70,14 +75,20 @@ export default class PortfolioAsset extends React.Component {
                   <InfoContainer>
                     <InfoTitle>Current price</InfoTitle>
                     <StyledInfo color="#06d554">
-                      {formatCurrency(currentPrice, currency)}
+                      {formatCurrency(
+                        currentPrice[currency.toLowerCase()],
+                        currency
+                      )}
                     </StyledInfo>
                   </InfoContainer>
                   <InfoContainer>
                     <InfoTitle>Price change 24h</InfoTitle>
                     <StyledInfo color={increase ? "#06d554" : "#fe1040"}>
                       {increase ? <CaretUpOutlined /> : <CaretDownOutlined />}{" "}
-                      {formatCurrency(priceChange24H, currency)}
+                      {formatCurrency(
+                        priceChange,
+                        currency
+                      )}
                     </StyledInfo>
                   </InfoContainer>
                   <InfoContainer>
@@ -95,7 +106,7 @@ export default class PortfolioAsset extends React.Component {
                   <InfoContainer>
                     <InfoTitle>Circ. vs. Max. supply:</InfoTitle>
                     <StyledInfo color="#fff">
-                      {formatLongNumber(circulatingSupply, currency)}
+                      {formatLongNumber(circulatingSupply, symbol)}
                     </StyledInfo>
                     <ColorBarContainer>
                       <ColorBar
@@ -106,7 +117,7 @@ export default class PortfolioAsset extends React.Component {
                       />
                     </ColorBarContainer>
                     <StyledInfo color="#06d554">
-                      {formatLongNumber(maxSupply, currency)}
+                      {formatLongNumber(maxSupply, symbol)}
                     </StyledInfo>
                   </InfoContainer>
                 </Container>
@@ -135,7 +146,10 @@ export default class PortfolioAsset extends React.Component {
                   <InfoContainer>
                     <InfoTitle>Amount value</InfoTitle>
                     <StyledInfo color="#06d554">
-                      {formatCurrency(purchasedAmount * currentPrice, currency)}
+                      {formatCurrency(
+                        purchasedAmount * currentPrice[currency.toLowerCase()],
+                        currency
+                      )}
                     </StyledInfo>
                   </InfoContainer>
                   <InfoContainer>
@@ -164,13 +178,11 @@ export default class PortfolioAsset extends React.Component {
         </StyledRow>
         {isEditActive && (
           <AddAsset
-            currentCoin={coin}
-            currency={currency}
+            coin={coin}
             toggleActive={this.toggleEdit}
             handleSubmit={handleEdit}
           />
         )}
-
       </>
     );
   }
