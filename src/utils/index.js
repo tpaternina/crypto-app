@@ -1,4 +1,5 @@
 import { camelCase, snakeCase, isPlainObject } from "lodash";
+import moment from "moment";
 
 export function formatLongNumber(number, currency, decimals) {
   const symbols = ["", "K", "M", "B", "T", "Q"];
@@ -14,12 +15,17 @@ export function formatLongNumber(number, currency, decimals) {
   const scale = 10 ** (tier * 3);
 
   // Get the currency symbol (with a shameless StackOverflow hack)
-  const currencySymbol = Number()
-    .toLocaleString(undefined, {
-      style: "currency",
-      currency: currency.toUpperCase(),
-    })
-    .slice(0, -4);
+  let currencySymbol;
+  try {
+    currencySymbol = Number()
+      .toLocaleString(undefined, {
+        style: "currency",
+        currency: currency.toUpperCase(),
+      })
+      .slice(0, -4);
+  } catch (err) {
+    currencySymbol = currency.toUpperCase();
+  }
 
   // Scale the number and add suffix
   return currencySymbol + (number / scale).toFixed(decimals) + suffix;
@@ -46,12 +52,21 @@ export const formatOverviewChart = (array) => {
 };
 
 export const formatCurrency = (number, currency) => {
-  return number.toLocaleString("en-UK", {
-    style: "currency",
-    currency: currency,
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 0,
-  });
+  let result;
+  try {
+    result = number.toLocaleString("en-UK", {
+      style: "currency",
+      currency: currency,
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 0,
+    });
+  } catch (err) {
+    result = `${currency} ${number.toLocaleString("en-UK", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 0,
+    })}`;
+  }
+  return result;
 };
 
 export const keysToSnakeCase = (obj) =>
@@ -67,3 +82,7 @@ export const keysToCamelCase = (obj) =>
     }
     return { ...acc, [camelCase(key)]: val };
   }, {});
+
+export const formatQueryDate = (dateString) => {
+  return moment(dateString).format("DD-MM-YYYY");
+};
