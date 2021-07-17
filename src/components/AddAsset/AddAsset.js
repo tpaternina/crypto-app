@@ -120,7 +120,6 @@ export default class AddAsset extends React.Component {
       this.getCoinInfo();
     }
     if (JSON.stringify(prevProps.coin) !== JSON.stringify(this.props.coin)) {
-      console.log("changed edit coin!");
       this.setState({ coin: this.props.coin });
     }
   }
@@ -132,7 +131,6 @@ export default class AddAsset extends React.Component {
       isListLoading,
       isCoinLoading,
     } = this.state;
-    console.log({ id, large, name, symbol, purchasedAmount, purchasedDate });
     const { destroyAddAsset, openAddAsset, handleClose } = this.props;
     return (
       <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
