@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { isEmpty } from "lodash";
 import {
   StyledInput,
   StyledItem,
@@ -76,7 +75,7 @@ export default class SearchCoin extends React.Component {
   }
 
   render() {
-    const { isLoading, hasError, data, searchValue } = this.state;
+    const { data, searchValue } = this.state;
 
     return (
       <div ref={this.searchWrapper}>
