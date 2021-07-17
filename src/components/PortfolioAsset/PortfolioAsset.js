@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
-import { AddAsset, ColorBar } from "components";
+import { ColorBar } from "components";
 import { formatCurrency, formatLongNumber } from "utils";
 import {
   ColorBarContainer,
@@ -36,13 +36,13 @@ export default class PortfolioAsset extends React.Component {
   };
 
   render() {
-    const { destroyAddAsset, openAddAsset } = this.state;
-    const { coin, currency, handleEdit } = this.props;
+    const { coin, currency, showEdit, handleDelete } = this.props;
 
     const {
       name,
       symbol,
       large,
+      key,
       marketData: {
         circulatingSupply,
         currentPrice,
@@ -134,12 +134,12 @@ export default class PortfolioAsset extends React.Component {
                 <StyledTitle>
                   Your coin{" "}
                   <StyledEditIcon
-                    onClick={this.showEdit}
+                    onClick={() => showEdit(coin)}
                     title="Edit coin"
                     role="button"
                   />
                   <StyledDeleteIcon
-                    onClick={() => this.props.handleDelete(purchasedDate)}
+                    onClick={() => handleDelete(key)}
                     title="Delete coin"
                     role="button"
                   />
@@ -182,13 +182,6 @@ export default class PortfolioAsset extends React.Component {
             </StyledRow>
           </StyledCol>
         </StyledRow>
-        <AddAsset
-          coin={coin}
-          destroyAddAsset={destroyAddAsset}
-          openAddAsset={openAddAsset}
-          hideAddAsset={this.hideEdit}
-          handleSubmit={handleEdit}
-        />
       </>
     );
   }

@@ -3,7 +3,7 @@ import { Col, DatePicker, Form, InputNumber, Row, Select } from "antd";
 import { CloseOutlined, FileImageOutlined } from "@ant-design/icons";
 
 export const Background = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -13,10 +13,10 @@ export const Background = styled.div`
   display: ${(props) => (props.destroyAddAsset ? "none" : "flex")};
   justify-content: center;
   align-items: center;
-
+  z-index: 999;
   opacity: ${(props) => (props.openAddAsset ? "1" : "0")};
-
   transition: all 0.25s linear;
+
 `;
 
 export const CoinContainer = styled.div`

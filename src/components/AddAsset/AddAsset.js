@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
+import { isEmpty } from "lodash";
 import { Form, Select } from "antd";
 import { LoadingList } from "components";
 import { keysToCamelCase } from "utils";
@@ -27,7 +28,7 @@ const { Option } = Select;
 
 export default class AddAsset extends React.Component {
   state = {
-    coin: this.props.coin || {},
+    coin: this.props.coin,
     coinList: [],
     isListLoading: false,
     isCoinLoading: false,
@@ -37,18 +38,21 @@ export default class AddAsset extends React.Component {
   modalBackground = React.createRef();
 
   getCoinInfo = async () => {
-    try {
-      this.setState({ isCoinLoading: true });
-      const { id } = this.state.coin;
-      let { data: coin } = await axios(
-        `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
-      );
-      coin = keysToCamelCase(coin);
-      this.setState({ coin: { ...this.state.coin, ...coin } });
-      this.setState({ isCoinLoading: false });
-    } catch (err) {
-      console.log(err);
-      this.setState({ isCoinLoading: false });
+    if (this.state.coin.id) {
+      try {
+        this.setState({ isCoinLoading: true });
+        const { id } = this.state.coin;
+        let { data: coin } = await axios(
+          `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
+        );
+        coin = keysToCamelCase(coin);
+
+        this.setState({ coin: { ...this.state.coin, ...coin } });
+        this.setState({ isCoinLoading: false });
+      } catch (err) {
+        console.log(err);
+        this.setState({ isCoinLoading: false });
+      }
     }
   };
 
@@ -67,14 +71,8 @@ export default class AddAsset extends React.Component {
 
   handleClickOutside = ({ target }) => {
     if (this.modal.current && !this.modal.current.contains(target)) {
-      console.log("ay");
       this.props.hideAddAsset();
     }
-  };
-
-  handleClose = (e) => {
-    e.preventDefault();
-    this.props.hideAddAsset();
   };
 
   handleSearch = (val) => {
@@ -82,20 +80,31 @@ export default class AddAsset extends React.Component {
   };
 
   handleSelect = (value) => {
-    const { id, large, name, symbol } = this.state.coinList.filter(
+    const { id, large, name, symbol } = this.state.coinList.find(
       (coin) => coin.id === value
-    )[0];
-    this.setState({ coin: { id, large, name, symbol }, coinList: [] });
+    );
+    const {
+      coin: { key },
+    } = this.state;
+    this.setState({ coin: { key, id, large, name, symbol }, coinList: [] });
   };
 
   handleSubmit = (values) => {
     const { coin } = this.state;
     const newCoin = { ...coin };
+    // Add element unique identifier if new asset
+    // Use current identifier if editing asset
+    newCoin.key = coin.key || `${Math.random()}-${Math.random()}`;
+
     newCoin.purchasedDate = values.purchasedDate;
     newCoin.purchasedAmount = values.purchasedAmount;
 
-    this.props.handleSubmit(newCoin);
-    this.props.hideAddAsset();
+    this.setState({ coin: {} });
+
+    // Handle state lift according to "add" or "edit" mode
+    !isEmpty(this.props.coin)
+      ? this.props.handleEdit(newCoin)
+      : this.props.handleSubmit(newCoin);
   };
 
   componentDidMount() {
@@ -110,6 +119,10 @@ export default class AddAsset extends React.Component {
     if (prevState.coin.id !== this.state.coin.id) {
       this.getCoinInfo();
     }
+    if (JSON.stringify(prevProps.coin) !== JSON.stringify(this.props.coin)) {
+      console.log("changed edit coin!");
+      this.setState({ coin: this.props.coin });
+    }
   }
 
   render() {
@@ -119,21 +132,22 @@ export default class AddAsset extends React.Component {
       isListLoading,
       isCoinLoading,
     } = this.state;
-    const { destroyAddAsset, openAddAsset, hideAddAsset } = this.props;
+    console.log({ id, large, name, symbol, purchasedAmount, purchasedDate });
+    const { destroyAddAsset, openAddAsset, handleClose } = this.props;
     return (
       <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
         <Container width="57%">
           <StyledRow>
             <StyledCol span={24}>
               <StyledTitle>Select Coin</StyledTitle>
-              <StyledClose onClick={hideAddAsset} />
+              <StyledClose onClick={handleClose} />
             </StyledCol>
           </StyledRow>
           <StyledRow>
             <StyledCol span={24}>
               <Form
                 initialValues={{
-                  remember: false,
+                  remember: true,
                 }}
                 onFinish={this.handleSubmit}
               >
@@ -166,7 +180,7 @@ export default class AddAsset extends React.Component {
                           message: "Please select a cryptocoin from the list.",
                         },
                       ]}
-                      initialValue={id || undefined}
+                      initialValue={id}
                     >
                       <StyledSelect
                         showSearch
@@ -197,7 +211,7 @@ export default class AddAsset extends React.Component {
                           message: "This field is required.",
                         },
                       ]}
-                      initialValue={id ? purchasedAmount : undefined}
+                      initialValue={purchasedAmount}
                     >
                       <StyledInputNumber
                         min={0}
@@ -214,7 +228,7 @@ export default class AddAsset extends React.Component {
                         },
                       ]}
                       initialValue={
-                        id ? moment(purchasedDate, "YYYY-MM-DD") : undefined
+                        purchasedDate ? moment(purchasedDate, "YYYY-MM-DD") : undefined
                       }
                     >
                       <StyledDatePicker
@@ -226,9 +240,7 @@ export default class AddAsset extends React.Component {
                 </StyledRow>
                 <StyledRow>
                   <StyledCol span={24}>
-                    <StyledButton onClick={this.handleClose}>
-                      Close
-                    </StyledButton>
+                    <StyledButton onClick={handleClose}>Close</StyledButton>
                     <StyledButton type="submit" primary>
                       Save and Continue
                     </StyledButton>

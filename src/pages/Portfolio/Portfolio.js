@@ -14,7 +14,8 @@ import {
 
 export default class Portfolio extends React.Component {
   state = {
-    assetList: JSON.parse(window.localStorage.getItem("assetList")) || [],
+    assetList: [],
+    editCoin: {},
     openAddAsset: false,
     destroyAddAsset: true,
   };
@@ -46,36 +47,45 @@ export default class Portfolio extends React.Component {
     }
   };
 
+  handleClose = (e) => {
+    // prevent empty field error
+    e.preventDefault();
+
+    this.hideAddAsset();
+    this.setState({ editCoin: {} });
+  };
+
   handleEdit = (coin) => {
-    const newList = this.state.assetList.map((item) => {
-      if (item.id === coin.id) {
+    const newList = this.state.assetList.map((item, index) => {
+      if (item.key === coin.key) {
         // replace old coin with new coin
-        console.log(coin);
         return coin;
       }
-      console.log("note coin");
       return item;
     });
     this.setState({ assetList: newList });
+    this.hideAddAsset();
   };
 
-  handleDelete = (purchasedDate) => {
-    const newList = this.state.assetList.filter(
-      (item) => item.purchasedDate !== purchasedDate
-    );
+  handleDelete = (key) => {
+    const newList = this.state.assetList.filter((item) => item.key !== key);
     this.setState({ assetList: newList });
   };
 
   handleSubmit = (coin) => {
     // Get price at purchased date
     this.getPriceAtDate(coin.id, coin.purchaseDate, this.props.currency);
+
     const newList = [...this.state.assetList, coin];
-    console.log(coin);
     this.setState({ assetList: newList });
-    window.localStorage.setItem("assetList", JSON.stringify(newList));
+    this.hideAddAsset();
   };
 
-  showAddAsset = () => {
+  showEdit = (coin) => {
+    this.setState({ editCoin: coin });
+  };
+
+  showAddAsset = (coin) => {
     this.setState({ destroyAddAsset: false });
     setTimeout(() => this.setState({ openAddAsset: true }), 250);
   };
@@ -86,12 +96,13 @@ export default class Portfolio extends React.Component {
   };
 
   componentDidMount() {
-    this.state.assetList.map((coin) =>
-      this.getPriceAtDate(coin.id, coin.purchasedDate, this.props.currency)
-    );
+    this.setState({
+      assetList: JSON.parse(window.localStorage.getItem("assetList")),
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // Get price at purchase date if asset list elements change
     if (
       JSON.stringify(prevState.assetList) !==
       JSON.stringify(this.state.assetList)
@@ -100,16 +111,38 @@ export default class Portfolio extends React.Component {
         this.getPriceAtDate(coin.id, coin.purchasedDate, this.props.currency)
       );
     }
+
+    // Save asset list to local storage if it changed
+    if (
+      JSON.stringify(prevState.assetList) !==
+      JSON.stringify(this.state.assetList)
+    ) {
+      window.localStorage.setItem(
+        "assetList",
+        JSON.stringify(this.state.assetList)
+      );
+    }
+
+    // Show AddAsset component in edit mode
+    if (
+      !isEmpty(this.state.editCoin) &&
+      JSON.stringify(prevState.editCoin) !== JSON.stringify(this.state.editCoin)
+    ) {
+      console.log("showing asset!");
+      this.showAddAsset();
+    }
   }
 
   render() {
-    const { assetList, openAddAsset, destroyAddAsset } = this.state;
+    const { assetList, openAddAsset, destroyAddAsset, editCoin } = this.state;
     const { currency } = this.props;
     return (
       <>
         <Row justify="center">
           <StyledCol span={6}>
-            <StyledButton onClick={this.showAddAsset}>Add Asset</StyledButton>
+            <StyledButton onClick={() => this.showAddAsset()}>
+              Add Asset
+            </StyledButton>
           </StyledCol>
         </Row>
         <StyledTitle>Your statistics</StyledTitle>
@@ -123,23 +156,22 @@ export default class Portfolio extends React.Component {
         )}
         {!!assetList.length &&
           assetList
-            .sort(
-              (coin1, coin2) => coin2.purchasedAmount - coin1.purchasedAmount
-            )
+            .sort((coin1, coin2) => coin2.purchasedDate - coin1.purchasedDate)
             .map((coin) => (
               <PortfolioAsset
-                key={coin.id}
+                key={coin.key}
                 coin={coin}
                 currency={currency}
-                handleEdit={this.handleEdit}
+                showEdit={this.showEdit}
                 handleDelete={this.handleDelete}
               />
             ))}
         <AddAsset
-          currency={currency}
+          coin={editCoin}
           destroyAddAsset={destroyAddAsset}
           openAddAsset={openAddAsset}
-          hideAddAsset={this.hideAddAsset}
+          handleClose={this.handleClose}
+          handleEdit={this.handleEdit}
           handleSubmit={this.handleSubmit}
         />
       </>
