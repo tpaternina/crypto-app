@@ -36,42 +36,6 @@ class Home extends React.Component {
 
   loadingBar = React.createRef();
 
-  getCoins = async () => {
-    try {
-      this.setState({
-        isLoading: true,
-      });
-
-      const query = {
-        ...keysToSnakeCase(this.state.queryConfig),
-        price_change_percentage: "1h,24h,7d",
-        sparkline: true,
-      };
-
-      let { data } = await axios(
-        queryString.stringifyUrl({
-          url: process.env.REACT_APP_COINS_ENDPOINT,
-          query: query,
-        })
-      );
-
-      // Convert keys from API to camelCase
-      data = data.map(keysToCamelCase);
-
-      this.setState({
-        coinList: data,
-        isLoading: false,
-        hasError: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
-      console.log(err);
-    }
-  };
-
   sortCoins = (item1, item2) => {
     const { sortBy, descending } = this.state.pageConfig;
     if (item1[sortBy] < item2[sortBy]) return descending ? 1 : -1;
@@ -158,7 +122,7 @@ class Home extends React.Component {
         <LoadingBar ref={this.loadingBar} />{" "}
         {hasResponse && (
           <ChartOverview
-            topCoin={this.state.coinList[0]}
+            topCoin={this.props.home.coinList[0]}
             currency={this.props.currency}
           />
         )}
