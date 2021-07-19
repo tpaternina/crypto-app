@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import queryString from "query-string";
 import LoadingBar from "react-top-loading-bar";
+import { fetchAllCoins } from "store/home/homeActions"
 import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
 import {
   ChartCol,
@@ -16,7 +18,7 @@ import {
 } from "./Home.styles";
 import { keysToCamelCase, keysToSnakeCase } from "utils";
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   state = {
     isLoading: false,
     hasError: false,
@@ -93,16 +95,15 @@ export default class Home extends React.Component {
       this.setState({
         pageConfig: { ...this.state.pageConfig, ...parsed },
       });
-      this.getCoins();
+      this.props.fetchAllCoins();
     } else {
       const query = queryString.stringify({
         ...this.state.pageConfig,
         currency: this.props.currency,
       });
       this.props.history.push(`/?${query}`);
-      this.getCoins()
+      this.props.fetchAllCoins();
     }
-    this.mounted = true;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -129,15 +130,11 @@ export default class Home extends React.Component {
     }
     if (prevState.isLoading !== this.state.isLoading && !this.state.isLoading) {
       this.loadingBar.current.complete();
-    } 
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+    }
   }
 
   render() {
-    const { coinList, isLoading, hasError } = this.state;
+    const { coinList, isLoading, hasError } = this.props.home;
     const hasResponse = !isEmpty(coinList) && !isLoading && !hasError;
 
     return (
@@ -242,7 +239,7 @@ export default class Home extends React.Component {
           {hasResponse && (
             <Coins
               currency={this.props.currency}
-              coinList={this.state.coinList.sort(this.sortCoins)}
+              coinList={coinList.sort(this.sortCoins)}
             />
           )}
         </Container>
@@ -250,3 +247,13 @@ export default class Home extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  home: state.home,
+});
+
+const mapDispatchToProps = {
+  fetchAllCoins
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
