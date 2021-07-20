@@ -1,9 +1,10 @@
 import React from "react";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { StyledIcon, StyledHeader } from "./TableHeader.styles";
 
 export default class TableHeader extends React.Component {
   state = {
-    descending: true,
+    descending: this.props.text === "#" ? false : true,
   };
 
   toggleOrder = () => {
@@ -14,14 +15,16 @@ export default class TableHeader extends React.Component {
 
   render() {
     return (
-      <span onClick={this.toggleOrder}>
+      <StyledHeader onClick={this.toggleOrder}>
         {this.props.text}
+        <StyledIcon>
         {this.state.descending ? (
-          <DownOutlined style={{ fontSize: "0.75rem", fontWeight: "bold" }} />
+          <DownOutlined />
         ) : (
-          <UpOutlined style={{ fontSize: "0.75rem", fontWeight: "bold" }} />
+          <UpOutlined />
         )}
-      </span>
+        </StyledIcon>
+      </StyledHeader>
     );
   }
 }

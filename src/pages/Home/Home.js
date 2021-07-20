@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import queryString from "query-string";
@@ -20,23 +19,8 @@ import {
   StyledRow,
   StyledTitle,
 } from "./Home.styles";
-import { keysToCamelCase, keysToSnakeCase } from "utils";
 
 class Home extends React.Component {
-  state = {
-    isLoading: false,
-    hasError: false,
-    coinList: [],
-    pageConfig: {
-      sortBy: "marketCapRank",
-      descending: false, // if true, sort in descending order, if false sort in ascending order
-    },
-    queryConfig: {
-      vsCurrency: this.props.currency,
-      perPage: 10,
-      page: 1,
-    },
-  };
 
   loadingBar = React.createRef();
 
@@ -47,20 +31,10 @@ class Home extends React.Component {
     return 0;
   };
 
-  toggleOrder = (sortBy, descending) => {
-    this.setState({
-      pageConfig: { ...this.state.pageConfig, sortBy, descending },
-    });
-    const query = queryString.stringify(this.state.pageConfig);
-    this.props.history.push(`/?${query}`);
-  };
-
   componentDidMount() {
     if (this.props.location.search) {
-      console.log("parsing exiting url")
       this.props.parseQueryString(this.props.location.search);
     } else {
-      console.log("no url")
       const query = queryString.stringify({
         ...this.props.home.pageConfig,
         currency: this.props.currency,
@@ -81,7 +55,7 @@ class Home extends React.Component {
     ) {
       const query = queryString.stringify({
         ...this.props.home.pageConfig,
-        currency: this.props.home.queryConfig.currency,
+        currency: this.props.currency,
       });
       this.props.history.push(`/?${query}`);
     }
@@ -89,14 +63,12 @@ class Home extends React.Component {
       prevProps.home.isLoading !== this.props.home.isLoading &&
       this.props.home.isLoading
     ) {
-      console.log("started loding");
       this.loadingBar.current.continuousStart();
     }
     if (
       prevProps.home.isLoading !== this.props.home.isLoading &&
       !this.props.home.isLoading
     ) {
-      console.log("finished")
       this.loadingBar.current.complete();
     }
   }

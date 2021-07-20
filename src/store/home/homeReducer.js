@@ -31,7 +31,7 @@ const homeReducer = (state = initialState, { type, payload }) => {
         },
         queryConfig: {
           ...queryConfig,
-          currency,
+          vsCurrency: currency,
         },
       };
     case "FETCH_ALL_COINS_PENDING":
