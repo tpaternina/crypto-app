@@ -46,7 +46,6 @@ class Home extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
-      console.log("parse new url")
       this.props.parseQueryString(this.props.location.search);
     }
     if (

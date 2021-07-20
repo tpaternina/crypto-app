@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 import { Row } from "antd";
 import { isEmpty } from "lodash";
 import { AddAsset, PortfolioAsset } from "components";
 import { formatQueryDate, keysToCamelCase } from "utils";
+import { handleClose, showAddAsset } from "store/portfolio/portfolioActions";
 import {
   EmptyListIcon,
   PlaceholderText,
@@ -12,7 +14,7 @@ import {
   StyledTitle,
 } from "./Portfolio.styles";
 
-export default class Portfolio extends React.Component {
+class Portfolio extends React.Component {
   state = {
     assetList: [],
     editCoin: {},
@@ -47,14 +49,6 @@ export default class Portfolio extends React.Component {
     }
   };
 
-  handleClose = (e) => {
-    // prevent empty field error
-    e.preventDefault();
-
-    this.hideAddAsset();
-    this.setState({ editCoin: {} });
-  };
-
   handleEdit = (coin) => {
     const newList = this.state.assetList.map((item, index) => {
       if (item.key === coin.key) {
@@ -83,16 +77,6 @@ export default class Portfolio extends React.Component {
 
   showEdit = (coin) => {
     this.setState({ editCoin: coin });
-  };
-
-  showAddAsset = (coin) => {
-    this.setState({ destroyAddAsset: false });
-    setTimeout(() => this.setState({ openAddAsset: true }), 250);
-  };
-
-  hideAddAsset = () => {
-    this.setState({ openAddAsset: false });
-    setTimeout(() => this.setState({ destroyAddAsset: true }), 250);
   };
 
   componentDidMount() {
@@ -134,19 +118,18 @@ export default class Portfolio extends React.Component {
   }
 
   render() {
-    const { assetList, openAddAsset, destroyAddAsset, editCoin } = this.state;
-    const { currency } = this.props;
+    const { assetList, openAddAsset, destroyAddAsset, editCoin } =
+      this.props.portfolio;
+    const { currency, handleClose, showAddAsset } = this.props;
     return (
       <>
         <Row justify="center">
           <StyledCol span={6}>
-            <StyledButton onClick={() => this.showAddAsset()}>
-              Add Asset
-            </StyledButton>
+            <StyledButton onClick={showAddAsset}>Add Asset</StyledButton>
           </StyledCol>
         </Row>
         <StyledTitle>Your statistics</StyledTitle>
-        {isEmpty(assetList) && (
+        {!assetList.length && (
           <Row justify="center">
             <StyledCol>
               <EmptyListIcon />
@@ -170,7 +153,10 @@ export default class Portfolio extends React.Component {
           coin={editCoin}
           destroyAddAsset={destroyAddAsset}
           openAddAsset={openAddAsset}
-          handleClose={this.handleClose}
+          handleClose={(e) => {
+            e.preventDefault();
+            handleClose();
+          }}
           handleEdit={this.handleEdit}
           handleSubmit={this.handleSubmit}
         />
@@ -178,3 +164,14 @@ export default class Portfolio extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  portfolio: state.portfolio,
+});
+
+const mapDispatchToProps = {
+  handleClose,
+  showAddAsset,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
