@@ -4,13 +4,24 @@ import {
   ADD_ASSET_DESTROY_MODAL,
   ADD_ASSET_UNOPEN_MODAL,
   ADD_ASSET_RESET_EDIT_COIN,
+  ADD_ASSET_SELECT_COIN,
+  ADD_ASSET_COIN_INFO_SUCCESS,
+  ADD_ASSET_COIN_INFO_ERROR,
+  ADD_ASSET_SUCCESS,
+  EDIT_ASSET_EDIT_COIN,
+  GET_PRICE_AT_DATE_PENDING,
+  GET_PRICE_AT_DATE_ERROR,
+  GET_PRICE_AT_DATE_SUCCESS,
 } from "./portfolioActions";
 
 const initialState = {
   assetList: [],
   editCoin: {},
+  coinSearchList: [],
   openAddAsset: false,
   destroyAddAsset: true,
+  currency: "eur",
+  hasError: false,
 };
 
 const portfolioReducer = (state = initialState, { type, payload }) => {
@@ -35,10 +46,53 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
         ...state,
         destroyAddAsset: true,
       };
+
+    case ADD_ASSET_SELECT_COIN:
+      return {
+        ...state,
+        editCoin: payload,
+      };
+    case ADD_ASSET_COIN_INFO_SUCCESS:
+      return {
+        ...state,
+        editCoin: { ...state.editCoin, ...payload },
+      };
+
+    case ADD_ASSET_SUCCESS:
+      const newList = [...state.assetList, payload];
+      return {
+        ...state,
+        assetList: newList,
+        editCoin: {},
+      };
+    case EDIT_ASSET_EDIT_COIN:
+      return {
+        ...state,
+        editCoin: payload,
+      };
+    case GET_PRICE_AT_DATE_SUCCESS:
+      const newListPrice = state.assetList.map((el) => {
+        if (el.key === payload.key) {
+          return payload;
+        }
+        return el;
+      });
+      return {
+        ...state,
+        assetList: newListPrice,
+        hasError: false,
+        editCoin: {},
+      };
+
     case ADD_ASSET_RESET_EDIT_COIN:
       return {
         ...state,
-        editCoin: {},
+        editCoin: {...{}},
+      };
+    case GET_PRICE_AT_DATE_ERROR:
+      return {
+        ...state,
+        hasError: payload,
       };
     default:
       return state;

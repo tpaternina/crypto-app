@@ -25,18 +25,13 @@ export default class PortfolioAsset extends React.Component {
     destroyAddAsset: true,
   };
 
-  showEdit = () => {
-    this.setState({ destroyAddAsset: false });
-    setTimeout(() => this.setState({ openAddAsset: true }));
-  };
-
   hideEdit = () => {
     this.setState({ openAddAsset: false });
     setTimeout(() => this.setState({ destroyAddAsset: true }), 250);
   };
 
   render() {
-    const { coin, currency, showEdit, handleDelete } = this.props;
+    const { coin, currency, showEditAsset, handleDelete } = this.props;
 
     const {
       name,
@@ -134,7 +129,7 @@ export default class PortfolioAsset extends React.Component {
                 <StyledTitle>
                   Your coin{" "}
                   <StyledEditIcon
-                    onClick={() => showEdit(coin)}
+                    onClick={() => showEditAsset(coin)}
                     title="Edit coin"
                     role="button"
                   />

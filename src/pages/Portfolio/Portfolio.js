@@ -5,7 +5,14 @@ import { Row } from "antd";
 import { isEmpty } from "lodash";
 import { AddAsset, PortfolioAsset } from "components";
 import { formatQueryDate, keysToCamelCase } from "utils";
-import { handleClose, showAddAsset } from "store/portfolio/portfolioActions";
+import {
+  getCoinInfo,
+  handleClose,
+  handleSelect,
+  handleSubmit,
+  getPriceAtDate,
+  showAddAsset,
+} from "store/portfolio/portfolioActions";
 import {
   EmptyListIcon,
   PlaceholderText,
@@ -86,25 +93,16 @@ class Portfolio extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // Get price at purchase date if asset list elements change
+    //  Get price at purchase date if asset list elements change
     if (
-      JSON.stringify(prevState.assetList) !==
-      JSON.stringify(this.state.assetList)
+      JSON.stringify(prevProps.portfolio.assetList) !==
+      JSON.stringify(this.props.portfolio.assetList)
     ) {
-      this.state.assetList.map((coin) =>
-        this.getPriceAtDate(coin.id, coin.purchasedDate, this.props.currency)
-      );
-    }
-
-    // Save asset list to local storage if it changed
-    if (
-      JSON.stringify(prevState.assetList) !==
-      JSON.stringify(this.state.assetList)
-    ) {
-      window.localStorage.setItem(
+      this.props.getPriceAtDate();
+      /*window.localStorage.setItem(
         "assetList",
-        JSON.stringify(this.state.assetList)
-      );
+        JSON.stringify(this.props.portfolio.assetList)
+      );*/
     }
 
     // Show AddAsset component in edit mode
@@ -112,15 +110,28 @@ class Portfolio extends React.Component {
       !isEmpty(this.state.editCoin) &&
       JSON.stringify(prevState.editCoin) !== JSON.stringify(this.state.editCoin)
     ) {
-      console.log("showing asset!");
       this.showAddAsset();
+    }
+    if (
+      this.props.portfolio.hasError &&
+      prevProps.portfolio.hasError !== this.props.portfolio.hasError
+    ) {
+      console.log(this.props.portfolio.hasError);
     }
   }
 
   render() {
     const { assetList, openAddAsset, destroyAddAsset, editCoin } =
       this.props.portfolio;
-    const { currency, handleClose, showAddAsset } = this.props;
+    const {
+      currency,
+      getCoinInfo,
+      handleClose,
+      handleSelect,
+      handleSubmit,
+      showAddAsset,
+      showEditAsset,
+    } = this.props;
     return (
       <>
         <Row justify="center">
@@ -145,7 +156,7 @@ class Portfolio extends React.Component {
                 key={coin.key}
                 coin={coin}
                 currency={currency}
-                showEdit={this.showEdit}
+                showEditAsset={showEditAsset}
                 handleDelete={this.handleDelete}
               />
             ))}
@@ -153,12 +164,14 @@ class Portfolio extends React.Component {
           coin={editCoin}
           destroyAddAsset={destroyAddAsset}
           openAddAsset={openAddAsset}
+          getCoinInfo={getCoinInfo}
           handleClose={(e) => {
             e.preventDefault();
             handleClose();
           }}
           handleEdit={this.handleEdit}
-          handleSubmit={this.handleSubmit}
+          handleSelect={handleSelect}
+          handleSubmit={handleSubmit}
         />
       </>
     );
@@ -170,7 +183,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  getCoinInfo,
+  getPriceAtDate,
   handleClose,
+  handleSelect,
+  handleSubmit,
   showAddAsset,
 };
 
