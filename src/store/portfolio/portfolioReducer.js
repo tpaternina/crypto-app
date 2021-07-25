@@ -9,9 +9,11 @@ import {
   ADD_ASSET_COIN_INFO_ERROR,
   ADD_ASSET_SUCCESS,
   EDIT_ASSET_EDIT_COIN,
+  EDIT_ASSET_SUCCESS,
   GET_PRICE_AT_DATE_PENDING,
   GET_PRICE_AT_DATE_ERROR,
   GET_PRICE_AT_DATE_SUCCESS,
+  DELETE_ASSET,
 } from "./portfolioActions";
 
 const initialState = {
@@ -63,12 +65,30 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         assetList: newList,
-        editCoin: {},
       };
     case EDIT_ASSET_EDIT_COIN:
       return {
         ...state,
         editCoin: payload,
+      };
+    case EDIT_ASSET_SUCCESS:
+      const editedList = state.assetList.map((item) => {
+        if (item.key === payload.key) {
+          return payload;
+        }
+        return item;
+      });
+      return {
+        ...state,
+        assetList: editedList,
+      };
+    case DELETE_ASSET:
+      const updatedList = state.assetList.filter(
+        (item) => item.key !== payload.key
+      );
+      return {
+        ...state,
+        assetList: updatedList,
       };
     case GET_PRICE_AT_DATE_SUCCESS:
       const newListPrice = state.assetList.map((el) => {
@@ -87,7 +107,7 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
     case ADD_ASSET_RESET_EDIT_COIN:
       return {
         ...state,
-        editCoin: {...{}},
+        editCoin: { ...{} },
       };
     case GET_PRICE_AT_DATE_ERROR:
       return {

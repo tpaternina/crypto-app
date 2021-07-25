@@ -8,10 +8,12 @@ import { formatQueryDate, keysToCamelCase } from "utils";
 import {
   getCoinInfo,
   handleClose,
+  handleDelete,
   handleSelect,
   handleSubmit,
   getPriceAtDate,
   showAddAsset,
+  showEditAsset,
 } from "store/portfolio/portfolioActions";
 import {
   EmptyListIcon,
@@ -22,103 +24,8 @@ import {
 } from "./Portfolio.styles";
 
 class Portfolio extends React.Component {
-  state = {
-    assetList: [],
-    editCoin: {},
-    openAddAsset: false,
-    destroyAddAsset: true,
-  };
 
-  getPriceAtDate = async (id, date, currency) => {
-    try {
-      let { data } = await axios(
-        `${
-          process.env.REACT_APP_SINGLE_COIN_ENDPOINT
-        }/${id}/history?date=${formatQueryDate(date)}&localization=false`
-      );
-      data = keysToCamelCase(data);
-
-      const {
-        marketData: { currentPrice: priceAtPurchase },
-      } = data;
-
-      const newList = this.state.assetList.map((coin) => {
-        if (coin.id === id) {
-          coin.priceAtPurchase = priceAtPurchase[currency.toLowerCase()];
-          return coin;
-        }
-        return coin;
-      });
-
-      this.setState({ assetList: newList });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  handleEdit = (coin) => {
-    const newList = this.state.assetList.map((item, index) => {
-      if (item.key === coin.key) {
-        // replace old coin with new coin
-        return coin;
-      }
-      return item;
-    });
-    this.setState({ assetList: newList });
-    this.hideAddAsset();
-  };
-
-  handleDelete = (key) => {
-    const newList = this.state.assetList.filter((item) => item.key !== key);
-    this.setState({ assetList: newList });
-  };
-
-  handleSubmit = (coin) => {
-    // Get price at purchased date
-    this.getPriceAtDate(coin.id, coin.purchaseDate, this.props.currency);
-
-    const newList = [...this.state.assetList, coin];
-    this.setState({ assetList: newList });
-    this.hideAddAsset();
-  };
-
-  showEdit = (coin) => {
-    this.setState({ editCoin: coin });
-  };
-
-  componentDidMount() {
-    this.setState({
-      assetList: JSON.parse(window.localStorage.getItem("assetList")),
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    //  Get price at purchase date if asset list elements change
-    if (
-      JSON.stringify(prevProps.portfolio.assetList) !==
-      JSON.stringify(this.props.portfolio.assetList)
-    ) {
-      this.props.getPriceAtDate();
-      /*window.localStorage.setItem(
-        "assetList",
-        JSON.stringify(this.props.portfolio.assetList)
-      );*/
-    }
-
-    // Show AddAsset component in edit mode
-    if (
-      !isEmpty(this.state.editCoin) &&
-      JSON.stringify(prevState.editCoin) !== JSON.stringify(this.state.editCoin)
-    ) {
-      this.showAddAsset();
-    }
-    if (
-      this.props.portfolio.hasError &&
-      prevProps.portfolio.hasError !== this.props.portfolio.hasError
-    ) {
-      console.log(this.props.portfolio.hasError);
-    }
-  }
+  componentDidUpdate(prevProps, prevState) {}
 
   render() {
     const { assetList, openAddAsset, destroyAddAsset, editCoin } =
@@ -127,6 +34,7 @@ class Portfolio extends React.Component {
       currency,
       getCoinInfo,
       handleClose,
+      handleDelete,
       handleSelect,
       handleSubmit,
       showAddAsset,
@@ -150,14 +58,14 @@ class Portfolio extends React.Component {
         )}
         {!!assetList.length &&
           assetList
-            .sort((coin1, coin2) => coin2.purchasedDate - coin1.purchasedDate)
+            .sort((coin1, coin2) => coin1.marketCapRank - coin2.marketCapRank)
             .map((coin) => (
               <PortfolioAsset
                 key={coin.key}
                 coin={coin}
                 currency={currency}
                 showEditAsset={showEditAsset}
-                handleDelete={this.handleDelete}
+                handleDelete={handleDelete}
               />
             ))}
         <AddAsset
@@ -169,7 +77,6 @@ class Portfolio extends React.Component {
             e.preventDefault();
             handleClose();
           }}
-          handleEdit={this.handleEdit}
           handleSelect={handleSelect}
           handleSubmit={handleSubmit}
         />
@@ -186,9 +93,11 @@ const mapDispatchToProps = {
   getCoinInfo,
   getPriceAtDate,
   handleClose,
+  handleDelete,
   handleSelect,
   handleSubmit,
   showAddAsset,
+  showEditAsset,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

@@ -11,14 +11,15 @@ export const ADD_ASSET_COIN_INFO_SUCCESS = "ADD_ASSET_COIN_INFO_SUCCESS";
 export const ADD_ASSET_COIN_INFO_ERROR = "ADD_ASSET_COIN_INFO_ERROR";
 export const ADD_ASSET_SUCCESS = "ADD_ASSET_SUCCESS";
 export const EDIT_ASSET_EDIT_COIN = "EDIT_ASSET_EDIT_COIN";
+export const EDIT_ASSET_SUCCESS = "EDIT_ASSET_SUCCESS";
 export const GET_PRICE_AT_DATE_PENDING = "GET_PRICE_AT_DATE_PENDING";
 export const GET_PRICE_AT_DATE_ERROR = "GET_PRICE_AT_DATE_ERROR";
 export const GET_PRICE_AT_DATE_SUCCESS = "GET_PRICE_AT_DATE_SUCCESS";
+export const DELETE_ASSET = "DELETE_ASSET";
 
 export const getCoinInfo = () => async (dispatch, getState) => {
   if (getState().portfolio.editCoin.id) {
     try {
-      console.log("getting coin info....")
       const { id } = getState().portfolio.editCoin;
       let { data: coin } = await axios(
         `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
@@ -77,19 +78,23 @@ export const getPriceAtDate = () => async (dispatch, getState) => {
 
 export const handleClose = () => (dispatch, getState) => {
   dispatch({
-    type: ADD_ASSET_RESET_EDIT_COIN,
-  });
-  dispatch({
     type: ADD_ASSET_UNOPEN_MODAL,
   });
-  setTimeout(
-    () =>
-      dispatch({
-        type: ADD_ASSET_DESTROY_MODAL,
-      }),
-    250
-  );
-  
+  setTimeout(() => {
+    dispatch({
+      type: ADD_ASSET_DESTROY_MODAL,
+    });
+    dispatch({
+      type: ADD_ASSET_RESET_EDIT_COIN,
+    });
+  }, 250);
+};
+
+export const handleDelete = (key) => {
+  return {
+    type: DELETE_ASSET,
+    payload: { key },
+  };
 };
 
 export const handleSelect = (coin) => {
@@ -99,32 +104,72 @@ export const handleSelect = (coin) => {
   };
 };
 
-export const handleSubmit = (values) => (dispatch, getState) => {
-const { editCoin } = getState().portfolio;
-    const newCoin = { ...editCoin };
-    // Add element unique identifier if new asset
-    // Use current identifier if editing asset
-    newCoin.key = editCoin.key || `${Math.random()}-${Math.random()}`;
+export const handleSubmit = (values) => async (dispatch, getState) => {
+  const { editCoin } = getState().portfolio;
+  const newCoin = { ...editCoin };
+  newCoin.purchasedDate = values.purchasedDate;
+  newCoin.purchasedAmount = values.purchasedAmount;
 
-    newCoin.purchasedDate = values.purchasedDate;
-    newCoin.purchasedAmount = values.purchasedAmount;
-  dispatch({
-    type: ADD_ASSET_SUCCESS,
-    payload: newCoin,
-  });
-  dispatch({
-    type: ADD_ASSET_RESET_EDIT_COIN,
-  })
+  // Get price at purchase date
+  if (
+    JSON.stringify(editCoin.purchasedDate) !==
+    JSON.stringify(newCoin.purchasedDate)
+  ) {
+    try {
+      dispatch({
+        type: GET_PRICE_AT_DATE_PENDING,
+      });
+
+      const {
+        portfolio: { currency },
+      } = getState();
+      const { id, purchasedDate } = newCoin;
+      let { data } = await axios(
+        `${
+          process.env.REACT_APP_SINGLE_COIN_ENDPOINT
+        }/${id}/history?date=${formatQueryDate(
+          purchasedDate
+        )}&localization=false`
+      );
+      data = keysToCamelCase(data);
+
+      const {
+        marketData: { currentPrice: priceAtPurchase },
+      } = data;
+      newCoin.priceAtPurchase = priceAtPurchase[currency.toLowerCase()];
+      dispatch({
+        type: GET_PRICE_AT_DATE_SUCCESS,
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_PRICE_AT_DATE_ERROR,
+        payload: err,
+      });
+    }
+  }
+
+  // Edit mode
+  if (!newCoin.key) {
+    newCoin.key = `${Math.random()}-${Math.random()}`;
+    dispatch({
+      type: ADD_ASSET_SUCCESS,
+      payload: newCoin,
+    });
+  } else {
+    dispatch({ type: EDIT_ASSET_SUCCESS, payload: newCoin });
+  }
+
   dispatch({
     type: ADD_ASSET_UNOPEN_MODAL,
   });
-  setTimeout(
-    () =>
-      dispatch({
-        type: ADD_ASSET_DESTROY_MODAL,
-      }),
-    250
-  );
+  setTimeout(() => {
+    dispatch({
+      type: ADD_ASSET_DESTROY_MODAL,
+    });
+    dispatch({
+      type: ADD_ASSET_RESET_EDIT_COIN,
+    });
+  }, 250);
 };
 
 export const showAddAsset = () => (dispatch, getState) => {

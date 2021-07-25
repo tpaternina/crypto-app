@@ -33,25 +33,6 @@ export default class AddAsset extends React.Component {
     isCoinLoading: false,
   };
 
-  getCoinInfo = async () => {
-    if (this.state.coin.id) {
-      try {
-        this.setState({ isCoinLoading: true });
-        const { id } = this.state.coin;
-        let { data: coin } = await axios(
-          `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
-        );
-        coin = keysToCamelCase(coin);
-
-        this.setState({ coin: { ...this.state.coin, ...coin } });
-        this.setState({ isCoinLoading: false });
-      } catch (err) {
-        console.log(err);
-        this.setState({ isCoinLoading: false });
-      }
-    }
-  };
-
   getCoinList = async (val) => {
     try {
       this.setState({ isListLoading: true });
@@ -77,11 +58,11 @@ export default class AddAsset extends React.Component {
       coin: { key },
     } = this.props;
     this.props.handleSelect({ key, id, large, name, symbol });
-    this.setState({coinList: []})
+    this.setState({ coinList: [] });
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.coin.id && prevProps.coin.id  !== this.props.coin.id) {
+    if (this.props.coin.id && prevProps.coin.id !== this.props.coin.id) {
       this.props.getCoinInfo();
     }
   }
@@ -93,9 +74,9 @@ export default class AddAsset extends React.Component {
       destroyAddAsset,
       openAddAsset,
       handleClose,
-      handleSubmit
+      handleSubmit,
     } = this.props;
-    console.log(id ? `${name} (${symbol.toUpperCase()})` : "no coin")
+
     return (
       <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
         <Container width="57%">
@@ -142,7 +123,9 @@ export default class AddAsset extends React.Component {
                           message: "Please select a cryptocoin from the list.",
                         },
                       ]}
-                      initialValue={id ? `${name} (${symbol.toUpperCase()})` : undefined}
+                      initialValue={
+                        id ? `${name} (${symbol.toUpperCase()})` : undefined
+                      }
                     >
                       <StyledSelect
                         showSearch
