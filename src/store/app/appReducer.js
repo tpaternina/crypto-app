@@ -29,11 +29,13 @@ const appReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         currencyList: payload.data,
+        isListLoading: false,
         hasError: false,
       };
     case FETCH_CURRENCY_LIST_ERROR:
       return {
         ...state,
+        isListLoading: false,
         hasError: payload.err,
       };
     default:
