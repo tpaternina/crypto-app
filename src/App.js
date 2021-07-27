@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import queryString from "query-string";
 import {
@@ -10,10 +11,11 @@ import {
 } from "./App.styles";
 import { Coin, Home, Portfolio } from "pages";
 import { Currency, GlobalInfo, SearchCoin } from "components";
+import { setCurrency } from "store/app/appActions";
 
 console.clear();
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     currency: "EUR",
   };
@@ -32,7 +34,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { currency } = this.state;
+    const { app: {currency}, setCurrency } = this.props;
     return (
       <AppContainer>
         <Router>
@@ -53,7 +55,7 @@ export default class App extends React.Component {
               <SearchCoin />
               <Currency
                 currency={currency}
-                handleCurrency={this.handleCurrency}
+                setCurrency={setCurrency}
               />
             </StyledList>
           </StyledNav>
@@ -81,3 +83,13 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  app: state.app,
+});
+
+const mapDispatchToProps = () => ({
+  setCurrency,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

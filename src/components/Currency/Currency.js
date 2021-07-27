@@ -55,7 +55,7 @@ export default class Currency extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.handleCurrency(this.state.searchTerm);
+    this.props.setCurrency(this.state.searchTerm);
     this.setState({ isActive: false, searchTerm: "" });
   };
 

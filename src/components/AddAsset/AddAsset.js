@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
-import { isEmpty } from "lodash";
+import { isEmpty, debounce } from "lodash";
 import { Form, Select } from "antd";
 import { LoadingList } from "components";
 import { keysToCamelCase } from "utils";
@@ -28,12 +28,15 @@ const { Option } = Select;
 
 export default class AddAsset extends React.Component {
   state = {
-    coinList: [],
-    isListLoading: false,
-    isCoinLoading: false,
+    coinList: [], // to redux
+    isListLoading: false, // to redux
+    isCoinLoading: false, // delete
   };
 
-  getCoinList = async (val) => {
+  form = React.createRef();
+
+  getCoinList = debounce(async (val) => {
+    console.log("we0re here");
     try {
       this.setState({ isListLoading: true });
       const { data: coinList } = await axios(
@@ -43,11 +46,11 @@ export default class AddAsset extends React.Component {
     } catch (err) {
       console.log(err);
       this.setState({ isListLoading: false });
-    }
-  };
+    } // to redux (call getCoinLst form props)
+  }, 1000);
 
   handleSearch = (val) => {
-    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] });
+    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] }); // to redux with debounce
   };
 
   handleSelect = (value) => {
@@ -59,11 +62,21 @@ export default class AddAsset extends React.Component {
     } = this.props;
     this.props.handleSelect({ key, id, large, name, symbol });
     this.setState({ coinList: [] });
+    console.log(this.form.current);
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.coin.id && prevProps.coin.id !== this.props.coin.id) {
+    if (
+      this.props.coin.id !== undefined &&
+      prevProps.coin.id !== this.props.coin.id
+    ) {
       this.props.getCoinInfo();
+    }
+    if (
+      prevProps.coin.id !== this.props.coin.id &&
+      this.props.coin.id === undefined
+    ) {
+      this.form.current.resetFields();
     }
   }
 
@@ -76,7 +89,6 @@ export default class AddAsset extends React.Component {
       handleClose,
       handleSubmit,
     } = this.props;
-
     return (
       <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
         <Container width="57%">
@@ -89,6 +101,7 @@ export default class AddAsset extends React.Component {
           <StyledRow>
             <StyledCol span={24}>
               <Form
+                ref={this.form}
                 initialValues={{
                   remember: false,
                 }}
