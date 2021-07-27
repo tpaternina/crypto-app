@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Row } from "antd";
-import { isEmpty } from "lodash";
 import { AddAsset, PortfolioAsset } from "components";
 import { formatQueryDate, keysToCamelCase } from "utils";
 import {

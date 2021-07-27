@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import app from "./app/appReducer"
+import app from "./app/appReducer";
+import coin from "./coin/coinReducer";
 import home from "./home/homeReducer";
 import portfolio from "./portfolio/portfolioReducer";
 
@@ -9,7 +10,8 @@ console.log(app)
 const reducers = combineReducers({
   app,
   home,
-  portfolio
+  portfolio,
+  coin
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

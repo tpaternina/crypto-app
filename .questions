@@ -1,14 +1,3 @@
 QUESTIONS
 
-3. handle currency in query string if it's a prop from parent component --> set it as state?
-
-7. REDUX: AddAsset? GlobalInfo bar?
-
-8. using dispatch middleware with additional arguments
-
-9. passing state between diff pages? currency App ---> Home, Portfolio, Coin
-
-10. portfolioReducer line 90?
-
-11. Resetting state not working (AddAsset default values)...
-
+* call an action form redux with this.props.match.params?
