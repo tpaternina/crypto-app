@@ -1,7 +1,5 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
-import { isEmpty } from "lodash";
 import { getCurrencies } from "store/app/appActions"
 import {
   StyledArrow,
