@@ -75,7 +75,7 @@ export default function ChartPriceOverview(props) {
 
   return (
     <div className="chart">
-      {!isEmpty(prices) && <Line data={data} options={options} />}
+      {!!prices.length && <Line data={data} options={options} />}
     </div>
   );
 }

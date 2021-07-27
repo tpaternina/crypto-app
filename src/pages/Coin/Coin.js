@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import parse from "html-react-parser";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
 import { layers } from "assets";
-import { keysToCamelCase } from "utils";
 import { getCoinInfo } from "store/coin/coinActions";
 import {
   BlockchainLink,

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { isEmpty } from "lodash";
 import queryString from "query-string";
 import LoadingBar from "react-top-loading-bar";
 import {
@@ -80,14 +79,13 @@ class Home extends React.Component {
 
   render() {
     const {
-      currency,
       toggleOrder,
-      home: { coinList, isLoading, hasError },
+      home: { coinList, isLoading },
+      hasResponse,
     } = this.props;
-    const hasResponse = !isEmpty(coinList) && !isLoading && !hasError;
-
     return (
       <>
+        <LoadingBar ref={this.loadingBar} />
         {isLoading && (
           <ChartRow>
             <ChartCol span={11}>
@@ -104,10 +102,7 @@ class Home extends React.Component {
             </ChartCol>{" "}
           </ChartRow>
         )}
-        <LoadingBar ref={this.loadingBar} />{" "}
-        {hasResponse && (
-          <ChartOverview topCoin={coinList[0]} currency={this.props.currency} />
-        )}
+        {hasResponse && <ChartOverview />}
         <StyledTitle> Market Overview </StyledTitle>
         <Container>
           <StyledRow>
@@ -180,7 +175,6 @@ class Home extends React.Component {
           {isLoading && <LoadingCoins />}
           {hasResponse && (
             <Coins
-              currency={currency}
               coinList={coinList.sort(this.sortCoins)}
             />
           )}
@@ -192,7 +186,13 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => ({
   home: state.home,
-  currency: state.app.currency
+  currency: state.app.currency,
+  hasResponse:
+    !state.home.isLoading &&
+    !state.home.hasError &&
+    /*!state.home.isOverviewLoading &&
+    !state.home.hasOverviewError &&*/
+    !!state.home.coinList.length,
 });
 
 const mapDispatchToProps = {
