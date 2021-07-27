@@ -7,7 +7,6 @@ const initialState = {
     descending: false, // if true, sort in descending order, if false sort in ascending order
   },
   queryConfig: {
-    vsCurrency: "eur",
     perPage: 10,
     page: 1,
   },
@@ -28,10 +27,10 @@ const homeReducer = (state = initialState, { type, payload }) => {
         pageConfig: {
           sortBy: parsedSortBy,
           descending: parsedDescending,
+          currency,
         },
         queryConfig: {
           ...queryConfig,
-          vsCurrency: currency,
         },
       };
     case "FETCH_ALL_COINS_PENDING":

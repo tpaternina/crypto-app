@@ -21,7 +21,6 @@ import {
 } from "./Home.styles";
 
 class Home extends React.Component {
-
   loadingBar = React.createRef();
 
   sortCoins = (item1, item2) => {
@@ -52,6 +51,13 @@ class Home extends React.Component {
       JSON.stringify(prevProps.home.pageConfig) !==
       JSON.stringify(this.props.home.pageConfig)
     ) {
+      const query = queryString.stringify({
+        ...this.props.home.pageConfig,
+        currency: this.props.currency,
+      });
+      this.props.history.push(`/?${query}`);
+    }
+    if (prevProps.currency !== this.props.currency) {
       const query = queryString.stringify({
         ...this.props.home.pageConfig,
         currency: this.props.currency,
@@ -186,6 +192,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => ({
   home: state.home,
+  currency: state.app.currency
 });
 
 const mapDispatchToProps = {

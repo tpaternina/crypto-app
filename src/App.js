@@ -16,22 +16,6 @@ import { setCurrency } from "store/app/appActions";
 console.clear();
 
 class App extends React.Component {
-  state = {
-    currency: "EUR",
-  };
-
-  handleCurrency = (newCurrency) => {
-    this.setState({ currency: newCurrency });
-  };
-
-  componentDidMount() {
-    if (window.location.search) {
-      const { currency } = queryString.parse(window.location.search);
-      this.setState({ currency });
-    } else {
-      this.setState({ currency: "EUR" });
-    }
-  }
 
   render() {
     const { app: {currency}, setCurrency } = this.props;
@@ -74,7 +58,7 @@ class App extends React.Component {
               />
               <Route
                 path="/"
-                component={(props) => <Home currency={currency} {...props} />}
+                component={Home}
               />
             </Switch>
           </Container>
@@ -88,8 +72,8 @@ const mapStateToProps = (state) => ({
   app: state.app,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = {
   setCurrency,
-});
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

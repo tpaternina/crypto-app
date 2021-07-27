@@ -13,16 +13,24 @@ const TOGGLE_ORDER = "TOGGLE_ORDER";
 export const fetchAllCoins = () => async (dispatch, getState) => {
   try {
     const {
-      home: { queryConfig },
+      home: {
+        queryConfig,
+        pageConfig: { currency },
+      },
     } = getState();
     dispatch({
       type: FETCH_ALL_COINS_PENDING,
     });
     const query = {
-      ...keysToSnakeCase(queryConfig),
-      price_change_percentage: "1h,24h,7d",
-      sparkline: true,
+      ...keysToSnakeCase({
+        ...queryConfig,
+        vsCurrency: currency,
+        priceChangePercentage: "1h,24h,7d",
+        sparkline: true,
+      }),
     };
+
+    console.log(query)
 
     let { data } = await axios(
       queryString.stringifyUrl({

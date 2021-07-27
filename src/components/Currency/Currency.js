@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 import { isEmpty } from "lodash";
+import { getCurrencies } from "store/app/appActions"
 import {
   StyledArrow,
   StyledCurrency,
@@ -10,26 +12,14 @@ import {
   StyledInput,
 } from "./Currency.styles";
 
-export default class Currency extends React.Component {
+class Currency extends React.Component {
   state = {
-    currencyList: [],
     isActive: false,
-    hasError: false,
     searchTerm: "",
   };
 
   currencyInput = React.createRef();
   currencyWrapper = React.createRef();
-
-  getCurrencies = async () => {
-    try {
-      this.setState({ isLoading: true });
-      const { data } = await axios(process.env.REACT_APP_VS_COINS_ENDPOINT);
-      this.setState({ currencyList: data, hasError: false });
-    } catch (err) {
-      this.setState({ hasError: true });
-    }
-  };
 
   toggleActive = () => {
     this.setState({ searchTerm: "", isActive: !this.state.isActive });
@@ -37,7 +27,7 @@ export default class Currency extends React.Component {
 
   handleSelect = ({ key }) => {
     this.setState({ isActive: false, searchTerm: "" });
-    this.props.handleCurrency(key.toUpperCase());
+    this.props.setCurrency(key.toUpperCase());
   };
 
   handleClickOutside = ({ target }) => {
@@ -55,12 +45,12 @@ export default class Currency extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.setCurrency(this.state.searchTerm);
     this.setState({ isActive: false, searchTerm: "" });
+    this.props.setCurrency(this.state.searchTerm);
   };
 
   componentDidMount() {
-    this.getCurrencies();
+    this.props.getCurrencies();
 
     // Add event listener for click outside event
     document.addEventListener("mousedown", this.handleClickOutside);
@@ -72,26 +62,26 @@ export default class Currency extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.isActive !== this.state.isActive && this.state.isActive) {
+    if (this.state.isActive && prevState.isActive !== this.state.isActive) {
       this.currencyInput.current.focus();
     }
   }
 
   render() {
-    const { currencyList, isActive, searchTerm } = this.state;
-
+    const { isActive, searchTerm } = this.state;
+    const { currencyList, currency } = this.props.app;
     return (
       <div ref={this.currencyWrapper}>
         <StyledCurrency onClick={this.toggleActive}>
           <StyledDollar />
-          {!isActive && <span>{this.props.currency}</span>}
+          {!isActive && <span>{currency}</span>}
           {isActive && (
             <form onSubmit={this.handleSubmit}>
               <StyledInput
                 ref={this.currencyInput}
                 onChange={this.handleChange}
                 value={searchTerm}
-                placeholder="search..."
+                placeholder="Search..."
               />
             </form>
           )}
@@ -99,19 +89,27 @@ export default class Currency extends React.Component {
         </StyledCurrency>
         {isActive && (
           <StyledMenu onClick={this.handleSelect}>
-            {!isEmpty(currencyList) && (
-              <>
-                {currencyList
-                  .filter((item) => item.toUpperCase().includes(searchTerm))
-                  .slice(0, 5)
-                  .map((item) => (
-                    <StyledItem key={item}>{item.toUpperCase()}</StyledItem>
-                  ))}
-              </>
-            )}
+            {!!currencyList.length &&
+              currencyList
+                .filter((item) => item.toUpperCase().includes(searchTerm))
+                .slice(0, 5)
+                .map((item) => (
+                  <StyledItem key={item}>{item.toUpperCase()}</StyledItem>
+                ))}
           </StyledMenu>
         )}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  app: state.app,
+  currency: state.app.currency,
+});
+
+const mapDispatchToProps = {
+  getCurrencies,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Currency);

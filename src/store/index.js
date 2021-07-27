@@ -4,6 +4,8 @@ import app from "./app/appReducer"
 import home from "./home/homeReducer";
 import portfolio from "./portfolio/portfolioReducer";
 
+console.log(app)
+
 const reducers = combineReducers({
   app,
   home,
