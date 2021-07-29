@@ -22,18 +22,9 @@ import {
 
 class Portfolio extends React.Component {
 
-  componentDidMount() {
-    this.addAsset.current.sayHello();
-  }
-
-  componentDidUpdate(prevProps, prevState) {}
-
-  addAsset = React.createRef();
-
   render() {
-    const { assetList, openAddAsset, destroyAddAsset, editCoin } =
-      this.props.portfolio;
     const {
+      portfolio: { assetList, openAddAsset, destroyAddAsset, editCoin },
       currency,
       getCoinInfo,
       handleClose,
@@ -72,7 +63,6 @@ class Portfolio extends React.Component {
               />
             ))}
         <AddAsset
-          ref={this.addAsset}
           coin={editCoin}
           destroyAddAsset={destroyAddAsset}
           openAddAsset={openAddAsset}
@@ -91,7 +81,7 @@ class Portfolio extends React.Component {
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,
-  currency: state.app.currency
+  currency: state.app.currency,
 });
 
 const mapDispatchToProps = {

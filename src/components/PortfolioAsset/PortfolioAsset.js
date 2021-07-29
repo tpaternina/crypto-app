@@ -20,19 +20,9 @@ import {
 } from "./PortfolioAsset.styles";
 
 export default class PortfolioAsset extends React.Component {
-  state = {
-    openAddAsset: false,
-    destroyAddAsset: true,
-  };
-
-  hideEdit = () => {
-    this.setState({ openAddAsset: false });
-    setTimeout(() => this.setState({ destroyAddAsset: true }), 250);
-  };
 
   render() {
     const { coin, currency, showEditAsset, handleDelete } = this.props;
-
     const {
       name,
       symbol,

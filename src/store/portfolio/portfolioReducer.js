@@ -4,6 +4,9 @@ import {
   ADD_ASSET_DESTROY_MODAL,
   ADD_ASSET_UNOPEN_MODAL,
   ADD_ASSET_RESET_EDIT_COIN,
+  FETCH_COIN_LIST_PENDING,
+  FETCH_COIN_LIST_SUCCESS,
+  FETCH_COIN_LIST_ERROR,
   ADD_ASSET_SELECT_COIN,
   ADD_ASSET_COIN_INFO_SUCCESS,
   ADD_ASSET_COIN_INFO_ERROR,
@@ -24,6 +27,8 @@ const initialState = {
   destroyAddAsset: true,
   currency: "eur",
   hasError: false,
+  isPriceLoading: false,
+  isSearchLoading: false,
 };
 
 const portfolioReducer = (state = initialState, { type, payload }) => {
@@ -49,15 +54,33 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
         destroyAddAsset: true,
       };
 
+    case FETCH_COIN_LIST_PENDING:
+      return {
+        ...state,
+        isSearchLoading: true,
+      };
+    case FETCH_COIN_LIST_SUCCESS:
+      return {
+        ...state,
+        isSearchLoading: false,
+        coinSearchList: payload.coinList,
+      };
+    case FETCH_COIN_LIST_ERROR:
+      return {
+        ...state,
+        hasError: payload.err,
+      };
+
     case ADD_ASSET_SELECT_COIN:
       return {
         ...state,
-        editCoin: payload,
+        editCoin: payload.coin,
+        coinSearchList: [],
       };
     case ADD_ASSET_COIN_INFO_SUCCESS:
       return {
         ...state,
-        editCoin: { ...state.editCoin, ...payload },
+        editCoin: payload.editCoin,
       };
 
     case ADD_ASSET_SUCCESS:
@@ -65,11 +88,13 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         assetList: newList,
+        hasError: false,
+        editCoin: {},
       };
     case EDIT_ASSET_EDIT_COIN:
       return {
         ...state,
-        editCoin: payload,
+        editCoin: payload.editCoin,
       };
     case EDIT_ASSET_SUCCESS:
       const editedList = state.assetList.map((item) => {
@@ -81,7 +106,15 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         assetList: editedList,
+        editCoin: {},
       };
+    case ADD_ASSET_RESET_EDIT_COIN:
+      return {
+        ...state,
+        editCoin: {},
+      }
+
+
     case DELETE_ASSET:
       const updatedList = state.assetList.filter(
         (item) => item.key !== payload.key
@@ -90,29 +123,22 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
         ...state,
         assetList: updatedList,
       };
+    case GET_PRICE_AT_DATE_PENDING:
+      return {
+        ...state,
+        isPriceLoading: true,
+      }
     case GET_PRICE_AT_DATE_SUCCESS:
-      const newListPrice = state.assetList.map((el) => {
-        if (el.key === payload.key) {
-          return payload;
-        }
-        return el;
-      });
+      // TODO: loading feedback when retrieving price at date info
       return {
         ...state,
-        assetList: newListPrice,
-        hasError: false,
-        editCoin: {},
-      };
-
-    case ADD_ASSET_RESET_EDIT_COIN:
-      return {
-        ...state,
-        editCoin: { ...{} },
+        isPriceLoading: false,
       };
     case GET_PRICE_AT_DATE_ERROR:
       return {
         ...state,
         hasError: payload,
+        isPriceLoading: false
       };
     default:
       return state;
