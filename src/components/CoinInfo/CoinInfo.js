@@ -29,7 +29,10 @@ export default class CoinInfo extends React.Component {
     const { price } = coin.sparklineIn7D;
 
     return (
-      <StyledLink to={`coins/${coin.id}`} title={`More about ${coin.name}`}>
+      <StyledLink
+        to={`coins/${coin.id}?currency=${this.props.currency}`}
+        title={`More about ${coin.name}`}
+      >
         <StyledRow key={coin}>
           <StyledCol span={1}>{coin.marketCapRank}</StyledCol>
           <StyledCol span={3}>

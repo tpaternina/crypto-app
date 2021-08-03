@@ -1,5 +1,5 @@
 import {
-  PARSE_QUERY_STRING,
+  PARSE_HOME_QUERY_STRING,
   FETCH_ALL_COINS_SUCCESS,
   FETCH_ALL_COINS_PENDING,
   FETCH_ALL_COINS_ERROR,
@@ -28,26 +28,7 @@ const initialState = {
 };
 
 const homeReducer = (state = initialState, { type, payload }) => {
-  const { pageConfig, queryConfig } = state;
-
   switch (type) {
-    case PARSE_QUERY_STRING:
-      const {
-        sortBy: parsedSortBy,
-        descending: parsedDescending,
-        currency,
-      } = payload;
-      return {
-        ...state,
-        pageConfig: {
-          sortBy: parsedSortBy,
-          descending: parsedDescending,
-          currency,
-        },
-        queryConfig: {
-          ...queryConfig,
-        },
-      };
     case FETCH_ALL_COINS_PENDING:
       return {
         ...state,
@@ -89,7 +70,6 @@ const homeReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         pageConfig: {
-          ...pageConfig,
           sortBy,
           descending,
         },

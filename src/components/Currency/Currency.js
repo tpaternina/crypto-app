@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getCurrencies } from "store/app/appActions"
+import { getCurrencies, setCurrency } from "store/app/appActions";
 import {
   StyledArrow,
   StyledCurrency,
@@ -43,8 +43,8 @@ class Currency extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({ isActive: false, searchTerm: "" });
     this.props.setCurrency(this.state.searchTerm);
+    this.setState({ isActive: false, searchTerm: "" });
   };
 
   componentDidMount() {
@@ -67,7 +67,10 @@ class Currency extends React.Component {
 
   render() {
     const { isActive, searchTerm } = this.state;
-    const { currencyList, currency } = this.props.app;
+    const {
+      app: { currencyList },
+      currency,
+    } = this.props;
     return (
       <div ref={this.currencyWrapper}>
         <StyledCurrency onClick={this.toggleActive}>
@@ -108,6 +111,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getCurrencies,
-}
+  setCurrency,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Currency);

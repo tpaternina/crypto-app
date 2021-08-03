@@ -15,50 +15,42 @@ import { setCurrency } from "store/app/appActions";
 console.clear();
 
 class App extends React.Component {
-
   render() {
-    const { app: {currency}, setCurrency } = this.props;
+    const {
+      app: { currency },
+      pageConfig: { sortBy, descending }
+    } = this.props;
     return (
       <AppContainer>
         <Router>
           <StyledNav>
             <StyledList>
               <li>
-                <StyledLink exact activeClassName="selected" to="/">
+                <StyledLink
+                  exact
+                  activeClassName="selected"
+                  to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
+                >
                   Coins
                 </StyledLink>
               </li>
               <li>
-                <StyledLink exact activeClassName="selected" to="/portfolio">
+                <StyledLink exact activeClassName="selected" to={`/portfolio?currency=${currency}`}>
                   Portfolio
                 </StyledLink>
               </li>
             </StyledList>
             <StyledList>
               <SearchCoin />
-              <Currency
-                currency={currency}
-                setCurrency={setCurrency}
-              />
+              <Currency />
             </StyledList>
           </StyledNav>
           <Container>
             <GlobalInfo currency={currency} />
             <Switch>
-              <Route
-                path="/coins/:id"
-                component={(props) => <Coin currency={currency} {...props} />}
-              />
-              <Route
-                path="/portfolio"
-                component={(props) => (
-                  <Portfolio {...props} currency={currency} />
-                )}
-              />
-              <Route
-                path="/"
-                component={Home}
-              />
+              <Route path="/coins/:id" component={Coin} />
+              <Route path="/portfolio" component={Portfolio} />
+              <Route path="/" component={Home} />
             </Switch>
           </Container>
         </Router>
@@ -69,6 +61,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
   app: state.app,
+  pageConfig: state.home.pageConfig,
 });
 
 const mapDispatchToProps = {

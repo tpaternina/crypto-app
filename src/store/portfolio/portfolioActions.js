@@ -26,6 +26,7 @@ export const GET_PRICE_AT_DATE_SUCCESS = "GET_PRICE_AT_DATE_SUCCESS";
 
 export const DELETE_ASSET = "DELETE_ASSET";
 
+
 export const getCoinInfo = () => async (dispatch, getState) => {
   if (getState().portfolio.editCoin.id) {
     try {
@@ -142,7 +143,6 @@ export const handleSubmit = (values) => async (dispatch, getState) => {
   newCoin.purchasedDate = values.purchasedDate;
   newCoin.purchasedAmount = values.purchasedAmount;
 
-  
   // Get price at purchase date
   try {
     dispatch({

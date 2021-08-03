@@ -12,6 +12,7 @@ import {
   showAddAsset,
   showEditAsset,
 } from "store/portfolio/portfolioActions";
+import { setCurrency } from "store/app/appActions";
 import {
   EmptyListIcon,
   PlaceholderText,
@@ -91,6 +92,7 @@ const mapDispatchToProps = {
   handleDelete,
   handleSelect,
   handleSubmit,
+  setCurrency,
   showAddAsset,
   showEditAsset,
 };

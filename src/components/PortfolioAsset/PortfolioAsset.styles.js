@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Col, Row } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 
@@ -109,6 +110,13 @@ export const StyledInfo = styled.span.attrs((props) => ({
 }))`
   color: ${(props) => props.color};
   margin-left: 0.45rem;
+`;
+
+export const StyledLink = styled(Link)`
+  display: inherit;
+  flex-direction: inherit;
+  justify-content: inherit;
+  align-items: inherit;
 `;
 
 export const StyledTitle = styled.h3`

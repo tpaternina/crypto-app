@@ -1,3 +1,4 @@
 QUESTIONS
 
-* call an action form redux with this.props.match.params?
+- why when modifying location directly, it doesn't get mapped to state?
+

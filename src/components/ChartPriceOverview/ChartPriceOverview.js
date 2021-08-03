@@ -1,5 +1,4 @@
 import React from "react";
-import { isEmpty } from "lodash";
 import { formatOverviewChart } from "utils";
 import { Line } from "react-chartjs-2";
 
@@ -7,14 +6,14 @@ export default function ChartPriceOverview(props) {
   const { prices } = props;
   // Whether coin price increased the last 30 days
   // Exclude 31st element which corresponds to ... average?
-  const increase = !isEmpty(prices) && prices[29][1] - prices[0][1] > 0;
+  const increase = !!prices.length && prices[29][1] - prices[0][1] > 0;
 
   const data = (canvas) => {
     const ctx = canvas.getContext("2d");
     const gradient = ctx.createLinearGradient(0, 0, 0, 230);
 
     // Add three color stops
-    gradient.addColorStop(0, increase ? "#007113" : "#81011b");
+    gradient.addColorStop(0, increase ? "#00711377" : "#81011b77");
     gradient.addColorStop(1, "#191b1f");
 
     return {

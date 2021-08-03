@@ -2,7 +2,7 @@ import axios from "axios";
 import queryString from "query-string";
 import { keysToSnakeCase, keysToCamelCase } from "utils";
 
-export const PARSE_QUERY_STRING = "PARSE_QUERY_STRING";
+export const PARSE_HOME_QUERY_STRING = "PARSE_HOME_QUERY_STRING";
 
 export const FETCH_ALL_COINS_SUCCESS = "FETCH_ALL_COINS_SUCCESS";
 export const FETCH_ALL_COINS_PENDING = "FETCH_ALL_COINS_PENDING";
@@ -17,10 +17,8 @@ export const TOGGLE_ORDER = "TOGGLE_ORDER";
 export const fetchAllCoins = () => async (dispatch, getState) => {
   try {
     const {
-      home: {
-        queryConfig,
-        pageConfig: { currency },
-      },
+      home: { queryConfig },
+      app: { currency },
     } = getState();
     dispatch({
       type: FETCH_ALL_COINS_PENDING,
@@ -40,18 +38,17 @@ export const fetchAllCoins = () => async (dispatch, getState) => {
         query: query,
       })
     );
-
     // Convert keys from API to camelCase
     data = data.map(keysToCamelCase);
     dispatch({
       type: FETCH_ALL_COINS_SUCCESS,
-      payload: {data},
+      payload: { data },
     });
   } catch (err) {
     console.log(err);
     dispatch({
       type: FETCH_ALL_COINS_ERROR,
-      payload: {err},
+      payload: { err },
     });
   }
 };
@@ -72,11 +69,9 @@ export const fetchPrices = (currency) => async (dispatch, getState) => {
         interval: "daily",
       },
     });
-    let {
-      data ,
-    } = await axios(query);
+    let { data } = await axios(query);
     data = keysToCamelCase(data);
-    const { prices, totalVolumes } = data
+    const { prices, totalVolumes } = data;
     dispatch({
       type: FETCH_PRICES_SUCCESS,
       payload: { prices, totalVolumes },
@@ -90,13 +85,10 @@ export const fetchPrices = (currency) => async (dispatch, getState) => {
   }
 };
 
-export const parseQueryString = (location) => {
-  const parsed = queryString.parse(location, {
-    parseBooleans: true,
-  });
+export const parseQueryString = (pageConfig) => {
   return {
-    type: PARSE_QUERY_STRING,
-    payload: parsed,
+    type: PARSE_HOME_QUERY_STRING,
+    payload: pageConfig,
   };
 };
 

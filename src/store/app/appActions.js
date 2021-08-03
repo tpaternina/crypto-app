@@ -6,7 +6,6 @@ export const FETCH_CURRENCY_LIST_SUCCESS = "FETCH_CURRENCY_LIST_SUCCESS";
 export const FETCH_CURRENCY_LIST_ERROR = "FETCH_CURRENCY_LIST_ERROR";
 
 export const setCurrency = (currency) => {
-  console.log({ currency });
   return {
     type: CHANGE_CURRENCY,
     payload: { currency },
@@ -14,20 +13,20 @@ export const setCurrency = (currency) => {
 };
 
 export const getCurrencies = () => async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: FETCH_CURRENCY_LIST_PENDING
-      })
-      const { data } = await axios(process.env.REACT_APP_VS_COINS_ENDPOINT);
+  try {
+    dispatch({
+      type: FETCH_CURRENCY_LIST_PENDING,
+    });
+    const { data } = await axios(process.env.REACT_APP_VS_COINS_ENDPOINT);
 
-      dispatch({
-        type: FETCH_CURRENCY_LIST_SUCCESS,
-        payload: { data }
-      })
-    } catch (err) {
-      dispatch({
-        type: FETCH_CURRENCY_LIST_ERROR,
-        payload: { err }
-      })
-    }
-  };
+    dispatch({
+      type: FETCH_CURRENCY_LIST_SUCCESS,
+      payload: { data },
+    });
+  } catch (err) {
+    dispatch({
+      type: FETCH_CURRENCY_LIST_ERROR,
+      payload: { err },
+    });
+  }
+};

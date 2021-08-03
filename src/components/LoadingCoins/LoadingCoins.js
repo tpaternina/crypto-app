@@ -4,7 +4,7 @@ export default function LoadingCoins() {
   return (
     <>
       {[...Array(5)].map((item) => (
-        <StyledRow>
+        <StyledRow key={Math.random()}>
           <StyledCol span={1}>
             <ContentLoading />
           </StyledCol>

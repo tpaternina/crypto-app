@@ -25,7 +25,6 @@ const initialState = {
   coinSearchList: [],
   openAddAsset: false,
   destroyAddAsset: true,
-  currency: "eur",
   hasError: false,
   isPriceLoading: false,
   isSearchLoading: false,

@@ -16,14 +16,15 @@ import {
   StyledDeleteIcon,
   StyledCoinName,
   StyledInfo,
+  StyledLink,
   StyledTitle,
 } from "./PortfolioAsset.styles";
 
 export default class PortfolioAsset extends React.Component {
-
   render() {
     const { coin, currency, showEditAsset, handleDelete } = this.props;
     const {
+      id,
       name,
       symbol,
       large,
@@ -55,10 +56,12 @@ export default class PortfolioAsset extends React.Component {
         <StyledRow justify="space-between" margin="0 0 2rem 0">
           <StyledCol height="190px" span={4}>
             <CoinContainer>
-              <LogoContainer width="45%" src={large} />
-              <StyledCoinName>
-                {name} ({symbol.toUpperCase()})
-              </StyledCoinName>
+              <StyledLink to={`/coins/${id}?currency=${currency}`}>
+                <LogoContainer width="45%" src={large} />
+                <StyledCoinName>
+                  {name} ({symbol.toUpperCase()})
+                </StyledCoinName>
+              </StyledLink>
             </CoinContainer>
           </StyledCol>
           <StyledCol height="190px" span={19}>
