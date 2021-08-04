@@ -1,14 +1,3 @@
-import {
-  PARSE_HOME_QUERY_STRING,
-  FETCH_ALL_COINS_SUCCESS,
-  FETCH_ALL_COINS_PENDING,
-  FETCH_ALL_COINS_ERROR,
-  FETCH_PRICES_PENDING,
-  FETCH_PRICES_SUCCESS,
-  FETCH_PRICES_ERROR,
-  TOGGLE_ORDER,
-} from "./homeActions";
-
 const initialState = {
   isLoading: false,
   isOverviewLoading: false,
@@ -26,6 +15,18 @@ const initialState = {
     page: 1,
   },
 };
+
+export const PARSE_HOME_QUERY_STRING = "PARSE_HOME_QUERY_STRING";
+
+export const FETCH_ALL_COINS_SUCCESS = "FETCH_ALL_COINS_SUCCESS";
+export const FETCH_ALL_COINS_PENDING = "FETCH_ALL_COINS_PENDING";
+export const FETCH_ALL_COINS_ERROR = "FETCH_ALL_COINS_ERROR";
+
+export const FETCH_PRICES_PENDING = "FETCH_PRICES_PENDING";
+export const FETCH_PRICES_SUCCESS = "FETCH_PRICES_SUCCESS";
+export const FETCH_PRICES_ERROR = "FETCH_PRICES_ERROR";
+
+export const TOGGLE_ORDER = "TOGGLE_ORDER";
 
 const homeReducer = (state = initialState, { type, payload }) => {
   switch (type) {

@@ -1,9 +1,10 @@
 import axios from "axios";
-
-export const CHANGE_CURRENCY = "CHANGE_CURRENCY";
-export const FETCH_CURRENCY_LIST_PENDING = "FETCH_CURRENCY_LIST_PENDING";
-export const FETCH_CURRENCY_LIST_SUCCESS = "FETCH_CURRENCY_LIST_SUCCESS";
-export const FETCH_CURRENCY_LIST_ERROR = "FETCH_CURRENCY_LIST_ERROR";
+import {
+  CHANGE_CURRENCY,
+  FETCH_CURRENCY_LIST_PENDING,
+  FETCH_CURRENCY_LIST_SUCCESS,
+  FETCH_CURRENCY_LIST_ERROR,
+} from "./index";
 
 export const setCurrency = (currency) => {
   return {

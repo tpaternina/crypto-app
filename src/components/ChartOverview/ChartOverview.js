@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { ChartPriceOverview, ChartVolumeOverview } from "components";
 import { formatDate, formatLongNumber } from "utils";
-import { fetchPrices } from "store/home/homeActions";
+import { fetchPrices } from "store/home/actions";
 import {
   ChartCol,
   ChartContainer,

@@ -4,7 +4,7 @@ import parse from "html-react-parser";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
 import { layers } from "assets";
-import { getCoinInfo } from "store/coin/coinActions";
+import { getCoinInfo } from "store/coin/actions";
 import {
   BlockchainLink,
   CoinMarketInfo,

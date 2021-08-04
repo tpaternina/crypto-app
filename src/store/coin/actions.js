@@ -1,9 +1,10 @@
 import axios from "axios";
 import { keysToCamelCase } from "utils";
-
-export const FETCH_COIN_INFO_PENDING = "FETCH_COIN_INFO_PENDING";
-export const FETCH_COIN_INFO_SUCCESS = "FETCH_COIN_INFO_SUCCESS";
-export const FETCH_COIN_INFO_ERROR = "FETCH_COIN_INFO_ERROR";
+import {
+  FETCH_COIN_INFO_PENDING,
+  FETCH_COIN_INFO_SUCCESS,
+  FETCH_COIN_INFO_ERROR,
+} from "./index";
 
 export const getCoinInfo = (id) => async (dispatch, getState) => {
   try {

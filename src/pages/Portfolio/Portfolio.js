@@ -11,8 +11,8 @@ import {
   getPriceAtDate,
   showAddAsset,
   showEditAsset,
-} from "store/portfolio/portfolioActions";
-import { setCurrency } from "store/app/appActions";
+} from "store/portfolio/actions";
+import { setCurrency } from "store/app/actions";
 import {
   EmptyListIcon,
   PlaceholderText,

@@ -9,23 +9,30 @@ import {
 } from "redux-location-state";
 import createBrowserHistory from "history/createBrowserHistory";
 
-import app from "./app/appReducer";
-import coin from "./coin/coinReducer";
-import home from "./home/homeReducer";
-import portfolio from "./portfolio/portfolioReducer";
+import app from "./app";
+import coin from "./coin";
+import home from "./home";
+import portfolio from "./portfolio";
+
+// Local storage
+
+const portfolioPersistConfig = {
+  key: "portfolio",
+  storage,
+  whitelist: ["assetList"],
+};
 
 const rootReducer = combineReducers({
   app,
   home,
-  portfolio,
+  portfolio: persistReducer(portfolioPersistConfig, portfolio),
   coin,
 });
 
-// Local storage
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["portfolio"],
+  blacklist: ["app", "portfolio", "home", "coin"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -35,29 +42,21 @@ const paramSetup = {
   "/": {
     sortBy: {
       stateKey: "home.pageConfig.sortBy",
-      options: { shouldPush: true },
     },
     descending: {
       stateKey: "home.pageConfig.descending",
       type: "bool",
-      options: { shouldPush: true },
     },
   },
   global: {
-    currency: { stateKey: "app.currency", options: { shouldPush: true } },
+    currency: { stateKey: "app.currency" },
   },
 };
 
 const mapLocationToState = (state, location) => {
-  console.log(location.query);
   switch (location.pathname) {
     case "/":
-      return merge(
-        {},
-        state,
-        location.query.home.pageConfig,
-        location.query.app.currency
-      );
+      return merge({}, state, location.query);
     default:
       return merge({}, state, location.query.app.currency);
   }

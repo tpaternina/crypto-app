@@ -1,31 +1,25 @@
 import axios from "axios";
 import { formatQueryDate, keysToCamelCase } from "utils";
-
-export const ADD_ASSET_UNDESTROY_MODAL = "ADD_ASSET_UNDESTROY_MODAL";
-export const ADD_ASSET_OPEN_MODAL = "ADD_ASSET_OPEN_MODAL";
-export const ADD_ASSET_DESTROY_MODAL = "ADD_ASSET_DESTROY_MODAL";
-export const ADD_ASSET_UNOPEN_MODAL = "ADD_ASSET_UNOPEN_MODAL";
-
-export const ADD_ASSET_RESET_EDIT_COIN = "ADD_ASSET_RESET_EDIT_COIN";
-
-export const FETCH_COIN_LIST_PENDING = "FETCH_COIN_LIST_PENDING";
-export const FETCH_COIN_LIST_SUCCESS = "FETCH_COIN_LIST_SUCCESS";
-export const FETCH_COIN_LIST_ERROR = "FETCH_COIN_LIST_ERROR";
-
-export const ADD_ASSET_SELECT_COIN = "ADD_ASSET_SELECT_COIN";
-export const ADD_ASSET_COIN_INFO_SUCCESS = "ADD_ASSET_COIN_INFO_SUCCESS";
-export const ADD_ASSET_COIN_INFO_ERROR = "ADD_ASSET_COIN_INFO_ERROR";
-export const ADD_ASSET_SUCCESS = "ADD_ASSET_SUCCESS";
-
-export const EDIT_ASSET_EDIT_COIN = "EDIT_ASSET_EDIT_COIN";
-export const EDIT_ASSET_SUCCESS = "EDIT_ASSET_SUCCESS";
-
-export const GET_PRICE_AT_DATE_PENDING = "GET_PRICE_AT_DATE_PENDING";
-export const GET_PRICE_AT_DATE_ERROR = "GET_PRICE_AT_DATE_ERROR";
-export const GET_PRICE_AT_DATE_SUCCESS = "GET_PRICE_AT_DATE_SUCCESS";
-
-export const DELETE_ASSET = "DELETE_ASSET";
-
+import {
+  ADD_ASSET_UNDESTROY_MODAL,
+  ADD_ASSET_OPEN_MODAL,
+  ADD_ASSET_DESTROY_MODAL,
+  ADD_ASSET_UNOPEN_MODAL,
+  ADD_ASSET_RESET_EDIT_COIN,
+  FETCH_COIN_LIST_PENDING,
+  FETCH_COIN_LIST_SUCCESS,
+  FETCH_COIN_LIST_ERROR,
+  ADD_ASSET_SELECT_COIN,
+  ADD_ASSET_COIN_INFO_SUCCESS,
+  ADD_ASSET_COIN_INFO_ERROR,
+  ADD_ASSET_SUCCESS,
+  EDIT_ASSET_EDIT_COIN,
+  EDIT_ASSET_SUCCESS,
+  GET_PRICE_AT_DATE_PENDING,
+  GET_PRICE_AT_DATE_ERROR,
+  GET_PRICE_AT_DATE_SUCCESS,
+  DELETE_ASSET,
+} from "./index";
 
 export const getCoinInfo = () => async (dispatch, getState) => {
   if (getState().portfolio.editCoin.id) {
@@ -55,7 +49,6 @@ export const getCoinInfo = () => async (dispatch, getState) => {
 };
 
 export const getCoinList = (val) => async (dispatch, getState) => {
-
   try {
     dispatch({
       type: FETCH_COIN_LIST_PENDING,
@@ -156,9 +149,7 @@ export const handleSubmit = (values) => async (dispatch, getState) => {
     let { data } = await axios(
       `${
         process.env.REACT_APP_SINGLE_COIN_ENDPOINT
-      }/${id}/history?date=${formatQueryDate(
-        purchasedDate
-      )}&localization=false`
+      }/${id}/history?date=${formatQueryDate(purchasedDate)}&localization=false`
     );
     data = keysToCamelCase(data);
 
@@ -184,7 +175,7 @@ export const handleSubmit = (values) => async (dispatch, getState) => {
       payload: newCoin,
     });
 
-  // edit mode
+    // edit mode
   } else {
     dispatch({ type: EDIT_ASSET_SUCCESS, payload: newCoin });
   }

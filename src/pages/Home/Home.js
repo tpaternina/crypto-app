@@ -5,7 +5,7 @@ import {
   fetchAllCoins,
   parseQueryString,
   toggleOrder,
-} from "store/home/homeActions";
+} from "store/home/actions";
 import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
 import {
   ChartCol,

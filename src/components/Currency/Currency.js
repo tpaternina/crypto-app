@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getCurrencies, setCurrency } from "store/app/appActions";
+import { getCurrencies, setCurrency } from "store/app/actions";
 import {
   StyledArrow,
   StyledCurrency,

@@ -9,7 +9,7 @@ import {
   getCoinList,
   handleClose,
   handleSubmit,
-} from "store/portfolio/portfolioActions";
+} from "store/portfolio/actions";
 import {
   Background,
   CoinContainer,

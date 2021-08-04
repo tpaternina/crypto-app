@@ -1,24 +1,3 @@
-import {
-  ADD_ASSET_UNDESTROY_MODAL,
-  ADD_ASSET_OPEN_MODAL,
-  ADD_ASSET_DESTROY_MODAL,
-  ADD_ASSET_UNOPEN_MODAL,
-  ADD_ASSET_RESET_EDIT_COIN,
-  FETCH_COIN_LIST_PENDING,
-  FETCH_COIN_LIST_SUCCESS,
-  FETCH_COIN_LIST_ERROR,
-  ADD_ASSET_SELECT_COIN,
-  ADD_ASSET_COIN_INFO_SUCCESS,
-  ADD_ASSET_COIN_INFO_ERROR,
-  ADD_ASSET_SUCCESS,
-  EDIT_ASSET_EDIT_COIN,
-  EDIT_ASSET_SUCCESS,
-  GET_PRICE_AT_DATE_PENDING,
-  GET_PRICE_AT_DATE_ERROR,
-  GET_PRICE_AT_DATE_SUCCESS,
-  DELETE_ASSET,
-} from "./portfolioActions";
-
 const initialState = {
   assetList: [],
   editCoin: {},
@@ -29,6 +8,31 @@ const initialState = {
   isPriceLoading: false,
   isSearchLoading: false,
 };
+
+export const ADD_ASSET_UNDESTROY_MODAL = "ADD_ASSET_UNDESTROY_MODAL";
+export const ADD_ASSET_OPEN_MODAL = "ADD_ASSET_OPEN_MODAL";
+export const ADD_ASSET_DESTROY_MODAL = "ADD_ASSET_DESTROY_MODAL";
+export const ADD_ASSET_UNOPEN_MODAL = "ADD_ASSET_UNOPEN_MODAL";
+
+export const ADD_ASSET_RESET_EDIT_COIN = "ADD_ASSET_RESET_EDIT_COIN";
+
+export const FETCH_COIN_LIST_PENDING = "FETCH_COIN_LIST_PENDING";
+export const FETCH_COIN_LIST_SUCCESS = "FETCH_COIN_LIST_SUCCESS";
+export const FETCH_COIN_LIST_ERROR = "FETCH_COIN_LIST_ERROR";
+
+export const ADD_ASSET_SELECT_COIN = "ADD_ASSET_SELECT_COIN";
+export const ADD_ASSET_COIN_INFO_SUCCESS = "ADD_ASSET_COIN_INFO_SUCCESS";
+export const ADD_ASSET_COIN_INFO_ERROR = "ADD_ASSET_COIN_INFO_ERROR";
+export const ADD_ASSET_SUCCESS = "ADD_ASSET_SUCCESS";
+
+export const EDIT_ASSET_EDIT_COIN = "EDIT_ASSET_EDIT_COIN";
+export const EDIT_ASSET_SUCCESS = "EDIT_ASSET_SUCCESS";
+
+export const GET_PRICE_AT_DATE_PENDING = "GET_PRICE_AT_DATE_PENDING";
+export const GET_PRICE_AT_DATE_ERROR = "GET_PRICE_AT_DATE_ERROR";
+export const GET_PRICE_AT_DATE_SUCCESS = "GET_PRICE_AT_DATE_SUCCESS";
+
+export const DELETE_ASSET = "DELETE_ASSET";
 
 const portfolioReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -111,8 +115,7 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         editCoin: {},
-      }
-
+      };
 
     case DELETE_ASSET:
       const updatedList = state.assetList.filter(
@@ -126,7 +129,7 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isPriceLoading: true,
-      }
+      };
     case GET_PRICE_AT_DATE_SUCCESS:
       // TODO: loading feedback when retrieving price at date info
       return {
@@ -137,7 +140,7 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         hasError: payload,
-        isPriceLoading: false
+        isPriceLoading: false,
       };
     default:
       return state;

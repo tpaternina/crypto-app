@@ -1,14 +1,12 @@
-import {
-  FETCH_COIN_INFO_PENDING,
-  FETCH_COIN_INFO_SUCCESS,
-  FETCH_COIN_INFO_ERROR,
-} from "./coinActions";
-
 const initialState = {
   data: {},
   isLoading: false,
   hasError: false,
 };
+
+export const FETCH_COIN_INFO_PENDING = "FETCH_COIN_INFO_PENDING";
+export const FETCH_COIN_INFO_SUCCESS = "FETCH_COIN_INFO_SUCCESS";
+export const FETCH_COIN_INFO_ERROR = "FETCH_COIN_INFO_ERROR";
 
 const coinReducer = (state = initialState, { type, payload }) => {
   switch (type) {

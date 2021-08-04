@@ -1,17 +1,15 @@
-import {
-  CHANGE_CURRENCY,
-  FETCH_CURRENCY_LIST_PENDING,
-  FETCH_CURRENCY_LIST_SUCCESS,
-  FETCH_CURRENCY_LIST_ERROR,
-} from "./appActions";
-
-/* ACTION TYPES */
 const initialState = {
   currency: "EUR",
   currencyList: [], // to redux
   hasError: false, // to redux
   isListLoading: false,
 };
+
+export const CHANGE_CURRENCY = "CHANGE_CURRENCY";
+export const FETCH_CURRENCY_LIST_PENDING = "FETCH_CURRENCY_LIST_PENDING";
+export const FETCH_CURRENCY_LIST_SUCCESS = "FETCH_CURRENCY_LIST_SUCCESS";
+export const FETCH_CURRENCY_LIST_ERROR = "FETCH_CURRENCY_LIST_ERROR";
+
 
 const appReducer = (state = initialState, { type, payload }) => {
   switch (type) {
