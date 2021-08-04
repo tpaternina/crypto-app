@@ -39,7 +39,7 @@ class AddAsset extends React.Component {
   }, 1000);
 
   handleSearch = (val) => {
-    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] }); // to redux with debounce
+    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] }); 
   };
 
   handleSelect = (value) => {

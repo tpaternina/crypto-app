@@ -1,3 +1,4 @@
+import { Router } from "react-router-dom";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { merge } from "lodash";
 import thunk from "redux-thunk";
@@ -14,8 +15,7 @@ import coin from "./coin";
 import home from "./home";
 import portfolio from "./portfolio";
 
-// Local storage
-
+// Local storage (save asset list only)
 const portfolioPersistConfig = {
   key: "portfolio",
   storage,
@@ -49,16 +49,18 @@ const paramSetup = {
     },
   },
   global: {
-    currency: { stateKey: "app.currency" },
+    currency: { stateKey: "app.currency", options: { shouldPush: true } },
   },
 };
 
 const mapLocationToState = (state, location) => {
+  console.log(state, location.query);
   switch (location.pathname) {
     case "/":
       return merge({}, state, location.query);
     default:
-      return merge({}, state, location.query.app.currency);
+      state.app.currency = location.query.app.currency;
+      return state;
   }
 };
 

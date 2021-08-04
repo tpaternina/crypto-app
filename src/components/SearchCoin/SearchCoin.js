@@ -1,44 +1,29 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { debounce } from "lodash";
+import { Select } from "antd";
+import { LoadingList } from "components";
 import {
-  StyledInput,
-  StyledItem,
-  StyledMenu,
+  StyledSelect,
 } from "./SearchCoin.styles";
+
+const { Option } = Select;
 
 export default class SearchCoin extends React.Component {
   state = {
     data: [],
-    searchValue: "",
     isLoading: false,
     hasError: false,
   };
 
-  searchWrapper = React.createRef();
-  searchInput = React.createRef();
-
-  handleChange = ({ target: { value } }) => {
-    this.setState({ searchValue: value });
+  handleSelect = (id, Option) => {
+    this.setState({ data: [] });
+    window.location.pathname = `/coins/${id}`;
   };
 
-  handleClickOutside = ({ target }) => {
-    if (
-      this.searchWrapper !== null &&
-      !this.searchWrapper.current.contains(target)
-    ) {
-      this.setState({ searchValue: "", data: [] });
-    }
-  };
-
-  handleSelect = ({ key }) => {
-    this.setState({ searchValue: "", data: [] });
-  };
-
-  getCoinList = async () => {
+  getCoinList = debounce(async (searchValue) => {
     try {
       this.setState({ isLoading: true });
-      const { searchValue } = this.state;
       const { data } = await axios(
         `${process.env.REACT_APP_SEARCH_LIST}/${searchValue}`
       );
@@ -47,39 +32,39 @@ export default class SearchCoin extends React.Component {
       console.log(err);
       this.setState({ isLoading: false, hasError: true });
     }
+  }, 1000);
+
+  handleSearch = (val) => {
+    val !== "" ? this.getCoinList(val) : this.setState({ data: [] });
   };
 
-  componentDidMount() {
-    // Add event to listen for click outside of component
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    // Remove click outside event
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.searchValue !== this.state.searchValue &&
-      this.state.searchValue !== ""
-    ) {
-      this.getCoinList();
-    }
-    if (
-      prevState.searchValue !== this.state.searchValue &&
-      this.state.searchValue === ""
-    ) {
-      this.setState({ data: [] });
-    }
+  onBlur = () => {
+    console.log("blur")
+    this.setState({data: []})
   }
 
   render() {
-    const { data, searchValue } = this.state;
+    const { data, isLoading } = this.state;
 
     return (
       <div ref={this.searchWrapper}>
-        <StyledInput
+        <StyledSelect
+          showSearch
+          placeholder="Search coin..."
+          optionFilterProp="children"
+          onSearch={this.handleSearch}
+          onChange={this.handleSelect}
+          onBlur={this.onBlur}
+          notFoundContent={isLoading && <LoadingList />}
+          aria-expanded="true"
+        >
+          {data.map((coin) => (
+            <Option key={`${coin.id}-${Math.random()}`} value={coin.id}>
+                {coin.name} ({coin.symbol.toUpperCase()})
+            </Option>
+          ))}
+        </StyledSelect>
+        {/*<StyledInput
           type="text"
           placeholder="Search coins..."
           list="coinList"
@@ -93,7 +78,7 @@ export default class SearchCoin extends React.Component {
               <StyledItem>{coin.name}</StyledItem>
             </Link>
           ))}
-        </StyledMenu>
+        </StyledMenu>*/}
       </div>
     );
   }
