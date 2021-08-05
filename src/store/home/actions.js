@@ -83,13 +83,6 @@ export const fetchPrices = (currency) => async (dispatch, getState) => {
   }
 };
 
-export const parseQueryString = (pageConfig) => {
-  return {
-    type: PARSE_HOME_QUERY_STRING,
-    payload: pageConfig,
-  };
-};
-
 export const toggleOrder = (sortBy, descending) => {
   return {
     type: TOGGLE_ORDER,

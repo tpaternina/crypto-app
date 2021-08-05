@@ -1,4 +1,5 @@
 import React from "react";
+import queryString from "query-string";
 import { connect } from "react-redux";
 import { Row } from "antd";
 import { AddAsset, PortfolioAsset } from "components";
@@ -22,6 +23,30 @@ import {
 } from "./Portfolio.styles";
 
 class Portfolio extends React.Component {
+  componentDidMount() {
+    if (this.props.location.search) {
+      const { currency } = queryString.parse(this.props.location.search);
+      this.props.setCurrency(currency);
+    } else {
+      const { currency } = this.props;
+      const query = queryString.stringify({
+        currency,
+      });
+      this.props.history.push(`?${query}`);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.currency !== this.props.currency) {
+      console.log(this.props.location)
+      const { currency } = this.props;
+      const query = queryString.stringify({
+        currency
+      });
+      console.log(query)
+      this.props.history.push(`?${query}`);
+    }
+  }
 
   render() {
     const {

@@ -1,11 +1,9 @@
 import React from "react";
+import queryString from "query-string";
 import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
-import {
-  fetchAllCoins,
-  parseQueryString,
-  toggleOrder,
-} from "store/home/actions";
+import { fetchAllCoins, toggleOrder } from "store/home/actions";
+import { setCurrency } from "store/app/actions";
 import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
 import {
   ChartCol,
@@ -22,10 +20,49 @@ class Home extends React.Component {
   loadingBar = React.createRef();
 
   componentDidMount() {
+    if (this.props.location.search) {
+      const { sortBy, descending, currency } = queryString.parse(
+        this.props.location.search,
+        { parseBooleans: true }
+      );
+      this.props.toggleOrder(sortBy, descending);
+      this.props.setCurrency(currency);
+    } else {
+      const {
+        currency,
+        home: {
+          pageConfig: { sortBy, descending },
+        },
+      } = this.props;
+      const query = queryString.stringify({
+        sortBy,
+        descending,
+        currency,
+      });
+      this.props.history.push(`/?${query}`);
+    }
     this.props.fetchAllCoins();
   }
 
   componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(prevProps.home.pageConfig) !==
+        JSON.stringify(this.props.home.pageConfig) ||
+      prevProps.currency !== this.props.currency
+    ) {
+      const {
+        currency,
+        home: {
+          pageConfig: { sortBy, descending },
+        },
+      } = this.props;
+      const query = queryString.stringify({
+        sortBy,
+        descending,
+        currency,
+      });
+      this.props.history.push(query);
+    }
     if (prevProps.currency !== this.props.currency) {
       this.props.fetchAllCoins();
     }
@@ -157,7 +194,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchAllCoins,
-  parseQueryString,
+
+  setCurrency,
   toggleOrder,
 };
 
