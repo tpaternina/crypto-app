@@ -16,29 +16,15 @@ import {
   StyledDeleteIcon,
   StyledCoinName,
   StyledInfo,
+  StyledLink,
   StyledTitle,
 } from "./PortfolioAsset.styles";
 
 export default class PortfolioAsset extends React.Component {
-  state = {
-    openAddAsset: false,
-    destroyAddAsset: true,
-  };
-
-  showEdit = () => {
-    this.setState({ destroyAddAsset: false });
-    setTimeout(() => this.setState({ openAddAsset: true }));
-  };
-
-  hideEdit = () => {
-    this.setState({ openAddAsset: false });
-    setTimeout(() => this.setState({ destroyAddAsset: true }), 250);
-  };
-
   render() {
-    const { coin, currency, showEdit, handleDelete } = this.props;
-
+    const { coin, currency, showEditAsset, handleDelete } = this.props;
     const {
+      id,
       name,
       symbol,
       large,
@@ -70,10 +56,12 @@ export default class PortfolioAsset extends React.Component {
         <StyledRow justify="space-between" margin="0 0 2rem 0">
           <StyledCol height="190px" span={4}>
             <CoinContainer>
-              <LogoContainer width="45%" src={large} />
-              <StyledCoinName>
-                {name} ({symbol.toUpperCase()})
-              </StyledCoinName>
+              <StyledLink to={`/coins/${id}?currency=${currency}`}>
+                <LogoContainer width="45%" src={large} />
+                <StyledCoinName>
+                  {name} ({symbol.toUpperCase()})
+                </StyledCoinName>
+              </StyledLink>
             </CoinContainer>
           </StyledCol>
           <StyledCol height="190px" span={19}>
@@ -134,7 +122,7 @@ export default class PortfolioAsset extends React.Component {
                 <StyledTitle>
                   Your coin{" "}
                   <StyledEditIcon
-                    onClick={() => showEdit(coin)}
+                    onClick={() => showEditAsset(coin)}
                     title="Edit coin"
                     role="button"
                   />

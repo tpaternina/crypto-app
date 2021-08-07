@@ -1,8 +1,9 @@
 import React from "react";
-import axios from "axios";
-import { isEmpty } from "lodash";
 import queryString from "query-string";
+import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
+import { fetchAllCoins, toggleOrder } from "store/home/actions";
+import { setCurrency } from "store/app/actions";
 import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
 import {
   ChartCol,
@@ -14,134 +15,80 @@ import {
   StyledRow,
   StyledTitle,
 } from "./Home.styles";
-import { keysToCamelCase, keysToSnakeCase } from "utils";
 
-export default class Home extends React.Component {
-  state = {
-    isLoading: false,
-    hasError: false,
-    coinList: [],
-    pageConfig: {
-      sortBy: "marketCapRank",
-      descending: false, // if true, sort in descending order, if false sort in ascending order
-    },
-    queryConfig: {
-      vsCurrency: this.props.currency,
-      perPage: 10,
-      page: 1,
-    },
-  };
-
+class Home extends React.Component {
   loadingBar = React.createRef();
-
-  getCoins = async () => {
-    try {
-      this.setState({
-        isLoading: true,
-      });
-
-      const query = {
-        ...keysToSnakeCase(this.state.queryConfig),
-        price_change_percentage: "1h,24h,7d",
-        sparkline: true,
-      };
-
-      let { data } = await axios(
-        queryString.stringifyUrl({
-          url: process.env.REACT_APP_COINS_ENDPOINT,
-          query: query,
-        })
-      );
-
-      // Convert keys from API to camelCase
-      data = data.map(keysToCamelCase);
-
-      this.setState({
-        coinList: data,
-        isLoading: false,
-        hasError: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
-      console.log(err);
-    }
-  };
-
-  sortCoins = (item1, item2) => {
-    const { sortBy, descending } = this.state.pageConfig;
-    if (item1[sortBy] < item2[sortBy]) return descending ? 1 : -1;
-    if (item1[sortBy] > item2[sortBy]) return descending ? -1 : 1;
-    return 0;
-  };
-
-  toggleOrder = (sortBy, descending) => {
-    this.setState({
-      pageConfig: { ...this.state.pageConfig, sortBy, descending },
-    });
-    const query = queryString.stringify(this.state.pageConfig);
-    this.props.history.push(`/?${query}`);
-  };
 
   componentDidMount() {
     if (this.props.location.search) {
-      const parsed = queryString.parse(this.props.location.search, {
-        parseBooleans: true,
-      });
-      this.setState({
-        pageConfig: { ...this.state.pageConfig, ...parsed },
-      });
-      this.getCoins();
+      const { sortBy, descending, currency } = queryString.parse(
+        this.props.location.search,
+        { parseBooleans: true }
+      );
+      this.props.toggleOrder(sortBy, descending);
+      this.props.setCurrency(currency);
     } else {
+      const {
+        currency,
+        home: {
+          pageConfig: { sortBy, descending },
+        },
+      } = this.props;
       const query = queryString.stringify({
-        ...this.state.pageConfig,
-        currency: this.props.currency,
+        sortBy,
+        descending,
+        currency,
       });
       this.props.history.push(`/?${query}`);
-      this.getCoins()
     }
-    this.mounted = true;
+    this.props.fetchAllCoins();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.location.search !== this.props.location.search) {
-      const parsed = queryString.parse(this.props.location.search, {
-        parseBooleans: true,
+  componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(prevProps.home.pageConfig) !==
+        JSON.stringify(this.props.home.pageConfig) ||
+      prevProps.currency !== this.props.currency
+    ) {
+      const {
+        currency,
+        home: {
+          pageConfig: { sortBy, descending },
+        },
+      } = this.props;
+      const query = queryString.stringify({
+        sortBy,
+        descending,
+        currency,
       });
-      this.setState({
-        pageConfig: { ...this.state.pageConfig, ...parsed },
-      });
+      this.props.history.push(query);
+    }
+    if (prevProps.currency !== this.props.currency) {
+      this.props.fetchAllCoins();
     }
     if (
-      JSON.stringify(prevState.pageConfig) !==
-      JSON.stringify(this.state.pageConfig)
+      prevProps.home.isLoading !== this.props.home.isLoading &&
+      this.props.home.isLoading
     ) {
-      const query = queryString.stringify({
-        ...this.state.pageConfig,
-        currency: this.props.currency,
-      });
-      this.props.history.push(`/?${query}`);
-    }
-    if (prevState.isLoading !== this.state.isLoading && this.state.isLoading) {
       this.loadingBar.current.continuousStart();
     }
-    if (prevState.isLoading !== this.state.isLoading && !this.state.isLoading) {
+    if (
+      prevProps.home.isLoading !== this.props.home.isLoading &&
+      !this.props.home.isLoading
+    ) {
       this.loadingBar.current.complete();
-    } 
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+    }
   }
 
   render() {
-    const { coinList, isLoading, hasError } = this.state;
-    const hasResponse = !isEmpty(coinList) && !isLoading && !hasError;
-
+    const {
+      toggleOrder,
+      home: { coinList, isLoading },
+      hasResponse,
+    } = this.props;
     return (
       <>
+        <LoadingBar ref={this.loadingBar} />
         {isLoading && (
           <ChartRow>
             <ChartCol span={11}>
@@ -158,13 +105,7 @@ export default class Home extends React.Component {
             </ChartCol>{" "}
           </ChartRow>
         )}
-        <LoadingBar ref={this.loadingBar} />{" "}
-        {hasResponse && (
-          <ChartOverview
-            topCoin={this.state.coinList[0]}
-            currency={this.props.currency}
-          />
-        )}
+        {hasResponse && <ChartOverview />}
         <StyledTitle> Market Overview </StyledTitle>
         <Container>
           <StyledRow>
@@ -172,81 +113,90 @@ export default class Home extends React.Component {
               <TableHeader
                 text="#"
                 sortBy="marketCapRank"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />
             </StyledCol>
             <StyledCol span={3}>
-              <TableHeader
-                text="Name"
-                sortBy="id"
-                toggleOrder={this.toggleOrder}
-              />
+              <TableHeader text="Name" sortBy="id" toggleOrder={toggleOrder} />
             </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="Price"
                 sortBy="currentPrice"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />
             </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="1h"
                 sortBy="priceChangePercentage1HInCurrency"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />
             </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="24h"
                 sortBy="priceChangePercentage24HInCurrency"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />
             </StyledCol>
             <StyledCol span={2}>
               <TableHeader
                 text="7d"
                 sortBy="priceChangePercentage7DInCurrency"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />
             </StyledCol>
             <StyledCol span={4}>
               <TableHeader
                 text="24h Volume"
                 sortBy="totalVolume"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />{" "}
               /{" "}
               <TableHeader
                 text="Market Cap"
                 sortBy="marketCap"
-                toggleOrder={this.toggleOrder}
-              />{" "}
+                toggleOrder={toggleOrder}
+              />
             </StyledCol>
             <StyledCol span={4}>
               <TableHeader
                 text="Circulating"
                 sortBy="circulatingSupply"
-                toggleOrder={this.toggleOrder}
+                toggleOrder={toggleOrder}
               />{" "}
               /{" "}
               <TableHeader
                 text="Total Supply"
                 sortBy="totalSupply"
-                toggleOrder={this.toggleOrder}
-              />{" "}
+                toggleOrder={toggleOrder}
+              />
             </StyledCol>
             <StyledCol span={4}> Last 7 d </StyledCol>
           </StyledRow>
           {isLoading && <LoadingCoins />}
-          {hasResponse && (
-            <Coins
-              currency={this.props.currency}
-              coinList={this.state.coinList.sort(this.sortCoins)}
-            />
-          )}
+          {hasResponse && <Coins coinList={coinList} />}
         </Container>
       </>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  home: state.home,
+  currency: state.app.currency,
+  hasResponse:
+    !state.home.isLoading &&
+    !state.home.hasError &&
+    !!state.home.coinList.length,
+});
+
+const mapDispatchToProps = {
+  fetchAllCoins,
+
+  setCurrency,
+  toggleOrder,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

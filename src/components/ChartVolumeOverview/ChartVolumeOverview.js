@@ -1,15 +1,14 @@
 import React from "react";
-import { isEmpty } from "lodash";
 import { formatOverviewChart } from "utils";
 import { Bar } from "react-chartjs-2";
 
 export default function ChartPriceOverview(props) {
-  const { total_volumes } = props;
+  const { totalVolumes } = props;
   // Exclude 31st element which corresponds to ... average?
   const data = {
     datasets: [
       {
-        data: total_volumes
+        data: totalVolumes
           .filter((item, index, array) => index !== array.length - 1)
           .map(formatOverviewChart),
         borderColor: "#2172e5",
@@ -55,7 +54,7 @@ export default function ChartPriceOverview(props) {
 
   return (
     <div className="chart">
-      {!isEmpty(total_volumes) && <Bar data={data} options={options} />}
+      {!!totalVolumes.length && <Bar data={data} options={options} />}
     </div>
   );
 }

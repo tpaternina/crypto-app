@@ -1,9 +1,8 @@
-import axios from "axios";
 import React from "react";
-import queryString from "query-string";
-import { isEmpty } from "lodash";
-import { ChartPriceOverview } from "components";
+import { connect } from "react-redux";
+import { ChartPriceOverview, ChartVolumeOverview } from "components";
 import { formatDate, formatLongNumber } from "utils";
+import { fetchPrices } from "store/home/actions";
 import {
   ChartCol,
   ChartContainer,
@@ -13,59 +12,28 @@ import {
   StyledLoading,
   StyledPrice,
 } from "./ChartOverview.styles";
-import ChartVolumeOverview from "components/ChartVolumeOverview";
 
-export default class ChartOverview extends React.Component {
-  state = {
-    prices: [],
-    total_volumes: [],
-    isLoading: false,
-    hasError: false,
-  };
-
-  getPrices = async () => {
-    try {
-      const { topCoin, currency } = this.props;
-      this.setState({
-        isLoading: true,
-      });
-      const query = queryString.stringifyUrl({
-        url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${topCoin.id}/market_chart`,
-        query: {
-          vs_currency: currency,
-          days: 30,
-          interval: "daily",
-        },
-      });
-      const {
-        data: { prices, total_volumes },
-      } = await axios(query);
-      this.setState({
-        prices,
-        total_volumes,
-        isLoading: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
-      console.log(err);
-    }
-  };
-
+class ChartOverview extends React.Component {
   componentDidMount() {
-    this.getPrices();
+    this.props.fetchPrices(this.props.currency);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currency !== this.props.currency) {
+      this.props.fetchPrices(this.props.currency);
+    }
   }
 
   render() {
-    const { prices, total_volumes, isLoading, hasError } = this.state;
-    const { topCoin, currency } = this.props;
-    const hasResponse =
-      !isEmpty(prices) && !isEmpty(total_volumes) && !isLoading && !hasError;
+    const {
+      home: { prices, totalVolumes, coinList, isOverviewLoading },
+      hasResponse,
+      currency,
+    } = this.props;
+    const topCoin = coinList.find(item => item.marketCapRank === 1);
     return (
       <>
-        {isLoading && (
+        {isOverviewLoading && (
           <ChartRow>
             <ChartCol span={11}>
               <ChartContainer>
@@ -96,15 +64,15 @@ export default class ChartOverview extends React.Component {
             <ChartCol span={11}>
               <ChartContainer>
                 <ChartVolumeOverview
-                  total_volumes={total_volumes}
+                  totalVolumes={totalVolumes}
                   currency={currency}
                 />
                 <ChartInfo className="chart-info">
                   <StyledInfo> Volume 24 h </StyledInfo>
                   <StyledPrice>
-                    {formatLongNumber(total_volumes[29][1], currency, 3)}
+                    {formatLongNumber(totalVolumes[29][1], currency, 3)}
                   </StyledPrice>
-                  <StyledInfo> {formatDate(total_volumes[29][0])} </StyledInfo>
+                  <StyledInfo> {formatDate(totalVolumes[29][0])} </StyledInfo>
                 </ChartInfo>
               </ChartContainer>
             </ChartCol>
@@ -114,3 +82,22 @@ export default class ChartOverview extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  currency: state.app.currency,
+  home: state.home,
+  hasResponse:
+    !state.home.isLoading &&
+    !state.home.hasError &&
+    !state.home.isOverviewLoading &&
+    !state.home.hasOverviewError &&
+    !!state.home.coinList.length &&
+    !!state.home.prices.length &&
+    !!state.home.totalVolumes.length,
+});
+
+const mapDispatchToProps = {
+  fetchPrices,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChartOverview);

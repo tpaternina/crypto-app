@@ -1,6 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import queryString from "query-string";
 import {
   AppContainer,
   Container,
@@ -10,70 +10,47 @@ import {
 } from "./App.styles";
 import { Coin, Home, Portfolio } from "pages";
 import { Currency, GlobalInfo, SearchCoin } from "components";
+import { setCurrency } from "store/app/actions";
 
 console.clear();
 
-export default class App extends React.Component {
-  state = {
-    currency: "EUR",
-  };
-
-  handleCurrency = (newCurrency) => {
-    this.setState({ currency: newCurrency });
-  };
-
-  componentDidMount() {
-    if (window.location.search) {
-      const { currency } = queryString.parse(window.location.search);
-      this.setState({ currency });
-    } else {
-      this.setState({ currency: "EUR" });
-    }
-  }
-
+class App extends React.Component {
   render() {
-    const { currency } = this.state;
+    const {
+      app: { currency },
+      pageConfig: { sortBy, descending }
+    } = this.props;
     return (
       <AppContainer>
         <Router>
           <StyledNav>
             <StyledList>
               <li>
-                <StyledLink exact activeClassName="selected" to="/">
+                <StyledLink
+                  exact
+                  activeClassName="selected"
+                  to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
+                >
                   Coins
                 </StyledLink>
               </li>
               <li>
-                <StyledLink exact activeClassName="selected" to="/portfolio">
+                <StyledLink exact activeClassName="selected" to={`/portfolio?currency=${currency}`}>
                   Portfolio
                 </StyledLink>
               </li>
             </StyledList>
             <StyledList>
               <SearchCoin />
-              <Currency
-                currency={currency}
-                handleCurrency={this.handleCurrency}
-              />
+              <Currency />
             </StyledList>
           </StyledNav>
           <Container>
             <GlobalInfo currency={currency} />
             <Switch>
-              <Route
-                path="/coins/:id"
-                component={(props) => <Coin currency={currency} {...props} />}
-              />
-              <Route
-                path="/portfolio"
-                component={(props) => (
-                  <Portfolio {...props} currency={currency} />
-                )}
-              />
-              <Route
-                path="/"
-                component={(props) => <Home currency={currency} {...props} />}
-              />
+              <Route path="/coins/:id" component={Coin} />
+              <Route path="/portfolio" component={Portfolio} />
+              <Route path="/" component={Home} />
             </Switch>
           </Container>
         </Router>
@@ -81,3 +58,14 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  app: state.app,
+  pageConfig: state.home.pageConfig,
+});
+
+const mapDispatchToProps = {
+  setCurrency,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

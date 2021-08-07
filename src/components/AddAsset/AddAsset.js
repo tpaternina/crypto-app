@@ -1,10 +1,15 @@
 import React from "react";
-import axios from "axios";
 import moment from "moment";
-import { isEmpty } from "lodash";
+import { connect } from "react-redux";
+import { debounce } from "lodash";
 import { Form, Select } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { LoadingList } from "components";
-import { keysToCamelCase } from "utils";
+import {
+  getCoinList,
+  handleClose,
+  handleSubmit,
+} from "store/portfolio/actions";
 import {
   Background,
   CoinContainer,
@@ -26,112 +31,72 @@ import {
 
 const { Option } = Select;
 
-export default class AddAsset extends React.Component {
-  state = {
-    coin: this.props.coin,
-    coinList: [],
-    isListLoading: false,
-    isCoinLoading: false,
-  };
+class AddAsset extends React.Component {
+  form = React.createRef();
 
-  modal = React.createRef();
-  modalBackground = React.createRef();
-
-  getCoinInfo = async () => {
-    if (this.state.coin.id) {
-      try {
-        this.setState({ isCoinLoading: true });
-        const { id } = this.state.coin;
-        let { data: coin } = await axios(
-          `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}`
-        );
-        coin = keysToCamelCase(coin);
-
-        this.setState({ coin: { ...this.state.coin, ...coin } });
-        this.setState({ isCoinLoading: false });
-      } catch (err) {
-        console.log(err);
-        this.setState({ isCoinLoading: false });
-      }
-    }
-  };
-
-  getCoinList = async (val) => {
-    try {
-      this.setState({ isListLoading: true });
-      const { data: coinList } = await axios(
-        `${process.env.REACT_APP_SEARCH_LIST}/${val}`
-      );
-      this.setState({ coinList, isListLoading: false });
-    } catch (err) {
-      console.log(err);
-      this.setState({ isListLoading: false });
-    }
-  };
-
-  handleClickOutside = ({ target }) => {
-    if (this.modal.current && !this.modal.current.contains(target)) {
-      this.props.hideAddAsset();
-    }
-  };
+  getCoinList = debounce(async (val) => {
+    this.props.getCoinList(val);
+  }, 1000);
 
   handleSearch = (val) => {
-    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] });
+    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] }); 
   };
 
   handleSelect = (value) => {
-    const { id, large, name, symbol } = this.state.coinList.find(
+    const { id, large, name, symbol } = this.props.coinList.find(
       (coin) => coin.id === value
     );
     const {
-      coin: { key },
-    } = this.state;
-    this.setState({ coin: { key, id, large, name, symbol }, coinList: [] });
+      coin: { key, purchasedDate, purchasedAmount },
+    } = this.props;
+    this.props.handleSelect({
+      key,
+      id,
+      large,
+      name,
+      symbol,
+      purchasedDate,
+      purchasedAmount,
+    });
   };
-
-  handleSubmit = (values) => {
-    const { coin } = this.state;
-    const newCoin = { ...coin };
-    // Add element unique identifier if new asset
-    // Use current identifier if editing asset
-    newCoin.key = coin.key || `${Math.random()}-${Math.random()}`;
-
-    newCoin.purchasedDate = values.purchasedDate;
-    newCoin.purchasedAmount = values.purchasedAmount;
-
-    this.setState({ coin: {} });
-
-    // Handle state lift according to "add" or "edit" mode
-    !isEmpty(this.props.coin)
-      ? this.props.handleEdit(newCoin)
-      : this.props.handleSubmit(newCoin);
-  };
-
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.coin.id !== this.state.coin.id) {
-      this.getCoinInfo();
+    if (
+      this.props.coin.id !== undefined &&
+      prevProps.coin.id !== this.props.coin.id
+    ) {
+      const {
+        coin: { name, symbol, purchasedAmount, purchasedDate },
+      } = this.props;
+
+      this.form.current.setFieldsValue({
+        id: `${name} (${symbol.toUpperCase()})`,
+        purchasedAmount,
+        purchasedDate: purchasedDate
+          ? moment(purchasedDate, "YYYY-MM-DD")
+          : undefined,
+      });
+      this.props.getCoinInfo();
     }
-    if (JSON.stringify(prevProps.coin) !== JSON.stringify(this.props.coin)) {
-      this.setState({ coin: this.props.coin });
+    if (
+      prevProps.coin.id !== this.props.coin.id &&
+      this.props.coin.id === undefined
+    ) {
+      this.form.current.resetFields();
     }
   }
 
   render() {
     const {
-      coin: { id, large, name, symbol, purchasedAmount, purchasedDate },
+      coin: { key, large, name, symbol, purchasedAmount, purchasedDate },
       coinList,
-      isListLoading,
-      isCoinLoading,
-    } = this.state;
-    const { destroyAddAsset, openAddAsset, handleClose } = this.props;
+      isPriceLoading,
+      isSearchLoading,
+      destroyAddAsset,
+      openAddAsset,
+      handleClose,
+      handleSubmit,
+    } = this.props;
     return (
       <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
         <Container width="57%">
@@ -144,10 +109,11 @@ export default class AddAsset extends React.Component {
           <StyledRow>
             <StyledCol span={24}>
               <Form
+                ref={this.form}
                 initialValues={{
                   remember: true,
                 }}
-                onFinish={this.handleSubmit}
+                onFinish={handleSubmit}
               >
                 <StyledRow justify="space-between">
                   <StyledCol span={7}>
@@ -158,8 +124,6 @@ export default class AddAsset extends React.Component {
                           {name} ({symbol.toUpperCase()})
                         </StyledCoinName>
                       </CoinContainer>
-                    ) : isCoinLoading ? (
-                      <LoadingList />
                     ) : (
                       <CoinContainer>
                         <StyledFileImageIcon />
@@ -178,7 +142,9 @@ export default class AddAsset extends React.Component {
                           message: "Please select a cryptocoin from the list.",
                         },
                       ]}
-                      initialValue={id}
+                      initialValue={
+                        key ? `${name} (${symbol.toUpperCase()})` : undefined
+                      }
                     >
                       <StyledSelect
                         showSearch
@@ -186,7 +152,9 @@ export default class AddAsset extends React.Component {
                         optionFilterProp="children"
                         onSearch={this.handleSearch}
                         onChange={this.handleSelect}
-                        notFoundContent={isListLoading ? <LoadingList /> : null}
+                        notFoundContent={
+                          isSearchLoading ? <LoadingList /> : null
+                        }
                         aria-expanded="true"
                       >
                         {coinList.map((coin) => (
@@ -209,7 +177,7 @@ export default class AddAsset extends React.Component {
                           message: "This field is required.",
                         },
                       ]}
-                      initialValue={purchasedAmount}
+                      initialValue={key ? purchasedAmount : undefined}
                     >
                       <StyledInputNumber
                         min={0}
@@ -226,7 +194,7 @@ export default class AddAsset extends React.Component {
                         },
                       ]}
                       initialValue={
-                        purchasedDate ? moment(purchasedDate, "YYYY-MM-DD") : undefined
+                        key ? moment(purchasedDate, "YYYY-MM-DD") : ""
                       }
                     >
                       <StyledDatePicker
@@ -238,9 +206,20 @@ export default class AddAsset extends React.Component {
                 </StyledRow>
                 <StyledRow>
                   <StyledCol span={24}>
-                    <StyledButton onClick={handleClose}>Close</StyledButton>
+                    <StyledButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleClose();
+                      }}
+                    >
+                      Close
+                    </StyledButton>
                     <StyledButton type="submit" primary>
-                      Save and Continue
+                      {isPriceLoading ? (
+                        <LoadingOutlined />
+                      ) : (
+                        "Save and Continue"
+                      )}
                     </StyledButton>
                   </StyledCol>
                 </StyledRow>
@@ -252,3 +231,20 @@ export default class AddAsset extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  coin: state.portfolio.editCoin,
+  destroyAddAsset: state.portfolio.destroyAddAsset,
+  openAddAsset: state.portfolio.openAddAsset,
+  coinList: state.portfolio.coinSearchList,
+  isSearchLoading: state.portfolio.isSearchLoading,
+  isPriceLoading: state.portfolio.isPriceLoading,
+});
+
+const mapDispatchToProps = {
+  getCoinList,
+  handleClose,
+  handleSubmit,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddAsset);

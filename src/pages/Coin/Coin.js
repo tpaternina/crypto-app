@@ -1,10 +1,12 @@
 import React from "react";
-import axios from "axios";
+import queryString from "query-string";
+import { connect } from "react-redux";
 import parse from "html-react-parser";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
 import { layers } from "assets";
-import { keysToCamelCase } from "utils";
+import { getCoinInfo } from "store/coin/actions";
+import { setCurrency } from "store/app/actions";
 import {
   BlockchainLink,
   CoinMarketInfo,
@@ -20,51 +22,53 @@ import {
   StyledTitle,
 } from "./Coin.styles";
 
-export default class Coin extends React.Component {
-  state = {
-    data: {},
-    isLoading: false,
-    hasError: false,
-  };
-
+class Coin extends React.Component {
   loadingBar = React.createRef();
 
-  getCoinInfo = async () => {
-    try {
-      this.setState({ isLoading: true });
-      let { data } = await axios(
-        `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${this.props.match.params.id}`
-      );
-      data = keysToCamelCase(data);
-
-      this.setState({ isLoading: false, hasError: false, data });
-    } catch (err) {
-      console.log(err);
-      this.setState({ isLoading: false, hasError: err });
-    }
-  };
-
   componentDidMount() {
-    this.getCoinInfo();
+    if (this.props.location.search) {
+      const { currency } = queryString.parse(this.props.location.search);
+      this.props.setCurrency(currency);
+    } else {
+      const { currency } = this.props;
+      const query = queryString.stringify({
+        currency,
+      });
+      this.props.history.push(`?${query}`);
+    }
+    this.props.getCoinInfo(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.isLoading !== this.state.isLoading && this.state.isLoading) {
+    if (prevProps.currency !== this.props.currency) {
+      const { currency } = this.props;
+      const query = queryString.stringify({
+        currency,
+      });
+      console.log(query);
+      this.props.history.push(`?${query}`);
+    }
+    if (
+      prevProps.coin.isLoading !== this.props.coin.isLoading &&
+      this.props.coin.isLoading
+    ) {
       this.loadingBar.current.continuousStart();
     }
 
-    if (prevState.isLoading !== this.state.isLoading && !this.state.isLoading) {
+    if (
+      prevProps.coin.isLoading !== this.props.coin.isLoading &&
+      !this.props.coin.isLoading
+    ) {
       this.loadingBar.current.complete();
     }
 
     if (prevProps.match.params.id !== this.props.match.params.id) {
-
-      this.getCoinInfo();
+      this.props.getCoinInfo(this.props.match.params.id);
     }
   }
 
   render() {
-    const { data, isLoading, hasError } = this.state;
+    const { data, isLoading, hasError } = this.props.coin;
     let { currency } = this.props;
     currency = currency.toLowerCase();
     const hasResponse = !isEmpty(data) && !isLoading && !hasError;
@@ -79,7 +83,7 @@ export default class Coin extends React.Component {
           0
         )
       : 0;
-    return ( 
+    return (
       <>
         <StyledTitle>Coin summary</StyledTitle>
         <LoadingBar ref={this.loadingBar} />
@@ -106,7 +110,11 @@ export default class Coin extends React.Component {
                 <StyledContainer>
                   <StyledLayerIcon src={layers} />
                   <StyledDescription>
-                    {data.description["en"] ? parse(data.description["en"]) : <small>Description unavailable</small>}
+                    {data.description["en"] ? (
+                      parse(data.description["en"])
+                    ) : (
+                      <small>Description unavailable</small>
+                    )}
                   </StyledDescription>
                 </StyledContainer>
               </StyledCol>
@@ -126,3 +134,15 @@ export default class Coin extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  currency: state.app.currency,
+  coin: state.coin,
+});
+
+const mapDispatchToProps = {
+  getCoinInfo,
+  setCurrency,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Coin);
