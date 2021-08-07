@@ -2,7 +2,6 @@ import axios from "axios";
 import queryString from "query-string";
 import { keysToSnakeCase, keysToCamelCase } from "utils";
 import {
-  PARSE_HOME_QUERY_STRING,
   FETCH_ALL_COINS_SUCCESS,
   FETCH_ALL_COINS_PENDING,
   FETCH_ALL_COINS_ERROR,
