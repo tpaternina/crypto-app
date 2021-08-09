@@ -1,4 +1,3 @@
-import { Router } from "react-router-dom";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { merge } from "lodash";
 import thunk from "redux-thunk";
@@ -54,7 +53,6 @@ const paramSetup = {
 };
 
 const mapLocationToState = (state, location) => {
-  console.log(state, location.query);
   switch (location.pathname) {
     case "/":
       return merge({}, state, location.query);
