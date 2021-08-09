@@ -5,7 +5,7 @@ import { DollarCircleOutlined } from "@ant-design/icons";
 export const StyledSelect = styled(Select)`
   width: 5.5rem;
   box-sizing: border-box;
-  text-align: left;
+  text-align: center;
 
   color: #fff;
 
@@ -42,5 +42,5 @@ export const StyledDollar = styled(DollarCircleOutlined)`
   left: 0.65rem;
   transform: translate(0%, -50%);
   margin-right: 0.5rem;
-  color: #00ff5f;
+  color: #06d554;
 `;
