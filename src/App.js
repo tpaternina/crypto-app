@@ -18,7 +18,7 @@ class App extends React.Component {
   render() {
     const {
       app: { currency },
-      pageConfig: { sortBy, descending }
+      pageConfig: { sortBy, descending },
     } = this.props;
     return (
       <AppContainer>
@@ -35,14 +35,22 @@ class App extends React.Component {
                 </StyledLink>
               </li>
               <li>
-                <StyledLink exact activeClassName="selected" to={`/portfolio?currency=${currency}`}>
+                <StyledLink
+                  exact
+                  activeClassName="selected"
+                  to={`/portfolio?currency=${currency}`}
+                >
                   Portfolio
                 </StyledLink>
               </li>
             </StyledList>
             <StyledList>
-              <SearchCoin />
-              <Currency />
+              <li>
+                <SearchCoin />
+              </li>
+              <li>
+                <Currency />
+              </li>
             </StyledList>
           </StyledNav>
           <Container>
