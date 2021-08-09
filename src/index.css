@@ -28,11 +28,12 @@ code {
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
   .ant-select-selector {
   border-color: #06d554;
+  outline: none;
 }
 
-.ant-select-focused {
-  border-color: red;
-}
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #06d554;
+  }
 
 .ant-select-dropdown {
   background-color: #191b1f;

@@ -18,13 +18,8 @@ export const StyledSelect = styled(Select)`
     height: fit-content;
   }
 
-  .ant-select-selector.ant-select-selector:hover {
-    border-color: #06d554;
-  }
-
-  .ant-select-selector.ant-select-selector:focus {
-    border-color: #06d554;
-    outline: none;
+  .ant-select-selector.ant-select-selector .ant-select-selection-search {
+    left: 1.75rem;
   }
 
   & > .ant-select-arrow {
