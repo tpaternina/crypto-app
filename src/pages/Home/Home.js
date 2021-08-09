@@ -61,7 +61,7 @@ class Home extends React.Component {
         descending,
         currency,
       });
-      this.props.history.push(query);
+      this.props.history.push(`/${query}`);
     }
     if (prevProps.currency !== this.props.currency) {
       this.props.fetchAllCoins();
