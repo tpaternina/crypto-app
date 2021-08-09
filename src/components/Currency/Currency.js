@@ -32,7 +32,7 @@ function Currency(props) {
         }
       >
         {currencyList.map((el) => (
-          <Option value={el}>{el.toUpperCase()}</Option>
+          <Option key={el} value={el}>{el.toUpperCase()}</Option>
         ))}
       </StyledSelect>
       <StyledDollar />
