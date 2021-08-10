@@ -82,6 +82,7 @@ const Portfolio = (props) => {
       });
       props.history.push(`?${query}`);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -90,6 +91,7 @@ const Portfolio = (props) => {
         sortBy,
       });
       props.history.push(`?${query}`);
+      // eslint-disable-next-line
     }, [currency, sortBy])
   
   return (

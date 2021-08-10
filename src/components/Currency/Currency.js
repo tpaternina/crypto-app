@@ -16,7 +16,11 @@ function Currency(props) {
     input.current.blur();
   };
 
-  useEffect(() => getCurrencies(), []);
+  useEffect(
+    () => getCurrencies(),
+    // eslint-disable-next-line
+    []
+  );
 
   return (
     <Container>
@@ -32,7 +36,9 @@ function Currency(props) {
         }
       >
         {currencyList.map((el) => (
-          <Option key={el} value={el}>{el.toUpperCase()}</Option>
+          <Option key={el} value={el}>
+            {el.toUpperCase()}
+          </Option>
         ))}
       </StyledSelect>
       <StyledDollar />
