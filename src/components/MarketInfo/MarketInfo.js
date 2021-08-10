@@ -13,24 +13,33 @@ export default function MarketInfo(props) {
     singleCoin,
     width,
   } = props;
-  const url = singleCoin
-    ? logoUrl.split("/").splice(4).join("/")
-    : logoUrl.split("/").splice(3).join("/");
+  let url;
+  if (process.env.NODE_ENV === "development") {
+    url = singleCoin
+      ? logoUrl.split("/").splice(4).join("/")
+      : logoUrl.split("/").splice(3).join("/");
+  } else {
+    url = logoUrl;
+  }
   const { data } = usePalette(url);
-  const fraction = denominator ? ((numerator * 100) / denominator).toFixed(2) : "∞";
+  const fraction = denominator
+    ? ((numerator * 100) / denominator).toFixed(2)
+    : "∞";
   return (
     <StyledInfo width={width || "100%"}>
       <MarketInfoRow>
         <MarketDiv color={data.vibrant}>
           •
           {percentage
-            ? `${(typeof fraction === "number" ? `${fraction}%` : fraction)}`
+            ? `${typeof fraction === "number" ? `${fraction}%` : fraction}`
             : formatLongNumber(numerator, currency)}
         </MarketDiv>
         <MarketDiv color={data.lightVibrant}>
           •
           {percentage
-            ? `${(typeof fraction === "number" ? `${100 - fraction}%` : fraction)}`
+            ? `${
+                typeof fraction === "number" ? `${100 - fraction}%` : fraction
+              }`
             : formatLongNumber(denominator, currency)}
         </MarketDiv>
       </MarketInfoRow>
