@@ -19,6 +19,7 @@ class App extends React.Component {
     const {
       app: { currency },
       pageConfig: { sortBy, descending },
+      portfolio: {sortBy: portfolioSort},
     } = this.props;
     return (
       <AppContainer>
@@ -36,9 +37,8 @@ class App extends React.Component {
               </li>
               <li>
                 <StyledLink
-                  exact
                   activeClassName="selected"
-                  to={`/portfolio?currency=${currency}`}
+                  to={`/portfolio?currency=${currency}&sortBy=${portfolioSort}`}
                 >
                   Portfolio
                 </StyledLink>
@@ -70,6 +70,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => ({
   app: state.app,
   pageConfig: state.home.pageConfig,
+  portfolio: state.portfolio,
 });
 
 const mapDispatchToProps = {
