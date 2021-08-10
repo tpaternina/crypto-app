@@ -1,4 +1,4 @@
-import { camelCase, snakeCase, isPlainObject } from "lodash";
+import { camelCase, snakeCase, capitalize, isPlainObject } from "lodash";
 import moment from "moment";
 
 export function formatLongNumber(number, currency, decimals) {
@@ -82,6 +82,10 @@ export const keysToCamelCase = (obj) =>
     }
     return { ...acc, [camelCase(key)]: val };
   }, {});
+
+export const camelCaseToCapitalize = (string) => {
+  return capitalize(snakeCase(string).split("_").join(" "));
+};
 
 export const formatQueryDate = (dateString) => {
   return moment(dateString).format("DD-MM-YYYY");
