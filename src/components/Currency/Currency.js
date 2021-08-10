@@ -22,7 +22,7 @@ function Currency(props) {
     <Container>
       <StyledSelect
         ref={input}
-        defaultValue={currency}
+        value={currency}
         showSearch
         placeholder="New currency"
         onChange={handleSelect}
