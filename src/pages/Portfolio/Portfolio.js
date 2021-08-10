@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import queryString from "query-string";
 import moment from "moment";
 import { connect } from "react-redux";
-import { DownCircleOutlined } from "@ant-design/icons";
+import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import { AddAsset, PortfolioAsset } from "components";
 import { camelCaseToCapitalize } from "utils";
 import {
@@ -20,6 +20,7 @@ import { setCurrency } from "store/app/actions";
 import {
   EmptyListIcon,
   PlaceholderText,
+  StyledAnchor,
   StyledButton,
   StyledCol,
   StyledRow,
@@ -90,38 +91,6 @@ const Portfolio = (props) => {
       });
       props.history.push(`?${query}`);
     }, [currency, sortBy])
-
-  /*componentDidMount() {
-    if (this.props.location.search) {
-      const { currency, sortBy } = queryString.parse(
-        this.props.location.search
-      );
-      this.props.setCurrency(currency);
-      this.props.setOrder(sortBy);
-    } else {
-      const { currency, sortBy } = this.props;
-      const query = queryString.stringify({
-        currency,
-        sortBy,
-      });
-      this.props.history.push(`?${query}`);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.currency !== this.props.currency ||
-      prevProps.sortBy !== this.props.sortBy
-    ) {
-      const { currency, sortBy } = this.props;
-      const query = queryString.stringify({
-        currency,
-        sortBy,
-      });
-      this.props.history.push(`?${query}`);
-    }
-  }*/
-
   
   return (
     <>
@@ -130,11 +99,11 @@ const Portfolio = (props) => {
           <StyledButton onClick={showAddAsset}>Add Asset</StyledButton>
         </StyledCol>
       </StyledRow>
-      <StyledRow justify="space-between">
+      <StyledRow justify="center" gutter={16}>
         <StyledCol span={4} justify="flex-start">
           <StyledTitle>Your statistics</StyledTitle>
         </StyledCol>
-        <StyledCol span={14} justify="flex-end">
+        <StyledCol span={15} justify="flex-end">
           Sort by:{" "}
         </StyledCol>
         <StyledCol span={5}>
@@ -171,6 +140,27 @@ const Portfolio = (props) => {
               handleDelete={handleDelete}
             />
           ))}
+      <StyledRow justify="end" gutter={16}>
+        <StyledCol span={17} justify="flex-end">
+          <StyledAnchor href="#">Back to top <UpCircleOutlined /></StyledAnchor>
+        </StyledCol>
+        <StyledCol span={2} justify="flex-end">
+          Sort by:{" "}
+        </StyledCol>
+        <StyledCol span={5}>
+          <StyledSelect
+            value={sortBy}
+            onChange={onChange}
+            suffixIcon={<DownCircleOutlined />}
+          >
+            {options.map((el) => (
+              <Option value={el} key={el}>
+                {camelCaseToCapitalize(el)}
+              </Option>
+            ))}
+          </StyledSelect>
+        </StyledCol>
+      </StyledRow>
       <AddAsset
         coin={editCoin}
         destroyAddAsset={destroyAddAsset}

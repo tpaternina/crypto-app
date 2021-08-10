@@ -7,6 +7,24 @@ export const EmptyListIcon = styled(InboxOutlined)`
   font-size: 6rem;
 `;
 
+export const StyledAnchor = styled.a`
+  color: #fff;
+  border-radius: 6px;
+  background-color: #191b1f;
+
+  height: 100%;
+  width: 9rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  &:hover {
+    color: #06d554;
+  }
+`
+
 export const StyledButton = styled.button`
   color: #fff;
   background-color: #06d554;
