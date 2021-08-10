@@ -16,7 +16,6 @@ export const Background = styled.div`
   z-index: 999;
   opacity: ${(props) => (props.openAddAsset ? "1" : "0")};
   transition: all 0.25s linear;
-
 `;
 
 export const CoinContainer = styled.div`
@@ -149,10 +148,6 @@ export const StyledSelect = styled(Select)`
     border-radius: 6px;
     border: 1px solid #191b1f;
     background-color: #191b1f;
-  }
-
-  .ant-select-selector.ant-select-selector:hover {
-    border-color: #06d554;
   }
 
   & > .ant-select-arrow {
