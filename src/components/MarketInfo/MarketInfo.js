@@ -13,14 +13,9 @@ export default function MarketInfo(props) {
     singleCoin,
     width,
   } = props;
-  let url;
-  /*if (process.env.NODE_ENV === "development") {
-    */url = singleCoin
-      ? logoUrl.split("/").splice(4).join("/")
-      : logoUrl.split("/").splice(3).join("/");/*
-  } else {
-    url = logoUrl;
-  }*/
+  const url = singleCoin
+    ? logoUrl.split("/").splice(4).join("/")
+    : logoUrl.split("/").splice(3).join("/");
   const { data } = usePalette(url);
   const fraction = denominator
     ? ((numerator * 100) / denominator).toFixed(2)
