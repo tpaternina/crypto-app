@@ -69,11 +69,6 @@ function GlobalInfo(props) {
     setResponse(!isLoading && !hasError && !!coinList.length && !isEmpty(data));
   }, [isLoading, hasError, coinList, data]);
 
-  useEffect(
-    () => console.log({ first, second, increase }),
-    [first, second, increase]
-  );
-
   const currency = props.currency.toLowerCase();
 
   return (
