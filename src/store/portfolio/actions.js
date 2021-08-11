@@ -19,6 +19,7 @@ import {
   GET_PRICE_AT_DATE_ERROR,
   GET_PRICE_AT_DATE_SUCCESS,
   DELETE_ASSET,
+  CHANGE_ORDER,
 } from "./index";
 
 export const getCoinInfo = () => async (dispatch, getState) => {
@@ -188,6 +189,13 @@ export const handleSubmit = (values) => async (dispatch, getState) => {
       type: ADD_ASSET_DESTROY_MODAL,
     });
   }, 250);
+};
+
+export const setOrder = (sortBy) => {
+  return {
+    type: CHANGE_ORDER,
+    payload: { sortBy },
+  };
 };
 
 export const showAddAsset = () => (dispatch, getState) => {

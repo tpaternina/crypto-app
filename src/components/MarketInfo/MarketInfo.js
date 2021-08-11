@@ -17,20 +17,24 @@ export default function MarketInfo(props) {
     ? logoUrl.split("/").splice(4).join("/")
     : logoUrl.split("/").splice(3).join("/");
   const { data } = usePalette(url);
-  const fraction = denominator ? ((numerator * 100) / denominator).toFixed(2) : "∞";
+  const fraction = denominator
+    ? ((numerator * 100) / denominator).toFixed(2)
+    : "∞";
   return (
     <StyledInfo width={width || "100%"}>
       <MarketInfoRow>
         <MarketDiv color={data.vibrant}>
           •
           {percentage
-            ? `${(typeof fraction === "number" ? `${fraction}%` : fraction)}`
+            ? `${typeof fraction === "number" ? `${fraction}%` : fraction}`
             : formatLongNumber(numerator, currency)}
         </MarketDiv>
         <MarketDiv color={data.lightVibrant}>
           •
           {percentage
-            ? `${(typeof fraction === "number" ? `${100 - fraction}%` : fraction)}`
+            ? `${
+                typeof fraction === "number" ? `${100 - fraction}%` : fraction
+              }`
             : formatLongNumber(denominator, currency)}
         </MarketDiv>
       </MarketInfoRow>

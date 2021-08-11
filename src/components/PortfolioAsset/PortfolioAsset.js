@@ -98,7 +98,7 @@ export default class PortfolioAsset extends React.Component {
                     </ColorBarContainer>
                   </InfoContainer>
                   <InfoContainer>
-                    <InfoTitle>Circ. vs. Max. supply:</InfoTitle>
+                    <InfoTitle>Circ. vs. Max. supply</InfoTitle>
                     <StyledInfo color="#fff">
                       {formatLongNumber(circulatingSupply, symbol)}
                     </StyledInfo>

@@ -7,6 +7,13 @@ const initialState = {
   hasError: false,
   isPriceLoading: false,
   isSearchLoading: false,
+  sortBy: "marketCapRank",
+  options: [
+    "marketCapRank",
+    "purchasedAmount",
+    "purchasedDate",
+    "currentPrice",
+  ]
 };
 
 export const ADD_ASSET_UNDESTROY_MODAL = "ADD_ASSET_UNDESTROY_MODAL";
@@ -33,6 +40,8 @@ export const GET_PRICE_AT_DATE_ERROR = "GET_PRICE_AT_DATE_ERROR";
 export const GET_PRICE_AT_DATE_SUCCESS = "GET_PRICE_AT_DATE_SUCCESS";
 
 export const DELETE_ASSET = "DELETE_ASSET";
+
+export const CHANGE_ORDER = "CHANGE_ORDER";
 
 const portfolioReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -141,6 +150,11 @@ const portfolioReducer = (state = initialState, { type, payload }) => {
         ...state,
         hasError: payload,
         isPriceLoading: false,
+      };
+    case CHANGE_ORDER:
+      return {
+        ...state,
+        sortBy: payload.sortBy,
       };
     default:
       return state;

@@ -10,7 +10,7 @@ const sortCoins = (item1, item2, sortBy, descending) => {
 
 const Coins = (props) => {
   const { currency, coinList, sortBy, descending } = props;
-  return coinList
+  return [...coinList]
     .sort((item1, item2) => sortCoins(item1, item2, sortBy, descending))
     .map((coin) => <CoinInfo key={coin.id} coin={coin} currency={currency} />);
 };

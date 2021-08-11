@@ -1,30 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useToggle } from "react-use";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { StyledIcon, StyledHeader } from "./TableHeader.styles";
 
-export default class TableHeader extends React.Component {
-  state = {
-    descending: this.props.text === "#" ? false : true,
-  };
+export default function TableHeader(props) {
+  const { text, sortBy, toggleOrder } = props;
 
-  toggleOrder = () => {
-    // toggle descending order
-    this.setState({ descending: !this.state.descending });
-    this.props.toggleOrder(this.props.sortBy, !this.state.descending);
-  };
+  const [descending, toggleDescending] = useToggle(text === "#" ? false : true);
 
-  render() {
-    return (
-      <StyledHeader onClick={this.toggleOrder}>
-        {this.props.text}
-        <StyledIcon>
-        {this.state.descending ? (
-          <DownOutlined />
-        ) : (
-          <UpOutlined />
-        )}
-        </StyledIcon>
-      </StyledHeader>
-    );
-  }
+  useEffect(() => {
+    toggleOrder(sortBy, descending);
+    // eslint-disable-next-line
+  }, [descending]);
+
+  return (
+    <StyledHeader onClick={toggleDescending}>
+      {props.text}
+      <StyledIcon>{descending ? <DownOutlined /> : <UpOutlined />}</StyledIcon>
+    </StyledHeader>
+  );
 }

@@ -36,8 +36,13 @@ export const StyledLink = styled(NavLink)`
 
 export const StyledList = styled.ul`
   margin: 0;
+  padding: 0;
   display: flex;
   align-items: center;
+
+  & > li:last-of-type {
+    margin: 0;
+  }
 `
 
 export const StyledNav = styled.nav`

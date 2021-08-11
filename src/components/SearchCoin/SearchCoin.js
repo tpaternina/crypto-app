@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { debounce } from "lodash";
-import { Select } from "antd";
+import { DownCircleOutlined } from "@ant-design/icons";
 import { LoadingList } from "components";
 import {
   StyledSelect,
 } from "./SearchCoin.styles";
 
-const { Option } = Select;
+const { Option } = StyledSelect;
 
 export default class SearchCoin extends React.Component {
   state = {
@@ -55,6 +55,7 @@ export default class SearchCoin extends React.Component {
           onSearch={this.handleSearch}
           onChange={this.handleSelect}
           onBlur={this.onBlur}
+          suffixIcon={<DownCircleOutlined />}
           notFoundContent={isLoading && <LoadingList />}
           aria-expanded="true"
         >
