@@ -1,70 +1,41 @@
 import styled from "styled-components";
-import { Menu } from "antd";
-import { DollarCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
+import { Select } from "antd";
+import { DollarCircleOutlined } from "@ant-design/icons";
 
-export const StyledCurrency = styled.button`
-  background-color: #2c2f36;
-  border-radius: 6px;
-  padding: .75rem 1rem;
-  font-size: 1rem;
+export const StyledSelect = styled(Select)`
+  width: 5.5rem;
+  box-sizing: border-box;
+  text-align: center;
+
   color: #fff;
-  border: none;
-  height: fit-content;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: space-between;
+
+  .ant-select-selector.ant-select-selector {
+    border-radius: 6px;
+    border: 1px solid #191b1f;
+    background-color: #2c2f36;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem 0.3rem 1.75rem;
+    height: fit-content;
+  }
+
+  .ant-select-selector.ant-select-selector .ant-select-selection-search {
+    left: 1.75rem;
+  }
+
+  & > .ant-select-arrow {
+    color: #06d554;
+  }
+`;
+
+export const Container = styled.div`
+  position: relative;
 `;
 
 export const StyledDollar = styled(DollarCircleOutlined)`
-  margin-right: 0.5rem;
-  color: #00ff5f;
-`;
-
-export const StyledArrow = styled(DownCircleOutlined)`
-  margin-left: 0.5rem;
-  color: #00ff5f;
-`;
-
-export const StyledInput = styled.input`
-  background-color: #2c2f36;
-  border: none;
-  width: 2.5rem;
-  margin: 0;
-  padding: 0.5 0;
-  font-size: 0.75rem;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-
-export const StyledMenu = styled(Menu)`
-  background-color: #2c2f36;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   position: absolute;
-  right: 5.5rem;
-  top: 3.5rem;
-  z-index: 999;
-  border: none;
-`;
-
-export const StyledItem = styled(Menu.Item)`
-
-  
-  border: solid 0 #fff;
-  border-radius: 6px;
-  color: #fff;
-
-  &.ant-menu-item, &.ant-menu-item-only-child {
-    margin: 0;
-    padding: 0 2.80rem;
-  }
-
-  &.ant-menu-item-active:hover {
-    background-color: #0b9b43;
-    color: #fff;
-  }
+  top: 50%;
+  left: 0.65rem;
+  transform: translate(0%, -50%);
+  margin-right: 0.5rem;
+  color: #06d554;
 `;

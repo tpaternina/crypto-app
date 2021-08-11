@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import queryString from "query-string";
+import moment from "moment";
 import { connect } from "react-redux";
-import { Row } from "antd";
+import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import { AddAsset, PortfolioAsset } from "components";
+import { camelCaseToCapitalize } from "utils";
 import {
   getCoinInfo,
   handleClose,
@@ -10,6 +12,7 @@ import {
   handleSelect,
   handleSubmit,
   getPriceAtDate,
+  setOrder,
   showAddAsset,
   showEditAsset,
 } from "store/portfolio/actions";
@@ -17,97 +20,169 @@ import { setCurrency } from "store/app/actions";
 import {
   EmptyListIcon,
   PlaceholderText,
+  StyledAnchor,
   StyledButton,
   StyledCol,
+  StyledRow,
+  StyledSelect,
   StyledTitle,
 } from "./Portfolio.styles";
 
-class Portfolio extends React.Component {
-  componentDidMount() {
-    if (this.props.location.search) {
-      const { currency } = queryString.parse(this.props.location.search);
-      this.props.setCurrency(currency);
+const { Option } = StyledSelect;
+
+const Portfolio = (props) => {
+  const onChange = (value) => {
+    props.setOrder(value);
+  };
+
+  const sortAssets = (item1, item2) => {
+    const { sortBy, currency } = props;
+    switch (sortBy) {
+      case "marketCapRank":
+        return item1[sortBy] - item2[sortBy];
+      case "purchasedDate":
+        return moment(item2[sortBy]) - moment(item1[sortBy]) 
+      case "purchasedAmount":
+        return item2[sortBy] - item1[sortBy];
+      case "currentPrice":
+      case "priceChange24HInCurrency":
+        return (
+          item2.marketData[sortBy][currency.toLowerCase()] -
+          item1.marketData[sortBy][currency.toLowerCase()]
+        );
+      default:
+        return item1.marketCapRank - item2.marketCapRank;
+    }
+  };
+
+  const {
+    portfolio: { assetList, openAddAsset, destroyAddAsset, editCoin, options },
+    currency,
+    sortBy,
+    getCoinInfo,
+    handleClose,
+    handleDelete,
+    handleSelect,
+    handleSubmit,
+    showAddAsset,
+    showEditAsset,
+  } = props;
+
+  useEffect(() => {
+    if (props.location.search) {
+      const { currency, sortBy } = queryString.parse(
+        props.location.search
+      );
+      props.setCurrency(currency);
+      props.setOrder(sortBy);
     } else {
-      const { currency } = this.props;
       const query = queryString.stringify({
         currency,
+        sortBy,
       });
-      this.props.history.push(`?${query}`);
+      props.history.push(`?${query}`);
     }
-  }
+    // eslint-disable-next-line
+  }, []);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.currency !== this.props.currency) {
-      console.log(this.props.location)
-      const { currency } = this.props;
+  useEffect(() => {
       const query = queryString.stringify({
-        currency
+        currency,
+        sortBy,
       });
-      console.log(query)
-      this.props.history.push(`?${query}`);
-    }
-  }
-
-  render() {
-    const {
-      portfolio: { assetList, openAddAsset, destroyAddAsset, editCoin },
-      currency,
-      getCoinInfo,
-      handleClose,
-      handleDelete,
-      handleSelect,
-      handleSubmit,
-      showAddAsset,
-      showEditAsset,
-    } = this.props;
-    return (
-      <>
-        <Row justify="center">
-          <StyledCol span={6}>
-            <StyledButton onClick={showAddAsset}>Add Asset</StyledButton>
-          </StyledCol>
-        </Row>
-        <StyledTitle>Your statistics</StyledTitle>
-        {!assetList.length && (
-          <Row justify="center">
-            <StyledCol>
-              <EmptyListIcon />
-              <PlaceholderText>You have no assets yet.</PlaceholderText>
-            </StyledCol>
-          </Row>
-        )}
-        {!!assetList.length &&
-          assetList
-            .sort((coin1, coin2) => coin1.marketCapRank - coin2.marketCapRank)
-            .map((coin) => (
-              <PortfolioAsset
-                key={coin.key}
-                coin={coin}
-                currency={currency}
-                showEditAsset={showEditAsset}
-                handleDelete={handleDelete}
-              />
+      props.history.push(`?${query}`);
+      // eslint-disable-next-line
+    }, [currency, sortBy])
+  
+  return (
+    <>
+      <StyledRow justify="center">
+        <StyledCol span={6}>
+          <StyledButton onClick={showAddAsset}>Add Asset</StyledButton>
+        </StyledCol>
+      </StyledRow>
+      <StyledRow justify="center" gutter={16}>
+        <StyledCol span={4} justify="flex-start">
+          <StyledTitle>Your statistics</StyledTitle>
+        </StyledCol>
+        <StyledCol span={15} justify="flex-end">
+          Sort by:{" "}
+        </StyledCol>
+        <StyledCol span={5}>
+          <StyledSelect
+            value={sortBy}
+            onChange={onChange}
+            suffixIcon={<DownCircleOutlined />}
+          >
+            {options.map((el) => (
+              <Option value={el} key={el}>
+                {camelCaseToCapitalize(el)}
+              </Option>
             ))}
-        <AddAsset
-          coin={editCoin}
-          destroyAddAsset={destroyAddAsset}
-          openAddAsset={openAddAsset}
-          getCoinInfo={getCoinInfo}
-          handleClose={(e) => {
-            e.preventDefault();
-            handleClose();
-          }}
-          handleSelect={handleSelect}
-          handleSubmit={handleSubmit}
-        />
-      </>
-    );
-  }
-}
+          </StyledSelect>
+        </StyledCol>
+      </StyledRow>
+      {!assetList.length && (
+        <StyledRow justify="center">
+          <StyledCol>
+            <EmptyListIcon />
+            <PlaceholderText>You have no assets yet.</PlaceholderText>
+          </StyledCol>
+        </StyledRow>
+      )}
+      {!!assetList.length &&
+        assetList
+          .sort(sortAssets)
+          .map((coin) => (
+            <PortfolioAsset
+              key={coin.key}
+              coin={coin}
+              currency={currency}
+              showEditAsset={showEditAsset}
+              handleDelete={handleDelete}
+            />
+          ))}
+      <StyledRow justify="end" gutter={16}>
+        <StyledCol span={17} justify="flex-end">
+          <StyledAnchor href="#">Back to top <UpCircleOutlined /></StyledAnchor>
+        </StyledCol>
+        <StyledCol span={2} justify="flex-end">
+          Sort by:{" "}
+        </StyledCol>
+        <StyledCol span={5}>
+          <StyledSelect
+            value={sortBy}
+            onChange={onChange}
+            suffixIcon={<DownCircleOutlined />}
+          >
+            {options.map((el) => (
+              <Option value={el} key={el}>
+                {camelCaseToCapitalize(el)}
+              </Option>
+            ))}
+          </StyledSelect>
+        </StyledCol>
+      </StyledRow>
+      <AddAsset
+        coin={editCoin}
+        destroyAddAsset={destroyAddAsset}
+        openAddAsset={openAddAsset}
+        getCoinInfo={getCoinInfo}
+        handleClose={(e) => {
+          e.preventDefault();
+          handleClose();
+        }}
+        handleSelect={handleSelect}
+        handleSubmit={handleSubmit}
+      />
+    </>
+  );
+};
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,
   currency: state.app.currency,
+  sortBy: state.portfolio.sortBy,
 });
 
 const mapDispatchToProps = {
@@ -118,6 +193,7 @@ const mapDispatchToProps = {
   handleSelect,
   handleSubmit,
   setCurrency,
+  setOrder,
   showAddAsset,
   showEditAsset,
 };

@@ -45,7 +45,6 @@ class Coin extends React.Component {
       const query = queryString.stringify({
         currency,
       });
-      console.log(query);
       this.props.history.push(`?${query}`);
     }
     if (

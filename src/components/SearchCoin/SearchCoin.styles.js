@@ -23,14 +23,8 @@ export const StyledSelect = styled(Select)`
 
   .ant-select-selector.ant-select-selector {
     border-radius: 6px;
-    border: 1px solid #191b1f;
-    background-color: #191b1f;
-  }
-
-  .ant-select-selector.ant-select-selector:hover,
-  .ant-select-selector.ant-select-selector:focus {
-    outline: none;
-    border-color: #06d554;
+    border: 1px solid #2c2f36;
+    background-color: #2c2f36;
   }
 
   & > .ant-select-arrow {

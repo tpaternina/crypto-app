@@ -1,8 +1,8 @@
 {
   "name": "crypto-app",
   "version": "0.1.0",
-  "private": true,
   "proxy": "https://assets.coingecko.com",
+  "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -16,6 +16,7 @@
     "css-what": "^5.0.1",
     "glob-parent": "^6.0.0",
     "html-react-parser": "^1.2.7",
+    "http-proxy-middleware": "^2.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "node-vibrant": "^3.2.1-alpha.1",
@@ -31,6 +32,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-top-loading-bar": "^2.0.1",
+    "react-use": "^17.2.4",
     "redux": "^4.1.0",
     "redux-location-state": "^2.8.2",
     "redux-persist": "^6.0.0",
