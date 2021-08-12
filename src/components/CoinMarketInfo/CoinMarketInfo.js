@@ -13,6 +13,7 @@ import {
 
 export default function CoinMarketInfo(props) {
   const { currency, data } = props;
+  console.log(data.marketData.totalVolume[currency],data.marketData.marketCap[currency])
   return (
     <StyledContainer>
       <StyledDiv>
@@ -82,7 +83,7 @@ export default function CoinMarketInfo(props) {
         </StyledInfo>
         {(data.marketData.marketCap[currency] && (
           <MarketInfo
-            percentage
+            percentage={true}
             width="65%"
             numerator={data.marketData.totalVolume[currency]}
             denominator={data.marketData.marketCap[currency]}
