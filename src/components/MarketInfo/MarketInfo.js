@@ -8,7 +8,6 @@ export default function MarketInfo(props) {
   const fraction = denominator
     ? (numerator * 100) / denominator
     : "∞";
-  console.log({ fraction, percentage });
   return (
     <StyledInfo width={width || "100%"}>
       <MarketInfoRow>
