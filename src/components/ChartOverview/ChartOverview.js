@@ -1,17 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Row } from "antd";
 import { ChartPriceOverview, ChartVolumeOverview } from "components";
+import { ChartCol, ChartContainer, ChartInfo, StyledInfo, StyledLoading, StyledPrice } from "styled";
 import { formatDate, formatLongNumber } from "utils";
 import { fetchPrices } from "store/home/actions";
-import {
-  ChartCol,
-  ChartContainer,
-  ChartInfo,
-  ChartRow,
-  StyledInfo,
-  StyledLoading,
-  StyledPrice,
-} from "./ChartOverview.styles";
 
 class ChartOverview extends React.Component {
   componentDidMount() {
@@ -30,29 +23,27 @@ class ChartOverview extends React.Component {
       hasResponse,
       currency,
     } = this.props;
-    const topCoin = coinList.find(item => item.marketCapRank === 1);
+    const topCoin = coinList.find((item) => item.marketCapRank === 1);
     return (
       <>
         {isOverviewLoading && (
-          <ChartRow>
-            <ChartCol span={11}>
+          <Row>
+            <ChartCol>
+              <ChartContainer>
+                <StyledLoading />
+              </ChartContainer>
               <ChartContainer>
                 <StyledLoading />
               </ChartContainer>
             </ChartCol>
-            <ChartCol span={11}>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-            </ChartCol>
-          </ChartRow>
+          </Row>
         )}
         {hasResponse && (
-          <ChartRow>
-            <ChartCol span={11}>
+          <Row>
+            <ChartCol>
               <ChartContainer>
                 <ChartPriceOverview prices={prices} currency={currency} />
-                <ChartInfo className="chart-info">
+                <ChartInfo>
                   <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
                   <StyledPrice>
                     {formatLongNumber(prices[29][1], currency, 3)}
@@ -60,14 +51,12 @@ class ChartOverview extends React.Component {
                   <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
                 </ChartInfo>
               </ChartContainer>
-            </ChartCol>
-            <ChartCol span={11}>
               <ChartContainer>
                 <ChartVolumeOverview
                   totalVolumes={totalVolumes}
                   currency={currency}
                 />
-                <ChartInfo className="chart-info">
+                <ChartInfo>
                   <StyledInfo> Volume 24 h </StyledInfo>
                   <StyledPrice>
                     {formatLongNumber(totalVolumes[29][1], currency, 3)}
@@ -76,7 +65,7 @@ class ChartOverview extends React.Component {
                 </ChartInfo>
               </ChartContainer>
             </ChartCol>
-          </ChartRow>
+          </Row>
         )}
       </>
     );

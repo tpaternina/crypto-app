@@ -1,4 +1,5 @@
 import React from "react";
+import gradient from "chartjs-plugin-gradient";
 import { formatOverviewChart } from "utils";
 import { Line } from "react-chartjs-2";
 
@@ -8,27 +9,27 @@ export default function ChartPriceOverview(props) {
   // Exclude 31st element which corresponds to ... average?
   const increase = !!prices.length && prices[29][1] - prices[0][1] > 0;
 
-  const data = (canvas) => {
-    const ctx = canvas.getContext("2d");
-    const gradient = ctx.createLinearGradient(0, 0, 0, 230);
-
-    // Add three color stops
-    gradient.addColorStop(0, increase ? "#00711377" : "#81011b77");
-    gradient.addColorStop(1, "#191b1f");
-
-    return {
-      datasets: [
-        {
-          data: prices
-            .filter((item, index, array) => index !== array.length - 1)
-            .map(formatOverviewChart),
-          borderWidth: 1,
-          borderColor: increase ? "#00fc2a" : "#fe1040",
-          fill: true,
-          backgroundColor: gradient,
+  const data = {
+    datasets: [
+      {
+        data: prices
+          .filter((item, index, array) => index !== array.length - 1)
+          .map(formatOverviewChart),
+        gradient: {
+          backgroundColor: {
+            axis: "y",
+            colors: {
+              0: "red",
+              50: "yellow",
+              100: "green",
+            },
+          },
         },
-      ],
-    };
+        borderWidth: 1,
+        borderColor: increase ? "#00fc2a" : "#fe1040",
+        fill: true,
+      },
+    ],
   };
 
   const options = {
@@ -42,6 +43,7 @@ export default function ChartPriceOverview(props) {
       title: {
         display: false,
       },
+      gradient,
     },
     elements: {
       point: {

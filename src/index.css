@@ -24,6 +24,13 @@ code {
     monospace;
 }
 
+/* Overview chart in Home */
+.chart {
+  position: absolute;
+  top:  0;
+  width: 100%;
+}
+
 /* Customize Select component from antdesign */
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
   border-color: rgba(0, 0, 0, 0);

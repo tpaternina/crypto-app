@@ -2,19 +2,12 @@ import React from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
+import { Row } from "antd";
 import { fetchAllCoins, toggleOrder } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
 import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
-import {
-  ChartCol,
-  ChartContainer,
-  ChartRow,
-  Container,
-  StyledCol,
-  StyledLoading,
-  StyledRow,
-  StyledTitle,
-} from "./Home.styles";
+import { ChartCol, ChartContainer, StyledLoading } from "styled";
+import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
 
 class Home extends React.Component {
   loadingBar = React.createRef();
@@ -90,20 +83,16 @@ class Home extends React.Component {
       <>
         <LoadingBar ref={this.loadingBar} />
         {isLoading && (
-          <ChartRow>
-            <ChartCol span={11}>
+          <Row>
+            <ChartCol>
               <ChartContainer>
-                {" "}
-                <StyledLoading />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
-            <ChartCol span={11}>
+                <StyledLoading />
+              </ChartContainer>
               <ChartContainer>
-                {" "}
-                <StyledLoading />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
-          </ChartRow>
+                <StyledLoading />
+              </ChartContainer>
+            </ChartCol>
+          </Row>
         )}
         {hasResponse && <ChartOverview />}
         <StyledTitle> Market Overview </StyledTitle>
