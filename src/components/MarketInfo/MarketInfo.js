@@ -10,7 +10,7 @@ export default function MarketInfo(props) {
     percentage,
     width,
   } = props;
-
+  
   const fraction = denominator
     ? ((numerator * 100) / denominator).toFixed(2)
     : "∞";

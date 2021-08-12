@@ -12,7 +12,6 @@ export default function ColorBar(props) {
       <StyledBar
         width={`${clamp(fraction, 10, 100)}%`}
         color="#fff"
-      />
     </StyledBar>
   );
 }

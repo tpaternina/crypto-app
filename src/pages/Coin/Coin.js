@@ -52,6 +52,7 @@ function Coin(props) {
   useEffect(() => {
     if (!isEmpty(data)) {
       setIncrease(data.marketData.priceChangePercentage24H > 0);
+
     }
   }, [data]);
 
