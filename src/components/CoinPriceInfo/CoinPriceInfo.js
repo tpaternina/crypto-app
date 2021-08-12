@@ -12,7 +12,9 @@ import {
 } from "./CoinPriceInfo.styles";
 
 export default function CoinPriceInfo(props) {
-  const { currency, data, increase } = props;
+  const { data, increase } = props;
+  let { currency } = props;
+  currency = currency.toLowerCase();
   return (
     !isEmpty(data) && (
       <StyledContainer>

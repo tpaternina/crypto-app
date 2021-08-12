@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import { ColorBar } from "components";
 import { formatLongNumber, keysToCamelCase } from "utils";
+import { fetchAllCoins } from "store/home/actions"
 import {
   BarContainer,
   CoinLogo,
@@ -49,6 +50,7 @@ function GlobalInfo(props) {
   useEffect(() => {
     // eslint-disable-next-line
     getInfo();
+    props.fetchAllCoins();
   }, []);
 
   useEffect(() => {
@@ -66,8 +68,11 @@ function GlobalInfo(props) {
   }, [coinList]);
 
   useEffect(() => {
+    console.log({ isLoading, hasError, coinList, data });
     setResponse(!isLoading && !hasError && !!coinList.length && !isEmpty(data));
   }, [isLoading, hasError, coinList, data]);
+
+  useEffect(() => console.log(hasResponse), [hasResponse]);
 
   const currency = props.currency.toLowerCase();
 
@@ -104,8 +109,6 @@ function GlobalInfo(props) {
                 <ColorBar
                   numerator={data.totalVolume[currency]}
                   denominator={data.totalMarketCap[currency]}
-                  numeratorColor="#fff"
-                  denominatorColor="#2172e5"
                 />
               </BarContainer>
             </GlobalInfoContainer>
@@ -118,8 +121,6 @@ function GlobalInfo(props) {
                 <ColorBar
                   numerator={data.marketCapPercentage[first.symbol]}
                   denominator={100}
-                  numeratorColor="#fff"
-                  denominatorColor="#2172e5"
                 />
               </BarContainer>
             </GlobalInfoContainer>
@@ -149,4 +150,8 @@ const mapStateToProps = (state) => ({
   coinList: state.home.coinList,
 });
 
-export default connect(mapStateToProps)(GlobalInfo);
+const mapDispatchToProps = {
+  fetchAllCoins,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalInfo);

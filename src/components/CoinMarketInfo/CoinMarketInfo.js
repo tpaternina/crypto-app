@@ -82,12 +82,10 @@ export default function CoinMarketInfo(props) {
         </StyledInfo>
         {(data.marketData.marketCap[currency] && (
           <MarketInfo
+            percentage
             width="65%"
-            percentage={true}
-            singleCoin={true}
             numerator={data.marketData.totalVolume[currency]}
             denominator={data.marketData.marketCap[currency]}
-            logoUrl={data.image.large}
           />
         ))}
       </StyledDiv>

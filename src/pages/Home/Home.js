@@ -194,7 +194,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchAllCoins,
-
   setCurrency,
   toggleOrder,
 };

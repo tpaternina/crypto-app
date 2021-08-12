@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
@@ -22,116 +22,125 @@ import {
   StyledTitle,
 } from "./Coin.styles";
 
-class Coin extends React.Component {
-  loadingBar = React.createRef();
+function Coin(props) {
+  const loadingBar = React.createRef();
 
-  componentDidMount() {
-    if (this.props.location.search) {
-      const { currency } = queryString.parse(this.props.location.search);
-      this.props.setCurrency(currency);
+  const [hasResponse, setResponse] = useState(false);
+  const [increase, setIncrease] = useState(false);
+  const [linkNumber, setLinkNumber] = useState(0);
+
+  const {
+    coin: { data, isLoading, hasError },
+    currency,
+  } = props;
+
+  useEffect(() => {
+    if (props.location.search) {
+      const { currency } = queryString.parse(props.location.search);
+      props.setCurrency(currency);
     } else {
-      const { currency } = this.props;
+      const { currency } = props;
       const query = queryString.stringify({
         currency,
       });
-      this.props.history.push(`?${query}`);
+      props.history.push(`?${query}`);
     }
-    this.props.getCoinInfo(this.props.match.params.id);
-  }
+    props.getCoinInfo(props.match.params.id);
+    // eslint-disable-next-line
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.currency !== this.props.currency) {
-      const { currency } = this.props;
-      const query = queryString.stringify({
-        currency,
-      });
-      this.props.history.push(`?${query}`);
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      setIncrease(data.marketData.priceChangePercentage24H > 0);
     }
-    if (
-      prevProps.coin.isLoading !== this.props.coin.isLoading &&
-      this.props.coin.isLoading
-    ) {
-      this.loadingBar.current.continuousStart();
-    }
+  }, [data]);
 
-    if (
-      prevProps.coin.isLoading !== this.props.coin.isLoading &&
-      !this.props.coin.isLoading
-    ) {
-      this.loadingBar.current.complete();
-    }
-
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.props.getCoinInfo(this.props.match.params.id);
-    }
-  }
-
-  render() {
-    const { data, isLoading, hasError } = this.props.coin;
-    let { currency } = this.props;
-    currency = currency.toLowerCase();
-    const hasResponse = !isEmpty(data) && !isLoading && !hasError;
-    const increase = hasResponse
-      ? data.marketData.priceChangePercentage24H > 0
-      : false;
-
-    // Number of non-empty elements in links array
-    const linkNumber = hasResponse
-      ? data.links.blockchainSite.reduce(
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      setLinkNumber(
+        data.links.blockchainSite.reduce(
           (acc, item) => (item ? (acc += 1) : acc),
           0
         )
-      : 0;
-    return (
-      <>
-        <StyledTitle>Coin summary</StyledTitle>
-        <LoadingBar ref={this.loadingBar} />
-        {hasResponse && (
-          <>
-            <StyledRow>
-              <StyledCol span={6}>
-                <CoinTitle data={data} />
-              </StyledCol>
-              <StyledCol span={7}>
-                <CoinPriceInfo
-                  currency={currency}
-                  data={data}
-                  increase={increase}
-                />
-              </StyledCol>
-              <StyledCol span={10}>
-                <CoinMarketInfo currency={currency} data={data} />
-              </StyledCol>
-            </StyledRow>
-            <StyledTitle>Description</StyledTitle>
-            <StyledRow>
-              <StyledCol span={24}>
-                <StyledContainer>
-                  <StyledLayerIcon src={layers} />
-                  <StyledDescription>
-                    {data.description["en"] ? (
-                      parse(data.description["en"])
-                    ) : (
-                      <small>Description unavailable</small>
-                    )}
-                  </StyledDescription>
-                </StyledContainer>
-              </StyledCol>
-            </StyledRow>
-            <StyledRow>
-              {data.links.blockchainSite
-                .filter((link) => link !== "")
-                .map((link) => (
-                  <StyledCol key={link} span={24 / linkNumber - 1}>
-                    <BlockchainLink link={link} />
-                  </StyledCol>
-                ))}
-            </StyledRow>
-          </>
-        )}
-      </>
-    );
-  }
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const query = queryString.stringify({
+      currency,
+    });
+    props.history.push(`?${query}`);
+    // eslint-disable-next-line
+  }, [currency]);
+
+  useEffect(() => {
+    if (isLoading) {
+      loadingBar.current.continuousStart();
+    } else {
+      loadingBar.current.complete();
+    }
+    // eslint-disable-next-line
+  }, [isLoading]);
+
+  useEffect(() => {
+    props.getCoinInfo(props.match.params.id);
+    // eslint-disable-next-line
+  }, [props.match.params.id]);
+
+    useEffect(() => {
+    setResponse(!isEmpty(data) && !isLoading && !hasError);
+  }, [data, isLoading, hasError]);
+
+  return (
+    <>
+      <StyledTitle>Coin summary</StyledTitle>
+      <LoadingBar ref={loadingBar} />
+      {hasResponse && (
+        <>
+          <StyledRow>
+            <StyledCol span={6}>
+              <CoinTitle data={data} />
+            </StyledCol>
+            <StyledCol span={7}>
+              <CoinPriceInfo
+                currency={currency}
+                data={data}
+                increase={increase}
+              />
+            </StyledCol>
+            <StyledCol span={10}>
+              <CoinMarketInfo currency={currency.toLowerCase()} data={data} />
+            </StyledCol>
+          </StyledRow>
+          <StyledTitle>Description</StyledTitle>
+          <StyledRow>
+            <StyledCol span={24}>
+              <StyledContainer>
+                <StyledLayerIcon src={layers} />
+                <StyledDescription>
+                  {data.description["en"] ? (
+                    parse(data.description["en"])
+                  ) : (
+                    <small>Description unavailable</small>
+                  )}
+                </StyledDescription>
+              </StyledContainer>
+            </StyledCol>
+          </StyledRow>
+          <StyledRow>
+            {data.links.blockchainSite
+              .filter((link) => link !== "")
+              .map((link) => (
+                <StyledCol key={link} span={24 / linkNumber - 1}>
+                  <BlockchainLink link={link} />
+                </StyledCol>
+              ))}
+          </StyledRow>
+        </>
+      )}
+    </>
+  );
 }
 
 const mapStateToProps = (state) => ({

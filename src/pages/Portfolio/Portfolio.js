@@ -16,6 +16,7 @@ import {
   showAddAsset,
   showEditAsset,
 } from "store/portfolio/actions";
+import { fetchAllCoins } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
 import {
   EmptyListIcon,
@@ -186,6 +187,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  fetchAllCoins,
   getCoinInfo,
   getPriceAtDate,
   handleClose,
