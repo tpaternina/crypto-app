@@ -51,6 +51,7 @@ function GlobalInfo(props) {
     // eslint-disable-next-line
     getInfo();
     props.fetchAllCoins();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -68,11 +69,8 @@ function GlobalInfo(props) {
   }, [coinList]);
 
   useEffect(() => {
-    console.log({ isLoading, hasError, coinList, data });
     setResponse(!isLoading && !hasError && !!coinList.length && !isEmpty(data));
   }, [isLoading, hasError, coinList, data]);
-
-  useEffect(() => console.log(hasResponse), [hasResponse]);
 
   const currency = props.currency.toLowerCase();
 
