@@ -1,7 +1,8 @@
 import React from "react";
 import gradient from "chartjs-plugin-gradient";
-import { formatOverviewChart } from "utils";
 import { Line } from "react-chartjs-2";
+import { formatOverviewChart } from "utils";
+import { ChartDiv } from "styled";
 
 export default function ChartPriceOverview(props) {
   const { prices } = props;
@@ -19,9 +20,8 @@ export default function ChartPriceOverview(props) {
           backgroundColor: {
             axis: "y",
             colors: {
-              0: "red",
-              50: "yellow",
-              100: "green",
+              0: "#00fc2a00",
+              100: "#00fc2a77",
             },
           },
         },
@@ -34,7 +34,7 @@ export default function ChartPriceOverview(props) {
 
   const options = {
     layout: {
-      padding: { top: 50, right: 25, left: 25 },
+      //padding: { top: 10, right: 15, left: 5 },
     },
     plugins: {
       legend: {
@@ -43,7 +43,6 @@ export default function ChartPriceOverview(props) {
       title: {
         display: false,
       },
-      gradient,
     },
     elements: {
       point: {
@@ -58,7 +57,7 @@ export default function ChartPriceOverview(props) {
         },
         ticks: {
           font: {
-            size: 16,
+            size: 12,
           },
         },
       },
@@ -75,8 +74,8 @@ export default function ChartPriceOverview(props) {
   };
 
   return (
-    <div className="chart">
-      {!!prices.length && <Line data={data} options={options} />}
-    </div>
+    <ChartDiv>
+      {!!prices.length && <Line data={data} options={options} plugins={[{gradient}]} />}
+    </ChartDiv>
   );
 }

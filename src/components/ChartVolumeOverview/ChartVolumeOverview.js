@@ -1,6 +1,7 @@
 import React from "react";
-import { formatOverviewChart } from "utils";
 import { Bar } from "react-chartjs-2";
+import { formatOverviewChart } from "utils";
+import { ChartDiv } from "styled";
 
 export default function ChartPriceOverview(props) {
   const { totalVolumes } = props;
@@ -19,7 +20,7 @@ export default function ChartPriceOverview(props) {
   };
   const options = {
     layout: {
-      padding: { top: 50, right: 25, left: 25 },
+      //padding: { top: 50, right: 25, left: 25 },
     },
     plugins: {
       legend: {
@@ -36,7 +37,7 @@ export default function ChartPriceOverview(props) {
         },
         ticks: {
           font: {
-            size: 16,
+            size: 12,
           },
         },
       },
@@ -53,8 +54,8 @@ export default function ChartPriceOverview(props) {
   };
 
   return (
-    <div className="chart">
+    <ChartDiv>
       {!!totalVolumes.length && <Bar data={data} options={options} />}
-    </div>
+    </ChartDiv>
   );
 }
