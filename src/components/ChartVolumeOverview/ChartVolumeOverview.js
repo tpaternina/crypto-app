@@ -39,6 +39,7 @@ export default function ChartPriceOverview(props) {
           font: {
             size: 12,
           },
+          color: "#c6c7ce",
         },
       },
       y: {

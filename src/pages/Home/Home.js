@@ -2,11 +2,15 @@ import React from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
-import { Row } from "antd";
 import { fetchAllCoins, toggleOrder } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
-import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
-import { ChartCol, ChartContainer, StyledLoading } from "styled";
+import {
+  ChartLoading,
+  ChartOverview,
+  Coins,
+  LoadingCoins,
+  TableHeader,
+} from "components";
 import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
 
 class Home extends React.Component {
@@ -82,18 +86,7 @@ class Home extends React.Component {
     return (
       <>
         <LoadingBar ref={this.loadingBar} />
-        {isLoading && (
-          <Row>
-            <ChartCol>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-            </ChartCol>
-          </Row>
-        )}
+        {isLoading && <ChartLoading />}
         {hasResponse && <ChartOverview />}
         <StyledTitle> Market Overview </StyledTitle>
         <Container>

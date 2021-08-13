@@ -1,10 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Row } from "antd";
-import { ChartPriceOverview, ChartVolumeOverview } from "components";
-import { ChartCol, ChartContainer, ChartInfo, StyledInfo, StyledLoading, StyledPrice } from "styled";
+import Slider from "react-slick";
+import {
+  ChartLoading,
+  ChartPriceOverview,
+  ChartVolumeOverview,
+} from "components";
+import {
+  ChartCol,
+  ChartContainer,
+  ChartInfo,
+  StyledInfo,
+  StyledLoading,
+  StyledPrice,
+  NarrowDiv,
+  WideDiv,
+} from "styled";
 import { formatDate, formatLongNumber } from "utils";
 import { fetchPrices } from "store/home/actions";
+
+const slickSettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 class ChartOverview extends React.Component {
   componentDidMount() {
@@ -26,46 +48,69 @@ class ChartOverview extends React.Component {
     const topCoin = coinList.find((item) => item.marketCapRank === 1);
     return (
       <>
-        {isOverviewLoading && (
-          <Row>
-            <ChartCol>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-            </ChartCol>
-          </Row>
-        )}
+        {isOverviewLoading && <ChartLoading />}
         {hasResponse && (
-          <Row>
-            <ChartCol>
-              <ChartContainer>
-                <ChartPriceOverview prices={prices} currency={currency} />
-                <ChartInfo>
-                  <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
-                  <StyledPrice>
-                    {formatLongNumber(prices[29][1], currency, 3)}
-                  </StyledPrice>
-                  <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
-                </ChartInfo>
-              </ChartContainer>
-              <ChartContainer>
-                <ChartVolumeOverview
-                  totalVolumes={totalVolumes}
-                  currency={currency}
-                />
-                <ChartInfo>
-                  <StyledInfo> Volume 24 h </StyledInfo>
-                  <StyledPrice>
-                    {formatLongNumber(totalVolumes[29][1], currency, 3)}
-                  </StyledPrice>
-                  <StyledInfo> {formatDate(totalVolumes[29][0])} </StyledInfo>
-                </ChartInfo>
-              </ChartContainer>
-            </ChartCol>
-          </Row>
+          <>
+            <WideDiv>
+              <Row>
+                <ChartCol>
+                  <ChartContainer>
+                    <ChartPriceOverview prices={prices} currency={currency} />
+                    <ChartInfo>
+                      <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
+                      <StyledPrice>
+                        {formatLongNumber(prices[29][1], currency, 3)}
+                      </StyledPrice>
+                      <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
+                    </ChartInfo>
+                  </ChartContainer>
+                  <ChartContainer>
+                    <ChartVolumeOverview
+                      totalVolumes={totalVolumes}
+                      currency={currency}
+                    />
+                    <ChartInfo>
+                      <StyledInfo> Volume 24 h </StyledInfo>
+                      <StyledPrice>
+                        {formatLongNumber(totalVolumes[29][1], currency, 3)}
+                      </StyledPrice>
+                      <StyledInfo>
+                        {" "}
+                        {formatDate(totalVolumes[29][0])}{" "}
+                      </StyledInfo>
+                    </ChartInfo>
+                  </ChartContainer>
+                </ChartCol>
+              </Row>
+            </WideDiv>
+            <NarrowDiv>
+              <Slider {...slickSettings}>
+                <ChartContainer>
+                  <ChartPriceOverview prices={prices} currency={currency} />
+                  <ChartInfo>
+                    <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
+                    <StyledPrice>
+                      {formatLongNumber(prices[29][1], currency, 3)}
+                    </StyledPrice>
+                    <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
+                  </ChartInfo>
+                </ChartContainer>
+                <ChartContainer>
+                  <ChartVolumeOverview
+                    totalVolumes={totalVolumes}
+                    currency={currency}
+                  />
+                  <ChartInfo>
+                    <StyledInfo> Volume 24 h </StyledInfo>
+                    <StyledPrice>
+                      {formatLongNumber(totalVolumes[29][1], currency, 3)}
+                    </StyledPrice>
+                    <StyledInfo> {formatDate(totalVolumes[29][0])} </StyledInfo>
+                  </ChartInfo>
+                </ChartContainer>
+              </Slider>
+            </NarrowDiv>
+          </>
         )}
       </>
     );

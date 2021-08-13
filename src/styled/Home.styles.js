@@ -1,23 +1,39 @@
 import styled from "styled-components";
 import { LoadingOutlined } from "@ant-design/icons";
 
-export const ChartCol = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
+export const WideDiv = styled.div`
   @media screen and (min-width: 350px) {
     & {
-      flex-direction: column;
+      display: none;
     }
   }
 
   @media screen and (min-width: 768px) {
     & {
-      flex-direction: row;
+      display: block;
     }
   }
+`;
+
+export const NarrowDiv = styled.div`
+  @media screen and (min-width: 350px) {
+    & {
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    & {
+      display: none;
+    }
+  }
+`;
+
+export const ChartCol = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const ChartContainer = styled.div`
@@ -25,22 +41,21 @@ export const ChartContainer = styled.div`
   font-size: 0.9rem;
 
   margin: 0;
-  padding: 25% 0.25rem 0 0.25rem;
   width: 50%;
   position: relative;
 
   border-radius: 6px;
   border-collapse: collapse;
-  background-color: #191b1f;
 
   @media screen and (min-width: 350px) {
     & {
       width: 100%;
-      padding: 50% 0.25rem 0 0.25rem;
+      padding: 55% 0.25rem 0 0.25rem;
+      background-color: #2c2f36;
     }
     &:last-of-type {
       margin-left: 0px;
-      margin-top: 50px;
+      
     }
   }
 
@@ -48,20 +63,22 @@ export const ChartContainer = styled.div`
     & {
       width: 75%;
       padding: 40% 0.25rem 0 0.25rem;
+      background-color: #191b1f;
+      color: #2c2f36;
     }
     &:last-of-type {
       margin-left: 0px;
-      margin-top: 50px;
     }
   }
   @media screen and (min-width: 768px) {
     & {
       width: 50%;
       padding: 25% 0.25rem 0 0.25rem;
+      background-color: #191b1f;
+      color: #2c2f36;
     }
     &:last-of-type {
       margin-left: 50px;
-      margin-top: 0px;
     }
   }
 `;
@@ -69,8 +86,15 @@ export const ChartContainer = styled.div`
 export const ChartDiv = styled.div`
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
-  padding: 15px 15px 0px 5px;
+
+  @media screen and (min-width: 350px) {
+    & {
+      padding: 25px 15px 0px 5px;  
+    }
+  }
+  
 
   @media screen and (min-width: 900px) {
     & {
@@ -109,8 +133,8 @@ export const StyledLoading = styled(LoadingOutlined)`
   color: #33363e;
 
   position: absolute;
-  top: 45%;
-  left: 45%;
+  top: 40%;
+  left: 40%;
 `;
 
 export const StyledPrice = styled.h1`

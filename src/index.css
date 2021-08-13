@@ -24,6 +24,18 @@ code {
     monospace;
 }
 
+/* Customize Slick */
+.slick-arrow.slick-next {
+  right: 17px;
+  top:  17px;
+}
+
+.slick-arrow.slick-prev {
+  left: 260px;
+  top:  17px;
+  z-index: 99;
+}
+
 /* Customize Select component from antdesign */
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
   border-color: rgba(0, 0, 0, 0);

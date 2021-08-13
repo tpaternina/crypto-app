@@ -33,9 +33,6 @@ export default function ChartPriceOverview(props) {
   };
 
   const options = {
-    layout: {
-      //padding: { top: 10, right: 15, left: 5 },
-    },
     plugins: {
       legend: {
         display: false,
@@ -59,6 +56,7 @@ export default function ChartPriceOverview(props) {
           font: {
             size: 12,
           },
+          color: "#c6c7ce",
         },
       },
       y: {
