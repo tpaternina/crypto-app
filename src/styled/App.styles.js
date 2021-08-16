@@ -20,6 +20,23 @@ export const AppContainer = styled.div`
   }
 `;
 
+export const StyledTitle = styled.h3`
+  color: #fff;
+  text-transform: capitalize;
+  @media screen and (min-width: 350px) {
+    & {
+      font-size: 2rem;
+      margin: 0;
+    }
+  }
+  @media screen and (min-width: 570px) {
+    & {
+      font-size: initial;
+      margin: 3rem 0 1.5rem 0;
+    }
+  }
+`;
+
 export const Container = styled.div`
   color: #ffffff;
   width: 100%;
@@ -120,7 +137,7 @@ export const StyledLink = styled(NavLink)`
     }
   }
 
-  @media screen and (min-width: 500px) {
+  @media screen and (min-width: 570px) {
     & {
       display: block;
       padding: 0.5rem 1.5rem;
@@ -166,7 +183,7 @@ export const NarrowNav = styled.nav`
     }
   }
 
-  @media screen and (min-width: 500px) {
+  @media screen and (min-width: 570px) {
     & {
       display: none;
     }

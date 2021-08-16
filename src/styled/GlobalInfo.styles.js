@@ -15,8 +15,9 @@ export const IncreaseArrow = styled(CaretUpFilled).attrs((props) => ({
   color: ${(props) => props.color};
 `;
 
-export const CoinLogo = styled.img`
+export const SmallLogo = styled.img`
   width: 15px;
+  margin-right: 0.25rem;
 `;
 
 export const DecreaseArrow = styled(CaretDownFilled).attrs((props) => ({
@@ -24,14 +25,21 @@ export const DecreaseArrow = styled(CaretDownFilled).attrs((props) => ({
 }))`
   width: 13px;
   margin-right: 5px;
-  color: $(props => props.color);
+  color: ${props => props.color};
 `;
 
-export const GlobalInfoContainer = styled.div`
-  display: flex;
+export const InfoContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   align-content: center;
+
+  @media screen and (min-width: 350px) {
+    display: ${({responsive}) => responsive ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+  }
 `;
 
 const gradient = keyframes`
@@ -51,14 +59,12 @@ export const ContentLoading = styled.div`
   height: 25%;
 `;
 
-export const StyledContainer = styled.div`
+export const GlobalInfoContainer = styled.div`
   margin: 0 auto;
   margin-bottom: 1.5rem;
   padding: 0 2.5rem;
 
   height: 2.5rem;
-  width: 57%;
-  min-width: 632px;
   box-sizing: border-box;
 
   display: flex;
@@ -66,12 +72,46 @@ export const StyledContainer = styled.div`
   align-items: center;
 
   line-height: 1;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 
   background-color: #191b1f;
-  border-radius: 0 0 6px 6px;
+  
+
+  @media screen and (min-width: 350px) {
+    & {
+      background-color: #2c2f36;
+      border-radius: 0;
+      width: 100%;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 900;
+    }
+  }
+  @media screen and (min-width: 570px) {
+    & {
+      position: initial;
+      background-color: #191b1f;
+      border-radius: 0 0 6px 6px;
+      width: 430px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    & {
+      position: initial;
+      background-color: #191b1f;
+      border-radius: 0 0 6px 6px;
+      width: 610px;
+    }
+  }
 `;
 
 export const StyledNumber = styled.span`
   font-weight: 900;
 `;
+
+export const Text = styled.span`
+  margin-right: 0.25rem;
+`

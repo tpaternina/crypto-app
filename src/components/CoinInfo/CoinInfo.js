@@ -31,7 +31,7 @@ function CoinInfo(props) {
 
   return (
     <StyledLink
-      to={`coins/${coin.id}?currency=${currency}`}
+      to={`/coins/${coin.id}?currency=${currency}`}
       title={`More about ${coin.name}`}
     >
       <StyledRow key={coin}>

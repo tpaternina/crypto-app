@@ -95,9 +95,8 @@ class App extends React.Component {
               <NavText>Porfolio</NavText>
             </StyledLink>
             <StyledLink
-              exact
               activeClassName="selected"
-              to={`coins/bitcoin?currency=${currency}`}
+              to={`/coins/bitcoin?currency=${currency}`}
             >
               <NavIcon>
                 <LineChartOutlined />

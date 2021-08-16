@@ -4,14 +4,16 @@ import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
 import { fetchAllCoins, toggleOrder } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
+import { NarrowDiv, WideDiv, StyledTitle, TopDiv } from "styled";
 import {
+  Currency,
   ChartLoading,
   ChartOverview,
   Coins,
   LoadingCoins,
   TableHeader,
 } from "components";
-import { Container, StyledCol, StyledRow, StyledTitle } from "./Home.styles";
+import { Container, StyledCol, StyledRow } from "./Home.styles";
 
 class Home extends React.Component {
   loadingBar = React.createRef();
@@ -86,9 +88,17 @@ class Home extends React.Component {
     return (
       <>
         <LoadingBar ref={this.loadingBar} />
+        <NarrowDiv>
+          <TopDiv>
+            <StyledTitle> Market Overview </StyledTitle>
+            <Currency />
+          </TopDiv>
+        </NarrowDiv>
         {isLoading && <ChartLoading />}
         {hasResponse && <ChartOverview />}
-        <StyledTitle> Market Overview </StyledTitle>
+        <WideDiv>
+          <StyledTitle> Market Overview </StyledTitle>
+        </WideDiv>
         <Container>
           <StyledRow>
             <StyledCol span={1}>

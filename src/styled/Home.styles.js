@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
-export const WideDiv = styled.div`
+export const TopDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const WideDivChart = styled.div`
   @media screen and (min-width: 350px) {
     & {
       display: none;
@@ -16,22 +21,25 @@ export const WideDiv = styled.div`
   }
 `;
 
-export const NarrowDiv = styled.div`
+export const NarrowDivChart = styled.div`
+  width: 100%;
   @media screen and (min-width: 350px) {
     & {
       display: block;
+      margin-top: 125px;
     }
   }
-
+  @media screen and (min-width: 570px) {
+    & {
+      display: block;
+      margin-top: 50px;
+    }
+  }
   @media screen and (min-width: 768px) {
     & {
       display: none;
     }
   }
-`;
-
-export const StyledRow = styled(Row)`
-  border: solid 1px white;
 `;
 
 export const ChartCol = styled(Col)`
@@ -43,13 +51,6 @@ export const ChartCol = styled(Col)`
     padding-left: 2.5%;
   }
 `;
-
-/*export const ChartCol = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;*/
 
 export const ChartContainer = styled.div`
   text-align: center;
@@ -76,9 +77,6 @@ export const ChartContainer = styled.div`
 `;
 
 export const ChartDiv = styled.div`
-  /*position: absolute;
-  top: 0;
-  left: 0;*/
   width: 100%;
 
   @media screen and (min-width: 350px) {

@@ -12,10 +12,9 @@ import {
   ChartContainer,
   ChartInfo,
   StyledInfo,
-  StyledLoading,
   StyledPrice,
-  NarrowDiv,
-  WideDiv,
+  NarrowDivChart,
+  WideDivChart,
 } from "styled";
 import { formatDate, formatLongNumber } from "utils";
 import { fetchPrices } from "store/home/actions";
@@ -51,7 +50,7 @@ class ChartOverview extends React.Component {
         {isOverviewLoading && <ChartLoading />}
         {hasResponse && (
           <>
-            <WideDiv>
+            <WideDivChart>
               <Row justify="space-between">
                 <ChartCol
                   justify="start"
@@ -87,8 +86,8 @@ class ChartOverview extends React.Component {
                   </ChartContainer>
                 </ChartCol>
               </Row>
-            </WideDiv>
-            <NarrowDiv>
+            </WideDivChart>
+            <NarrowDivChart>
               <Slider {...slickSettings}>
                 <ChartContainer>
                   <ChartPriceOverview prices={prices} currency={currency} />
@@ -114,7 +113,7 @@ class ChartOverview extends React.Component {
                   </ChartInfo>
                 </ChartContainer>
               </Slider>
-            </NarrowDiv>
+            </NarrowDivChart>
           </>
         )}
       </>

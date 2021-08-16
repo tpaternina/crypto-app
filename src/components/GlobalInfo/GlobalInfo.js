@@ -7,14 +7,15 @@ import { formatLongNumber, keysToCamelCase } from "utils";
 import { fetchAllCoins } from "store/home/actions"
 import {
   BarContainer,
-  CoinLogo,
   ContentLoading,
   IncreaseArrow,
   DecreaseArrow,
+  SmallLogo,
   GlobalInfoContainer,
-  StyledContainer,
+  InfoContainer,
   StyledNumber,
-} from "./GlobalInfo.styles";
+  Text,
+} from "styled";
 
 function GlobalInfo(props) {
   const { coinList } = props;
@@ -75,19 +76,19 @@ function GlobalInfo(props) {
   const currency = props.currency.toLowerCase();
 
   return (
-    <StyledContainer>
+    <GlobalInfoContainer>
       <>
         {isLoading && <ContentLoading />}
         {hasResponse && (
           <>
-            <div title="Active coins">
-              Coins: <StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
-            </div>
-            <div title="Total exchanges">
-              Exchange: <StyledNumber>{data.markets}</StyledNumber>
-            </div>
+            <InfoContainer title="Active coins" responsive={true}>
+              <Text>Coins:</Text><StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
+            </InfoContainer>
+            <InfoContainer title="Total exchanges" responsive={true}>
+              <Text>Exchange:</Text><StyledNumber>{data.markets}</StyledNumber>
+            </InfoContainer>
 
-            <div title="Market Capitalization">
+            <InfoContainer title="Market Capitalization">
               <StyledNumber>
                 • {formatLongNumber(data.totalMarketCap[currency], currency)}
               </StyledNumber>
@@ -98,8 +99,8 @@ function GlobalInfo(props) {
                   <DecreaseArrow color="#fe1040" />
                 )}
               </span>
-            </div>
-            <GlobalInfoContainer title="Total volume in the last 24h">
+            </InfoContainer>
+            <InfoContainer title="Total volume in the last 24h">
               <StyledNumber>
                 • {formatLongNumber(data.totalVolume[currency], currency)}
               </StyledNumber>
@@ -109,10 +110,10 @@ function GlobalInfo(props) {
                   denominator={data.totalMarketCap[currency]}
                 />
               </BarContainer>
-            </GlobalInfoContainer>
-            <GlobalInfoContainer title={`Market Cap Dominance ${first.name}`}>
+            </InfoContainer>
+            <InfoContainer title={`Market Cap Dominance ${first.name}`}>
               <StyledNumber>
-                <CoinLogo src={first.image} alt={first.name} />
+                <SmallLogo src={first.image} alt={first.name} />
                 {data.marketCapPercentage[first.symbol].toFixed(2)}%
               </StyledNumber>
               <BarContainer>
@@ -121,10 +122,10 @@ function GlobalInfo(props) {
                   denominator={100}
                 />
               </BarContainer>
-            </GlobalInfoContainer>
-            <GlobalInfoContainer title={`Market Cap Dominance ${second.name}`}>
+            </InfoContainer>
+            <InfoContainer title={`Market Cap Dominance ${second.name}`}>
               <StyledNumber>
-                <CoinLogo src={second.image} alt={second.name} />
+                <SmallLogo src={second.image} alt={second.name} />
                 {data.marketCapPercentage[second.symbol].toFixed(2)}%
               </StyledNumber>
               <BarContainer>
@@ -135,11 +136,11 @@ function GlobalInfo(props) {
                   denominatorColor="#2172e5"
                 />
               </BarContainer>
-            </GlobalInfoContainer>
+            </InfoContainer>
           </>
         )}
       </>
-    </StyledContainer>
+    </GlobalInfoContainer>
   );
 }
 
