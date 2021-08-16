@@ -2,11 +2,21 @@ import React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
+  AppstoreFilled,
+  ContainerOutlined,
+  LineChartOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import {
   AppContainer,
   Container,
   StyledLink,
   StyledList,
-  StyledNav,
+  NavIcon,
+  NavText,
+  NarrowNav,
+  WideNav,
+  WideNavContainer,
 } from "styled";
 import { Coin, Home, Portfolio } from "pages";
 import { Currency, GlobalInfo, SearchCoin } from "components";
@@ -19,40 +29,42 @@ class App extends React.Component {
     const {
       app: { currency },
       pageConfig: { sortBy, descending },
-      portfolio: {sortBy: portfolioSort},
+      portfolio: { sortBy: portfolioSort },
     } = this.props;
     return (
       <AppContainer>
         <Router>
-          <StyledNav>
-            <StyledList>
-              <li>
-                <StyledLink
-                  exact
-                  activeClassName="selected"
-                  to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
-                >
-                  Coins
-                </StyledLink>
-              </li>
-              <li>
-                <StyledLink
-                  activeClassName="selected"
-                  to={`/portfolio?currency=${currency}&sortBy=${portfolioSort}`}
-                >
-                  Portfolio
-                </StyledLink>
-              </li>
-            </StyledList>
-            <StyledList>
-              <li>
-                <SearchCoin />
-              </li>
-              <li>
-                <Currency />
-              </li>
-            </StyledList>
-          </StyledNav>
+          <WideNavContainer>
+            <WideNav>
+              <StyledList>
+                <li>
+                  <StyledLink
+                    exact
+                    activeClassName="selected"
+                    to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
+                  >
+                    Coins
+                  </StyledLink>
+                </li>
+                <li>
+                  <StyledLink
+                    activeClassName="selected"
+                    to={`/portfolio?currency=${currency}&sortBy=${portfolioSort}`}
+                  >
+                    Portfolio
+                  </StyledLink>
+                </li>
+              </StyledList>
+              <StyledList>
+                <li>
+                  <SearchCoin />
+                </li>
+                <li>
+                  <Currency />
+                </li>
+              </StyledList>
+            </WideNav>
+          </WideNavContainer>
           <Container>
             <GlobalInfo currency={currency} />
             <Switch>
@@ -61,6 +73,44 @@ class App extends React.Component {
               <Route path="/" component={Home} />
             </Switch>
           </Container>
+          <NarrowNav>
+            <StyledLink
+              exact
+              activeClassName="selected"
+              to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
+            >
+              <NavIcon>
+                <AppstoreFilled />
+              </NavIcon>
+              <NavText>Overview</NavText>
+            </StyledLink>
+            <StyledLink
+              exact
+              activeClassName="selected"
+              to={`/portfolio?currency=${currency}&sortBy=${portfolioSort}`}
+            >
+              <NavIcon>
+                <ContainerOutlined />
+              </NavIcon>
+              <NavText>Porfolio</NavText>
+            </StyledLink>
+            <StyledLink
+              exact
+              activeClassName="selected"
+              to={`coins/bitcoin?currency=${currency}`}
+            >
+              <NavIcon>
+                <LineChartOutlined />
+              </NavIcon>
+              <NavText>Summary</NavText>
+            </StyledLink>
+            <StyledLink exact activeClassName="selected" to={`/search`}>
+              <NavIcon>
+                <SearchOutlined />
+              </NavIcon>
+              <NavText>Search</NavText>
+            </StyledLink>
+          </NarrowNav>
         </Router>
       </AppContainer>
     );
