@@ -52,8 +52,11 @@ class ChartOverview extends React.Component {
         {hasResponse && (
           <>
             <WideDiv>
-              <Row>
-                <ChartCol>
+              <Row justify="space-between">
+                <ChartCol
+                  justify="start"
+                  span={12}
+                >
                   <ChartContainer>
                     <ChartPriceOverview prices={prices} currency={currency} />
                     <ChartInfo>
@@ -64,6 +67,11 @@ class ChartOverview extends React.Component {
                       <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
                     </ChartInfo>
                   </ChartContainer>
+                </ChartCol>
+                <ChartCol
+                  justify="end"
+                  span={12}
+                >
                   <ChartContainer>
                     <ChartVolumeOverview
                       totalVolumes={totalVolumes}
@@ -74,10 +82,7 @@ class ChartOverview extends React.Component {
                       <StyledPrice>
                         {formatLongNumber(totalVolumes[29][1], currency, 3)}
                       </StyledPrice>
-                      <StyledInfo>
-                        {" "}
-                        {formatDate(totalVolumes[29][0])}{" "}
-                      </StyledInfo>
+                      <StyledInfo>{formatDate(totalVolumes[29][0])}</StyledInfo>
                     </ChartInfo>
                   </ChartContainer>
                 </ChartCol>

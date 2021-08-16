@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 export const WideDiv = styled.div`
@@ -29,76 +30,66 @@ export const NarrowDiv = styled.div`
   }
 `;
 
-export const ChartCol = styled.div`
+export const StyledRow = styled(Row)`
+  border: solid 1px white;
+`;
+
+export const ChartCol = styled(Col)`
+  &:first-of-type {
+    padding-right: 2.5%;
+  }
+
+  &:last-of-type {
+    padding-left: 2.5%;
+  }
+`;
+
+/*export const ChartCol = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
+`;*/
 
 export const ChartContainer = styled.div`
   text-align: center;
   font-size: 0.9rem;
 
+  width: 100%;
   margin: 0;
-  width: 50%;
   position: relative;
-
   border-radius: 6px;
   border-collapse: collapse;
 
   @media screen and (min-width: 350px) {
     & {
-      width: 100%;
-      padding: 55% 0.25rem 0 0.25rem;
       background-color: #2c2f36;
-    }
-    &:last-of-type {
-      margin-left: 0px;
-      
-    }
-  }
-
-  @media screen and (min-width: 600px) {
-    & {
-      width: 75%;
-      padding: 40% 0.25rem 0 0.25rem;
-      background-color: #191b1f;
-      color: #2c2f36;
-    }
-    &:last-of-type {
-      margin-left: 0px;
+      margin: 0;
     }
   }
   @media screen and (min-width: 768px) {
     & {
-      width: 50%;
-      padding: 25% 0.25rem 0 0.25rem;
       background-color: #191b1f;
       color: #2c2f36;
-    }
-    &:last-of-type {
-      margin-left: 50px;
     }
   }
 `;
 
 export const ChartDiv = styled.div`
-  position: absolute;
+  /*position: absolute;
   top: 0;
-  left: 0;
+  left: 0;*/
   width: 100%;
 
   @media screen and (min-width: 350px) {
     & {
-      padding: 25px 15px 0px 5px;  
+      padding: 25px 15px 0px 5px;
     }
   }
-  
 
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 768px) {
     & {
-      padding: 35px 25px 25px 15px;
+      padding: 35px 25px 5px 15px;
     }
   }
 `;
@@ -120,7 +111,7 @@ export const StyledInfo = styled.p`
   color: #fff;
   margin: 0;
 
-  @media screen and (max-width: 936px) {
+  @media screen and (max-width: 768px) {
     & {
       font-size: 0.75rem;
     }
@@ -130,11 +121,22 @@ export const StyledInfo = styled.p`
 export const StyledLoading = styled(LoadingOutlined)`
   font-size: 3rem;
   text-align: center;
-  color: #33363e;
 
-  position: absolute;
-  top: 40%;
-  left: 40%;
+  @media screen and (min-width: 350px) {
+    & {
+      margin-top: 20%;
+      margin-bottom: 20%;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    & {
+      margin-top: 20%;
+      margin-bottom: 20%;
+      color: #33363e;
+    }
+  }
 `;
 
 export const StyledPrice = styled.h1`

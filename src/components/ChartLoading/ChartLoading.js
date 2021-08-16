@@ -1,16 +1,23 @@
 import { Row } from "antd";
-import {ChartCol, ChartContainer, StyledLoading, NarrowDiv, WideDiv} from "styled";
-
+import {
+  ChartCol,
+  ChartContainer,
+  StyledLoading,
+  NarrowDiv,
+  WideDiv,
+} from "styled";
 
 export default function ChartLoading(props) {
   return (
     <>
       <WideDiv>
         <Row>
-          <ChartCol>
+          <ChartCol justify="start" span={12}>
             <ChartContainer>
               <StyledLoading />
             </ChartContainer>
+          </ChartCol>
+          <ChartCol justify="end" span={12}>
             <ChartContainer>
               <StyledLoading />
             </ChartContainer>
@@ -18,11 +25,9 @@ export default function ChartLoading(props) {
         </Row>
       </WideDiv>
       <NarrowDiv>
-        <ChartCol>
-          <ChartContainer>
-            <StyledLoading />
-          </ChartContainer>
-        </ChartCol>
+        <ChartContainer>
+          <StyledLoading />
+        </ChartContainer>
       </NarrowDiv>
     </>
   );

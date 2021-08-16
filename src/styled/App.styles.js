@@ -2,19 +2,44 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 export const AppContainer = styled.div`
-  background-color: #1f2128;
   color: #ffffff;
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (min-width: 350px) {
+    & {
+      background-color: #1f2128;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    & {
+      background-color: #171821;
+    }
+  }
 `;
 
 export const Container = styled.div`
-  background-color: #1f2128;
   color: #ffffff;
   width: 100%;
-  height: fit-content;
-  padding: 2rem 5.5rem;
-  padding-top: 0;
+  max-width: 1200px;
+
+  @media screen and (min-width: 350px) {
+    & {
+      background-color: #1f2128;
+      padding: 1rem 1rem;
+      padding-top: 0;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    & {
+      background-color: #171821;
+      padding: 2rem 3rem;
+      padding-top: 0;
+    }
+  }
 `;
 
 export const StyledLink = styled(NavLink)`

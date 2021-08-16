@@ -7,7 +7,7 @@ import {
   StyledLink,
   StyledList,
   StyledNav,
-} from "./App.styles";
+} from "styled";
 import { Coin, Home, Portfolio } from "pages";
 import { Currency, GlobalInfo, SearchCoin } from "components";
 import { setCurrency } from "store/app/actions";

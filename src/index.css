@@ -31,7 +31,8 @@ code {
 }
 
 .slick-arrow.slick-prev {
-  left: 260px;
+  left: initial;
+  right: 50px;
   top:  17px;
   z-index: 99;
 }
