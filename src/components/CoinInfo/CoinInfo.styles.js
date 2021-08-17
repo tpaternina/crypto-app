@@ -1,22 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 
-export const StyledCol = styled(Col)`
-  box-sizing: border-box;
-  padding: 1.5rem 0.75rem;
-  display: flex;
-  align-items: flex-end;
-  width: fit-content;
-`;
 
-export const StyledRow = styled(Row)`
-  border-bottom: solid 1px #707070;
-  vertical-align: bottom;
-  &:last-of-type {
-    border: none;
-  }
-`;
 
 export const StyledLink = styled(Link)`
   color: #fff;

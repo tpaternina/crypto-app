@@ -3,14 +3,14 @@ import {
   ChartCol,
   ChartContainer,
   StyledLoading,
-  NarrowDiv,
-  WideDiv,
+  NarrowDivChart,
+  WideDivChart,
 } from "styled";
 
 export default function ChartLoading(props) {
   return (
     <>
-      <WideDiv>
+      <WideDivChart>
         <Row>
           <ChartCol justify="start" span={12}>
             <ChartContainer>
@@ -23,12 +23,12 @@ export default function ChartLoading(props) {
             </ChartContainer>
           </ChartCol>
         </Row>
-      </WideDiv>
-      <NarrowDiv>
+      </WideDivChart>
+      <NarrowDivChart>
         <ChartContainer>
           <StyledLoading />
         </ChartContainer>
-      </NarrowDiv>
+      </NarrowDivChart>
     </>
   );
 }

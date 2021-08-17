@@ -4,7 +4,15 @@ import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
 import { fetchAllCoins, toggleOrder } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
-import { NarrowDiv, WideDiv, StyledTitle, TopDiv } from "styled";
+import {
+  TableContainer,
+  HeaderCol,
+  HeaderRow,
+  NarrowDiv,
+  WideDiv,
+  StyledTitle,
+  TopDiv,
+} from "styled";
 import {
   Currency,
   ChartLoading,
@@ -13,7 +21,6 @@ import {
   LoadingCoins,
   TableHeader,
 } from "components";
-import { Container, StyledCol, StyledRow } from "./Home.styles";
 
 class Home extends React.Component {
   loadingBar = React.createRef();
@@ -99,77 +106,75 @@ class Home extends React.Component {
         <WideDiv>
           <StyledTitle> Market Overview </StyledTitle>
         </WideDiv>
-        <Container>
-          <StyledRow>
-            <StyledCol span={1}>
+        <TableContainer>
+          <HeaderRow>
+            <HeaderCol xs={4} sm={4} md={3} lg={3} xl={2} xxl={2} rank={true}>
               <TableHeader
                 text="#"
                 sortBy="marketCapRank"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={3}>
+            </HeaderCol>
+            <HeaderCol xs={6} sm={4} md={4} lg={4} xl={4} xxl={4}>
               <TableHeader text="Name" sortBy="id" toggleOrder={toggleOrder} />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={6} sm={4} md={3} lg={3} xl={2} xxl={2}>
               <TableHeader
                 text="Price"
                 sortBy="currentPrice"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="1h"
                 sortBy="priceChangePercentage1HInCurrency"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="24h"
                 sortBy="priceChangePercentage24HInCurrency"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="7d"
                 sortBy="priceChangePercentage7DInCurrency"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={4}>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={4} lg={4} xl={3} xxl={3}>
               <TableHeader
                 text="24h Volume"
                 sortBy="totalVolume"
                 toggleOrder={toggleOrder}
-              />{" "}
-              /{" "}
+              />
               <TableHeader
                 text="Market Cap"
                 sortBy="marketCap"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={4}>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={4} lg={4} xl={3} xxl={3}>
               <TableHeader
                 text="Circulating"
                 sortBy="circulatingSupply"
                 toggleOrder={toggleOrder}
-              />{" "}
-              /{" "}
+              />
               <TableHeader
                 text="Total Supply"
                 sortBy="totalSupply"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={4}> Last 7 d </StyledCol>
-          </StyledRow>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={0} lg={0} xl={4} xxl={4}> Last 7 d </HeaderCol>
+          </HeaderRow>
           {isLoading && <LoadingCoins />}
           {hasResponse && <Coins coinList={coinList} />}
-        </Container>
+        </TableContainer>
       </>
     );
   }

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import {default as styled, keyframes} from "styled-components";
 import { Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -7,6 +7,121 @@ export const TopDiv = styled.div`
   justify-content: space-between;
 `;
 
+/* Coin Table */
+export const TableContainer = styled.div`
+  text-align: left;
+  font-size: 0.75rem;
+
+  margin: 1rem 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  border-radius: 6px;
+  border-collapse: collapse;
+  background-color: #191b1f;
+`;
+
+const gradient = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .25;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+export const ContentLoading = styled.div`
+  background: #33363e;
+  background-size: 200% 200%;
+  animation: ${gradient} 2s ease infinite;
+  width: 100%;
+  height: 1rem;
+`;
+
+export const HeaderCol = styled(Col).attrs((props) => ({
+  align: props.rank ? "center" : "flex-start",
+}))`
+  padding: 1.5rem 0.75rem 0 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props) => props.align};
+
+  @media screen and (min-width: 350px) {
+    display: ${props => props.xs === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 576px) {
+    display: ${props => props.sm === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 768px) {
+    display: ${props => props.md === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 992px) {
+    display: ${props => props.lg === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 1200px) {
+    display: ${props => props.xl === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 1600px){
+    display: flex;
+  }
+`;
+
+export const HeaderRow = styled(Row)`
+  font-weight: 900;
+`;
+
+export const TableCol = styled(Col).attrs((props) => ({
+  align: props.rank ? "center" : "flex-start",
+  display: props.display,
+}))`
+  box-sizing: border-box;
+  padding: 1.5rem 0.75rem;
+  justify-content: ${(props) => props.align};
+  align-items: flex-end;
+  width: fit-content;
+
+  @media screen and (min-width: 350px) {
+    display: ${props => props.xs === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 576px) {
+    display: ${props => props.sm === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 768px) {
+    display: ${props => props.md === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 992px) {
+    display: ${props => props.lg === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 1200px) {
+    display: ${props => props.xl === 0 ? "none" : "flex"}
+  }
+
+  @media screen and (min-width: 1600px){
+    display: flex;
+  }
+`;
+
+export const TableRow = styled(Row)`
+  border-bottom: solid 1px #707070;
+  vertical-align: bottom;
+  &:last-of-type {
+    border: none;
+  }
+`;
+
+/* Overview Charts */
 export const WideDivChart = styled.div`
   @media screen and (min-width: 350px) {
     & {

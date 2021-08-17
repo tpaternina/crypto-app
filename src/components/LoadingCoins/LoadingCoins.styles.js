@@ -34,10 +34,3 @@ const gradient = keyframes`
   }
 `;
 
-export const ContentLoading = styled.div`
-  background: #33363e;
-  background-size: 200% 200%;
-  animation: ${gradient} 2s ease infinite;
-  width: 100%;
-  height: 1rem;
-`;

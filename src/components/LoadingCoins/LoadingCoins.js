@@ -1,38 +1,38 @@
-import { ContentLoading, StyledCol, StyledRow } from "./LoadingCoins.styles";
+import { ContentLoading, TableCol, TableRow } from "styled";
 
 export default function LoadingCoins() {
   return (
     <>
       {[...Array(5)].map((item) => (
-        <StyledRow key={Math.random()}>
-          <StyledCol span={1}>
+        <TableRow key={Math.random()}>
+          <TableCol xs={4} sm={4} md={3} lg={3} xl={2} xxl={2} rank={true}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={3}>
+          </TableCol>
+          <TableCol xs={6} sm={4} md={4} lg={4} xl={4} xxl={4}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={2}>
+          </TableCol>
+          <TableCol xs={6} sm={4} md={3} lg={3} xl={2} xxl={2}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={2}>
+          </TableCol>
+          <TableCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={2}>
+          </TableCol>
+          <TableCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={2}>
+          </TableCol>
+          <TableCol xs={0} sm={4} md={2} lg={2} xl={2} xxl={2}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={4}>
+          </TableCol>
+          <TableCol xs={0} sm={0} md={4} lg={4} xl={3} xxl={3}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={4}>
+          </TableCol>
+          <TableCol xs={0} sm={0} md={4} lg={4} xl={3} xxl={3}>
             <ContentLoading />
-          </StyledCol>
-          <StyledCol span={4}>
+          </TableCol>
+          <TableCol xs={0} sm={0} md={0} lg={0} xl={4} xxl={4}>
             <ContentLoading />
-          </StyledCol>
-        </StyledRow>
+          </TableCol>
+        </TableRow>
       ))}
     </>
   );
