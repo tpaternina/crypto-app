@@ -47,6 +47,7 @@ export const Container = styled.div`
       background-color: #171821;
       padding: 1rem 1rem;
       padding-top: 0;
+      margin-bottom: 83.5px;
     }
   }
 
@@ -55,6 +56,7 @@ export const Container = styled.div`
       background-color: #1f2128;
       padding: 2rem 3rem;
       padding-top: 0;
+      margin-bottom: 0;
     }
   }
 `;

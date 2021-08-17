@@ -1,10 +1,11 @@
-import {default as styled, keyframes} from "styled-components";
+import { default as styled, keyframes } from "styled-components";
 import { Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 export const TopDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 
 /* Coin Table */
@@ -50,26 +51,26 @@ export const HeaderCol = styled(Col).attrs((props) => ({
   align-items: ${(props) => props.align};
 
   @media screen and (min-width: 350px) {
-    display: ${props => props.xs === 0 ? "none" : "flex"}
+    display: ${(props) => (props.xs === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 576px) {
-    display: ${props => props.sm === 0 ? "none" : "flex"}
+    display: ${(props) => (props.sm === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 768px) {
-    display: ${props => props.md === 0 ? "none" : "flex"}
+    display: ${(props) => (props.md === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 992px) {
-    display: ${props => props.lg === 0 ? "none" : "flex"}
+    display: ${(props) => (props.lg === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 1200px) {
-    display: ${props => props.xl === 0 ? "none" : "flex"}
+    display: ${(props) => (props.xl === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 1600px){
+  @media screen and (min-width: 1600px) {
     display: flex;
   }
 `;
@@ -89,26 +90,26 @@ export const TableCol = styled(Col).attrs((props) => ({
   width: fit-content;
 
   @media screen and (min-width: 350px) {
-    display: ${props => props.xs === 0 ? "none" : "flex"}
+    display: ${(props) => (props.xs === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 576px) {
-    display: ${props => props.sm === 0 ? "none" : "flex"}
+    display: ${(props) => (props.sm === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 768px) {
-    display: ${props => props.md === 0 ? "none" : "flex"}
+    display: ${(props) => (props.md === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 992px) {
-    display: ${props => props.lg === 0 ? "none" : "flex"}
+    display: ${(props) => (props.lg === 0 ? "none" : "flex")};
   }
 
   @media screen and (min-width: 1200px) {
-    display: ${props => props.xl === 0 ? "none" : "flex"}
+    display: ${(props) => (props.xl === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 1600px){
+  @media screen and (min-width: 1600px) {
     display: flex;
   }
 `;
