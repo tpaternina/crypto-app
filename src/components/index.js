@@ -5,6 +5,7 @@ export { default as ChartLoading } from "./ChartLoading";
 export { default as ChartOverview } from "./ChartOverview";
 export { default as ChartPriceOverview } from "./ChartPriceOverview";
 export { default as ChartVolumeOverview } from "./ChartVolumeOverview";
+export { default as CoinDescription } from "./CoinDescription";
 export { default as CoinInfo } from "./CoinInfo";
 export { default as Coins } from "./Coins";
 export { default as CoinMarketInfo } from "./CoinMarketInfo";

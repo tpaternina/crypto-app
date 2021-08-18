@@ -9,8 +9,6 @@ export const StyledRow = styled(Row)`
   margin: 2.25rem 0;
 `;
 
-
-
 export const StyledCol = styled(Col)`
   display: flex;
   flex-direction: column;
@@ -35,11 +33,7 @@ export const StyledContainer = styled.div`
   background-color: #191b1f;
 `;
 
-export const StyledDescription = styled.div`
-  line-height: 1.35rem;
-  text-align: left;
-  margin-bottom: 1.5rem;
-`;
+
 
 
 export const StyledLoading = styled(LoadingOutlined)`
@@ -48,11 +42,7 @@ export const StyledLoading = styled(LoadingOutlined)`
   color: #33363e;
 `;
 
-export const StyledLayerIcon = styled.img`
-  width: 20px;
-  filter: invert(100%);
-  margin: 1.5rem auto;
-`;
+
 
 export const StyledTitle = styled.h3`
   color: #fff;

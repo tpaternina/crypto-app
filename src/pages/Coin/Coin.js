@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
-import parse from "html-react-parser";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
-import { layers } from "assets";
 import { getCoinInfo } from "store/coin/actions";
 import { setCurrency } from "store/app/actions";
 import {
   BlockchainLink,
+  CoinDescription,
   CoinMarketInfo,
   CoinPriceInfo,
   CoinTitle,
+  Currency,
 } from "components";
 import {
-  StyledCol,
-  StyledContainer,
-  StyledDescription,
-  StyledLayerIcon,
-  StyledRow,
+  CoinCol,
+  CoinRow,
+  NarrowDiv,
+  TopDiv,
+  WideDiv,
   StyledTitle,
-} from "./Coin.styles";
+} from "styled";
 
 function Coin(props) {
   const loadingBar = React.createRef();
@@ -52,7 +52,6 @@ function Coin(props) {
   useEffect(() => {
     if (!isEmpty(data)) {
       setIncrease(data.marketData.priceChangePercentage24H > 0);
-
     }
   }, [data]);
 
@@ -89,55 +88,54 @@ function Coin(props) {
     // eslint-disable-next-line
   }, [props.match.params.id]);
 
-    useEffect(() => {
+  useEffect(() => {
     setResponse(!isEmpty(data) && !isLoading && !hasError);
   }, [data, isLoading, hasError]);
 
   return (
     <>
-      <StyledTitle>Coin summary</StyledTitle>
+      <NarrowDiv>
+        <TopDiv>
+          <StyledTitle>Coin summary</StyledTitle>
+          <Currency />
+        </TopDiv>
+      </NarrowDiv>
+      <WideDiv>
+        <StyledTitle>Coin summary</StyledTitle>
+      </WideDiv>
       <LoadingBar ref={loadingBar} />
       {hasResponse && (
         <>
-          <StyledRow>
-            <StyledCol span={6}>
+          <CoinRow justify="center" gutter={16} top={true}>
+            <CoinCol span={6} xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
               <CoinTitle data={data} />
-            </StyledCol>
-            <StyledCol span={7}>
+            </CoinCol>
+            <CoinCol span={8} xs={24} sm={16} md={10} lg={10} xl={8} xxl={8}>
               <CoinPriceInfo
                 currency={currency}
                 data={data}
                 increase={increase}
               />
-            </StyledCol>
-            <StyledCol span={10}>
+            </CoinCol>
+            <CoinCol span={10} xs={24} sm={18} md={16} lg={16} xl={10} xxl={10}>
               <CoinMarketInfo currency={currency.toLowerCase()} data={data} />
-            </StyledCol>
-          </StyledRow>
+            </CoinCol>
+          </CoinRow>
           <StyledTitle>Description</StyledTitle>
-          <StyledRow>
-            <StyledCol span={24}>
-              <StyledContainer>
-                <StyledLayerIcon src={layers} />
-                <StyledDescription>
-                  {data.description["en"] ? (
-                    parse(data.description["en"])
-                  ) : (
-                    <small>Description unavailable</small>
-                  )}
-                </StyledDescription>
-              </StyledContainer>
-            </StyledCol>
-          </StyledRow>
-          <StyledRow>
+          <CoinRow justify="center">
+            <CoinCol span={24} xs={24} sm={24} md={18} lg={18} xl={24} xxl={24}>
+              <CoinDescription data={data} />
+            </CoinCol>
+          </CoinRow>
+          <CoinRow justify="center" gutter={16}>
             {data.links.blockchainSite
               .filter((link) => link !== "")
               .map((link) => (
-                <StyledCol key={link} span={24 / linkNumber - 1}>
+                <CoinCol key={link} span={24 / linkNumber}>
                   <BlockchainLink link={link} />
-                </StyledCol>
+                </CoinCol>
               ))}
-          </StyledRow>
+          </CoinRow>
         </>
       )}
     </>

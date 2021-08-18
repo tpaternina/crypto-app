@@ -1,5 +1,5 @@
 import React from "react";
-import gradient from "chartjs-plugin-gradient";
+//import gradient from "chartjs-plugin-gradient";
 import { Line } from "react-chartjs-2";
 import { formatOverviewChart } from "utils";
 import { ChartDiv } from "styled";
@@ -16,20 +16,32 @@ export default function ChartPriceOverview(props) {
         data: prices
           .filter((item, index, array) => index !== array.length - 1)
           .map(formatOverviewChart),
-        gradient: {
-          backgroundColor: {
-            axis: "y",
-            colors: {
-              0: "#00fc2a00",
-              100: "#00fc2a77",
-            },
-          },
-        },
         borderWidth: 1,
         borderColor: increase ? "#00fc2a" : "#fe1040",
         fill: true,
       },
     ],
+  };
+
+  const gradient = {
+    id: "responsiveGradient",
+
+    afterLayout: function (chart, options) {
+      const scales = chart.scales;
+
+      // create a linear gradient with the dimensions of the scale
+      const color = chart.ctx.createLinearGradient(
+        scales["x"].left,
+        scales["y"].bottom,
+        scales["x"].left,
+        scales["y"].top,
+      );
+      // add gradients stops
+      color.addColorStop(0, "#00fc2a00");
+      color.addColorStop(1, "#00fc2a77");
+      // changes the background color option
+      chart.data.datasets[0].backgroundColor = color;
+    },
   };
 
   const options = {
@@ -73,7 +85,9 @@ export default function ChartPriceOverview(props) {
 
   return (
     <ChartDiv>
-      {!!prices.length && <Line data={data} options={options} plugins={[{gradient}]} />}
+      {!!prices.length && (
+        <Line data={data} options={options} plugins={[gradient]} />
+      )}
     </ChartDiv>
   );
 }

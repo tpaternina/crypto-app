@@ -1,6 +1,3 @@
-export * from "./Pages.styles";
-
-export * from "./Home.styles";
-export * from "./App.styles";
-
-export * from "./GlobalInfo.styles";
+export * from "./Layout.styles";
+export * from "./Icons.styles";
+export * from "./Typography.styles";

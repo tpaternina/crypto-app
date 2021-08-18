@@ -97,7 +97,7 @@ class Home extends React.Component {
         <LoadingBar ref={this.loadingBar} />
         <NarrowDiv>
           <TopDiv>
-            <StyledTitle> Market Overview </StyledTitle>
+            <StyledTitle>Overview</StyledTitle>
             <Currency />
           </TopDiv>
         </NarrowDiv>
@@ -108,14 +108,14 @@ class Home extends React.Component {
         </WideDiv>
         <TableContainer>
           <HeaderRow>
-            <HeaderCol xs={4} sm={4} md={3} lg={3} xl={2} xxl={2} rank={true}>
+            <HeaderCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank={true}>
               <TableHeader
                 text="#"
                 sortBy="marketCapRank"
                 toggleOrder={toggleOrder}
               />
             </HeaderCol>
-            <HeaderCol xs={6} sm={4} md={4} lg={4} xl={4} xxl={4}>
+            <HeaderCol xs={6} sm={4} md={6} lg={4} xl={4} xxl={4}>
               <TableHeader text="Name" sortBy="id" toggleOrder={toggleOrder} />
             </HeaderCol>
             <HeaderCol xs={6} sm={4} md={3} lg={3} xl={2} xxl={2}>
@@ -132,7 +132,7 @@ class Home extends React.Component {
                 toggleOrder={toggleOrder}
               />
             </HeaderCol>
-            <HeaderCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
+            <HeaderCol xs={5} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="24h"
                 sortBy="priceChangePercentage24HInCurrency"
@@ -146,7 +146,7 @@ class Home extends React.Component {
                 toggleOrder={toggleOrder}
               />
             </HeaderCol>
-            <HeaderCol xs={0} sm={0} md={4} lg={4} xl={3} xxl={3}>
+            <HeaderCol xs={0} sm={0} md={6} lg={4} xl={3} xxl={3}>
               <TableHeader
                 text="24h Volume"
                 sortBy="totalVolume"
@@ -158,7 +158,7 @@ class Home extends React.Component {
                 toggleOrder={toggleOrder}
               />
             </HeaderCol>
-            <HeaderCol xs={0} sm={0} md={4} lg={4} xl={3} xxl={3}>
+            <HeaderCol xs={0} sm={0} md={0} lg={4} xl={3} xxl={3}>
               <TableHeader
                 text="Circulating"
                 sortBy="circulatingSupply"

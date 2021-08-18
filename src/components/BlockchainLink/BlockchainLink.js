@@ -1,11 +1,6 @@
 import React from "react";
 import { message } from "antd";
-import {
-  StyledContainer,
-  StyledCopy,
-  StyledLink,
-  StyledLinkIcon,
-} from "./BlockchainLink.styles";
+import { CoinContainer, StyledCopy, StyledCoinLink, StyledLinkIcon } from "styled";
 
 export default class BlockchainList extends React.Component {
   handleCopy = (text) => {
@@ -17,11 +12,11 @@ export default class BlockchainList extends React.Component {
     const { link } = this.props;
     return (
       <>
-        <StyledContainer>
+        <CoinContainer>
           <StyledLinkIcon />
-          <StyledLink href={link}>{link}</StyledLink>
+          <StyledCoinLink href={link}>{link}</StyledCoinLink>
           <StyledCopy onClick={() => this.handleCopy(link)} />
-        </StyledContainer>
+        </CoinContainer>
       </>
     );
   }

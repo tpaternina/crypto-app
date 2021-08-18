@@ -4,17 +4,17 @@ import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import { ColorBar } from "components";
 import { formatLongNumber, keysToCamelCase } from "utils";
-import { fetchAllCoins } from "store/home/actions"
+import { fetchAllCoins } from "store/home/actions";
 import {
   BarContainer,
-  ContentLoading,
+  ContentLoadingGlobal,
   IncreaseArrow,
   DecreaseArrow,
   SmallLogo,
   GlobalInfoContainer,
   InfoContainer,
   StyledNumber,
-  Text,
+  GlobalText,
 } from "styled";
 
 function GlobalInfo(props) {
@@ -78,19 +78,21 @@ function GlobalInfo(props) {
   return (
     <GlobalInfoContainer>
       <>
-        {isLoading && <ContentLoading />}
+        {isLoading && <ContentLoadingGlobal />}
         {hasResponse && (
           <>
             <InfoContainer title="Active coins" responsive={true}>
-              <Text>Coins:</Text><StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
+              <GlobalText>Coins:</GlobalText>
+              <StyledNumber>{data.activeCryptocurrencies}</StyledNumber>
             </InfoContainer>
             <InfoContainer title="Total exchanges" responsive={true}>
-              <Text>Exchange:</Text><StyledNumber>{data.markets}</StyledNumber>
+              <GlobalText>Exchange:</GlobalText>
+              <StyledNumber>{data.markets}</StyledNumber>
             </InfoContainer>
-
+            <InfoContainer>•</InfoContainer>
             <InfoContainer title="Market Capitalization">
               <StyledNumber>
-                • {formatLongNumber(data.totalMarketCap[currency], currency)}
+                {formatLongNumber(data.totalMarketCap[currency], currency)}
               </StyledNumber>
               <span title="24-hour change percentage relative to USD">
                 {increase ? (
@@ -100,9 +102,10 @@ function GlobalInfo(props) {
                 )}
               </span>
             </InfoContainer>
+            <InfoContainer>• </InfoContainer>
             <InfoContainer title="Total volume in the last 24h">
               <StyledNumber>
-                • {formatLongNumber(data.totalVolume[currency], currency)}
+                {formatLongNumber(data.totalVolume[currency], currency)}
               </StyledNumber>
               <BarContainer>
                 <ColorBar
@@ -114,7 +117,9 @@ function GlobalInfo(props) {
             <InfoContainer title={`Market Cap Dominance ${first.name}`}>
               <StyledNumber>
                 <SmallLogo src={first.image} alt={first.name} />
-                {data.marketCapPercentage[first.symbol].toFixed(2)}%
+                <InfoContainer responsive={true}>
+                  {data.marketCapPercentage[first.symbol].toFixed(2)}%
+                </InfoContainer>
               </StyledNumber>
               <BarContainer>
                 <ColorBar
@@ -126,7 +131,9 @@ function GlobalInfo(props) {
             <InfoContainer title={`Market Cap Dominance ${second.name}`}>
               <StyledNumber>
                 <SmallLogo src={second.image} alt={second.name} />
-                {data.marketCapPercentage[second.symbol].toFixed(2)}%
+                <InfoContainer responsive={true}>
+                  {data.marketCapPercentage[second.symbol].toFixed(2)}%
+                </InfoContainer>
               </StyledNumber>
               <BarContainer>
                 <ColorBar
@@ -151,6 +158,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchAllCoins,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalInfo);

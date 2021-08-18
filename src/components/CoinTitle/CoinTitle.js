@@ -1,30 +1,24 @@
-import {
-  LogoContainer,
-  StyledContainer,
-  StyledName,
-  StyledLink,
-  StyledLinkIcon,
-  StyledRow,
-} from "./CoinTitle.styles";
+import { Row } from "antd";
+import { CoinTitleContainer, LogoContainer, StyledCoinName, StyledCoinLink, StyledLinkIcon } from "styled";
 
 export default function CoinTitle(props) {
   const { data } = props;
   return (
     <>
-      <StyledContainer>
+      <CoinTitleContainer top={true}>
         <LogoContainer src={data.image.small} alt={data.name} />
-        <StyledName>
+        <StyledCoinName>
           {data.name} ({data.symbol.toUpperCase()})
-        </StyledName>
-      </StyledContainer>
-      <StyledContainer>
-        <StyledRow>
+        </StyledCoinName>
+      </CoinTitleContainer>
+      <CoinTitleContainer>
+        <Row justify="space-between">
           <StyledLinkIcon />
-          <StyledLink href={data.links.homepage}>
+          <StyledCoinLink href={data.links.homepage}>
             {data.links.homepage}
-          </StyledLink>
-        </StyledRow>
-      </StyledContainer>
+          </StyledCoinLink>
+        </Row>
+      </CoinTitleContainer>
     </>
   );
 }
