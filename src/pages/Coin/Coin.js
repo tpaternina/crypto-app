@@ -107,23 +107,23 @@ function Coin(props) {
       {hasResponse && (
         <>
           <CoinRow justify="center" gutter={16} top={true}>
-            <CoinCol span={6} xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
+            <CoinCol xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
               <CoinTitle data={data} />
             </CoinCol>
-            <CoinCol span={8} xs={24} sm={16} md={10} lg={10} xl={8} xxl={8}>
+            <CoinCol xs={24} sm={16} md={10} lg={10} xl={8} xxl={8}>
               <CoinPriceInfo
                 currency={currency}
                 data={data}
                 increase={increase}
               />
             </CoinCol>
-            <CoinCol span={10} xs={24} sm={18} md={16} lg={16} xl={10} xxl={10}>
+            <CoinCol xs={24} sm={18} md={16} lg={16} xl={10} xxl={10}>
               <CoinMarketInfo currency={currency.toLowerCase()} data={data} />
             </CoinCol>
           </CoinRow>
           <StyledTitle>Description</StyledTitle>
           <CoinRow justify="center">
-            <CoinCol span={24} xs={24} sm={24} md={18} lg={18} xl={24} xxl={24}>
+            <CoinCol xs={24} sm={24} md={18} lg={18} xl={24} xxl={24}>
               <CoinDescription data={data} />
             </CoinCol>
           </CoinRow>
@@ -131,7 +131,7 @@ function Coin(props) {
             {data.links.blockchainSite
               .filter((link) => link !== "")
               .map((link) => (
-                <CoinCol key={link} span={24 / linkNumber}>
+                <CoinCol key={link} xs={24} sm={24} md={18} lg={18} xl={24 / linkNumber} xxl={24 / linkNumber}>
                   <BlockchainLink link={link} />
                 </CoinCol>
               ))}

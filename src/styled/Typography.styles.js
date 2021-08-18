@@ -95,7 +95,7 @@ export const StyledPrice = styled.h1`
 export const IncreaseText = styled.span.attrs((props) => ({
   increase: props.increase,
   size: props.size,
-  margin: props.margin
+  margin: props.margin,
 }))`
   color: ${(props) => (props.increase ? "#00fc2a" : "#fe1040")};
   font-size: ${(props) => props.size};
@@ -118,6 +118,15 @@ export const StyledCoinName = styled.h2`
 export const StyledCoinLink = styled.a`
   color: #fff;
   font-size: 0.85rem;
+  text-decoration: none;
+  &::after {
+    color: #fff;
+    text-decoration: none;
+  }
+  &:hover,
+  &:active {
+    color: #00fc2a;
+  }
 `;
 
 export const CoinPrice = styled.div`
@@ -151,7 +160,7 @@ export const CoinAllTimeInfo = styled.div`
   justify-content: space-between;
 
   & > div:last-of-type {
-    margin-top: .35rem;
+    margin-top: 0.35rem;
   }
 `;
 

@@ -227,7 +227,7 @@ export const GlobalInfoContainer = styled.div`
       z-index: 900;
     }
   }
-  @media screen and (min-width: 570px) {
+  @media screen and (min-width: 576px) {
     & {
       position: initial;
       background-color: #191b1f;
