@@ -13,7 +13,7 @@ export const StyledTitle = styled.h3`
       margin: 0;
     }
   }
-  @media screen and (min-width: 570px) {
+  @media screen and (min-width: 576px) {
     & {
       font-size: initial;
       margin: 3rem 0 1.5rem 0;
@@ -173,4 +173,30 @@ export const CoinMarketInfoTitle = styled.span`
 export const StyledPercentage = styled.span`
   margin-left: 0.5rem;
   font-weight: bold;
+`;
+
+/* PORTFOLIO PAGE */
+
+export const PlaceholderText = styled.div`
+  font-size: ${props => props.size};
+  font-weight: bold;
+  color: #40454f;
+`;
+
+export const AssetCoinName = styled.h4`
+  color: #fff;
+  text-align: center;
+`;
+
+export const AssetSectionTitle = styled.h3`
+  color: #fff;
+  font-weight: bold;
+
+  @media screen and (min-width: 350px) {
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: 576px) {
+    font-size: 1.25rem;
+  }
 `;

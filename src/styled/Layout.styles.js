@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Col, Row } from "antd";
 
 /* HIGH-LEVEL CONTAINERS */
@@ -173,7 +174,7 @@ export const NarrowDiv = styled.div`
 export const TopDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 /* GLOBAL INFO BAR */
@@ -529,14 +530,19 @@ export const CoinContainer = styled.div`
   }
 `;
 
-export const LogoContainer = styled.img`
+export const LogoContainer = styled.img.attrs((props) => ({
+  width: props.width || "default",
+  margin: props.margin || "2rem auto 0 auto",
+  backgroundColor: props.modal ? "#1f2128" : "#2c2d33",
+}))`
+  width: ${(props) => props.width};
   border-radius: 6px;
   padding: 1.25rem;
   box-sizing: border-box;
-  margin: 2rem auto 0 auto;
+  margin: ${props => props.margin};
 
   @media screen and (min-width: 350px) {
-    background-color: #2c2d33;
+    background-color: ${props => props.backgroundColor};
   }
 
   @media screen and (min-width: 768px) {
@@ -551,4 +557,236 @@ export const CoinInfoContainer = styled.div`
   flex-direction: ${props => props.direction};
   justify-content: flex-start;
   align-items: ${props => props.align};
+`;
+
+
+/* PORTFOLIO PAGE */
+
+export const PortfolioRow = styled(Row).attrs(props => ({
+  marginTop: props.top ? "125px" : "initial",
+  direction: props.asset ? "column" : "row",
+}))`
+
+  @media screen and (min-width: 350px) {
+    margin: ${props => props.margin ? props.margin : "0 0 2rem 0"};
+    margin-top: ${props => props.marginTop};
+    flex-direction: ${props => props.direction};
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 576px) {
+    margin-top: initial;
+    margin: ${props => props.margin ? props.margin : "0 0 2rem 0"};
+    margin-top: initial;
+  }
+
+  @media screen and (min-width: 992px) {
+    margin-top: initial;
+    margin: ${props => props.margin ? props.margin : "0 0 2rem 0"};
+    flex-direction: row;
+    justify-content: ${props => props.justify};
+    align-items: center;
+  }
+`;
+
+export const PortfolioCol = styled(Col).attrs((props) => ({
+  align: props.align || "center",
+  justify: props.justify || "center",
+  direction: props.direction || "row",
+}))`
+  display: flex;
+  flex-direction: ${props => props.direction};
+  justify-content: ${props => props.justify};
+  align-items: ${props => props.align};
+
+  & > h3 {
+    margin: 0;
+  }
+`;
+
+export const SmallColorBarContainer = styled.div`
+  
+  margin-left: 0.35rem;
+
+  @media screen and (min-width: 350px) {
+    width: 60px;
+  }
+
+  @media screen and (min-width: 992px) {
+    width: 35px;
+  }
+`;
+
+export const AssetCol = styled(Col).attrs((props) => ({
+  height: props.height,
+}))`
+  height: ${(props) => props.height};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  @media screen and (min-width: 350px) {
+    & > div {
+    margin-top: .5rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    & > div {
+    margin-top: 0;
+  }  
+`;
+
+export const AssetCoinContainer = styled.div.attrs(props => ({
+  backgroundColor: props.modal ? "#191b1f" : "rgba(0, 0, 0, 0)",
+  padding: props.modal ? "1.5rem" : "0.5rem",
+  margin: props.modal ? "0 0 1rem 0" : "default",
+}))`
+  height: 100%;
+  padding: ${props => props.padding};
+  margin: ${props => props.margin};
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (min-width: 350px) {
+    background-color: ${props => props.backgroundColor};
+  }
+
+  @media screen and (min-width: 768px) {
+    background-color: #191b1f;
+  }
+
+  @media screen and (min-width: 992px) {
+    background-color: #191b1f;
+  }
+`;
+
+export const AssetContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  @media screen and (min-width: 350px) {
+    background-color: rgba(0,0,0,0);
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    
+    background-color: #191b1f;
+    flex-direction: row;
+    padding: .75rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    
+    background-color: #191b1f;
+    flex-direction: row;
+    padding: .75rem;
+  }
+`;
+
+export const AssetInfoContainer = styled.div`
+  display: flex;
+  
+  align-items: center;
+  border-radius: 6px;
+  
+  @media screen and (min-width: 350px) {
+    background-color: #2c2d33;
+    font-size: 1rem;
+    padding: 1rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    justify-content: space-between;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 0.75rem;
+    background-color: rgba(0,0,0,0);
+  }
+
+  @media screen and (min-width: 992px) {
+    background-color: #rgba(0,0,0,0);
+    padding: 0.25rem;
+    width: auto;
+    margin-bottom: 0;
+    justify-content: space-around;
+  }
+`;
+
+export const AssetInfoTitleContainer = styled.div`
+  font-weight: bold;
+  max-width: 60%;
+`;
+
+export const AssetInfo = styled.span.attrs((props) => ({
+  color: props.color,
+}))`
+  color: ${(props) => props.color};
+  margin-left: 0.45rem;
+`;
+
+export const PercentageContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const AssetCoinLink = styled(Link)`
+  display: inherit;
+  flex-direction: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+`;
+
+/* ASSET MODAL */
+
+export const ModalRow = styled(Row)`
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: 350px) {
+    flex-direction: ${props => props.form ? "column" : "row"};
+    align-items: center;
+  }
+
+  @media screen and (min-width: 576px) {
+    flex-direction: row;
+    align-items: default;
+  }  
+`;
+
+export const ModalContainer = styled.div`
+  max-width: 500px;
+  border-radius: 6px;
+
+  background-color: #2c2f36;
+  padding: 2rem;
+  box-sizing: content-box;
+
+  @media screen and (min-width: 350px) {
+    width: 100%;
+    margin: 0 1rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 57%;
+  }
+  
 `;

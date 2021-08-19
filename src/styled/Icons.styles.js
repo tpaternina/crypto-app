@@ -2,9 +2,14 @@ import { default as styled, keyframes } from "styled-components";
 import {
   CaretUpFilled,
   CaretDownFilled,
+  CloseOutlined,
   CopyOutlined,
+  DeleteFilled,
+  EditFilled,
+  FileImageOutlined,
+  InboxOutlined,
   LinkOutlined,
-  LoadingOutlined
+  LoadingOutlined,
 } from "@ant-design/icons";
 
 export const NavIcon = styled.div`
@@ -66,13 +71,19 @@ const gradientGlobal = keyframes`
 `;
 
 export const ContentLoadingGlobal = styled.div`
-  background: linear-gradient(45deg, #1f2128, #1f2128, #33363e, #1f2128, #1f2128);
+  background: linear-gradient(
+    45deg,
+    #1f2128,
+    #1f2128,
+    #33363e,
+    #1f2128,
+    #1f2128
+  );
   background-size: 200% 200%;
   animation: ${gradientGlobal} 1s ease infinite;
   width: 100%;
   height: 25%;
 `;
-
 
 /* HOME PAGE */
 const gradient = keyframes`
@@ -118,4 +129,80 @@ export const StyledCopy = styled(CopyOutlined)`
   position: absolute;
   right: 0.75rem;
   font-size: 0.85rem;
+`;
+
+/* PORTFOLIO PAGE */
+
+export const EmptyListIcon = styled(InboxOutlined)`
+  color: #40454f;
+  font-size: 6rem;
+`;
+
+export const StyledEditIcon = styled(EditFilled)`
+  color: #ffb528;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  &:hover {
+    cursor: pointer;
+    background-color: #ffb528;
+    color: #fff;
+  }
+
+  @media screen and (min-width: 350px) {
+    background-color: #2c2d33;
+  }
+
+  @media screen and (min-width: 768px) {
+    background-color: #191b1f;
+  }
+`;
+
+export const StyledDeleteIcon = styled(DeleteFilled)`
+  color: #fe1040;
+  border-radius: 6px;
+  background-color: #191b1f;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  &:hover {
+    cursor: pointer;
+    background-color: #fe1040;
+    color: #fff;
+  }
+
+  @media screen and (min-width: 350px) {
+    background-color: #2c2d33;
+  }
+
+  @media screen and (min-width: 768px) {
+    background-color: #191b1f;
+  }
+`;
+
+
+/* ADD ASSET MODAL */
+
+export const StyledFileImageIcon = styled(FileImageOutlined)`
+  color: #40454f;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+`;
+
+export const StyledClose = styled(CloseOutlined)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #06d554;
+  font-weight: bold;
+
+  @media screen and (min-width: 350px) {
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: 576px) {
+    font-size: 1.25rem;
+  }
 `;
