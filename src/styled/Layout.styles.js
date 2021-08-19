@@ -7,6 +7,7 @@ import { Col, Row } from "antd";
 export const AppContainer = styled.div`
   color: #ffffff;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +28,7 @@ export const Container = styled.div`
   color: #ffffff;
   width: 100%;
   max-width: 1200px;
+  height: 100%;
 
   @media screen and (min-width: 350px) {
     & {
