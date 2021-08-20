@@ -7,7 +7,7 @@ import { Col, Row } from "antd";
 export const AppContainer = styled.div`
   color: #ffffff;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +17,7 @@ export const AppContainer = styled.div`
     }
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     & {
       background-color: #1f2128;
     }
@@ -32,7 +32,6 @@ export const Container = styled.div`
 
   @media screen and (min-width: 350px) {
     & {
-      background-color: #171821;
       padding: 1rem 1rem;
       padding-top: 0;
       margin-bottom: 83.5px;
@@ -41,7 +40,6 @@ export const Container = styled.div`
 
   @media screen and (min-width: 768px) {
     & {
-      background-color: #1f2128;
       padding: 2rem 3rem;
       padding-top: 0;
       margin-bottom: 0;
@@ -192,7 +190,7 @@ export const InfoContainer = styled.div`
   align-content: center;
 
   @media screen and (min-width: 350px) {
-    display: ${({responsive}) => responsive ? "none" : "flex"}
+    display: ${({ responsive }) => (responsive ? "none" : "flex")};
   }
 
   @media screen and (min-width: 768px) {
@@ -216,7 +214,6 @@ export const GlobalInfoContainer = styled.div`
   font-size: 0.7rem;
 
   background-color: #191b1f;
-  
 
   @media screen and (min-width: 350px) {
     & {
@@ -248,7 +245,6 @@ export const GlobalInfoContainer = styled.div`
     }
   }
 `;
-
 
 /* OVERVIEW CHART ELEMENTS */
 
@@ -297,12 +293,16 @@ export const ChartCol = styled(Col)`
   }
 `;
 
-export const ChartContainer = styled.div`
+export const ChartContainer = styled.div.attrs(props => ({
+  margin: props.timeRange ? "1rem 0 0 0" : "0",
+  padding: props.timeRange ? "0.75rem 0.75rem" : "default",
+}))`
   text-align: center;
   font-size: 0.9rem;
 
   width: 100%;
-  margin: 0;
+  margin: ${(props) => props.margin};
+  padding: ${props => props.padding};
   position: relative;
   border-radius: 6px;
   border-collapse: collapse;
@@ -310,10 +310,9 @@ export const ChartContainer = styled.div`
   @media screen and (min-width: 350px) {
     & {
       background-color: #2c2f36;
-      margin: 0;
     }
   }
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     & {
       background-color: #191b1f;
       color: #2c2f36;
@@ -330,7 +329,7 @@ export const ChartDiv = styled.div`
     }
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     & {
       padding: 35px 25px 5px 15px;
     }
@@ -373,7 +372,12 @@ export const TableContainer = styled.div`
 
   border-radius: 6px;
   border-collapse: collapse;
-  background-color: #191b1f;
+  @media screen and (min-width: 350px) {
+    background-color: none;
+  }
+  @media screen and (min-width: 576px) {
+    background-color: #191b1f;
+  }
 `;
 
 export const HeaderCol = styled(Col).attrs((props) => ({
@@ -541,10 +545,10 @@ export const LogoContainer = styled.img.attrs((props) => ({
   border-radius: 6px;
   padding: 1.25rem;
   box-sizing: border-box;
-  margin: ${props => props.margin};
+  margin: ${(props) => props.margin};
 
   @media screen and (min-width: 350px) {
-    background-color: ${props => props.backgroundColor};
+    background-color: ${(props) => props.backgroundColor};
   }
 
   @media screen and (min-width: 768px) {
@@ -553,41 +557,39 @@ export const LogoContainer = styled.img.attrs((props) => ({
 `;
 
 export const CoinInfoContainer = styled.div`
-  margin: ${props => props.margin};
+  margin: ${(props) => props.margin};
   width: 100%;
   display: flex;
-  flex-direction: ${props => props.direction};
+  flex-direction: ${(props) => props.direction};
   justify-content: flex-start;
-  align-items: ${props => props.align};
+  align-items: ${(props) => props.align};
 `;
-
 
 /* PORTFOLIO PAGE */
 
-export const PortfolioRow = styled(Row).attrs(props => ({
+export const PortfolioRow = styled(Row).attrs((props) => ({
   marginTop: props.top ? "125px" : "initial",
   direction: props.asset ? "column" : "row",
 }))`
-
   @media screen and (min-width: 350px) {
-    margin: ${props => props.margin ? props.margin : "0 0 2rem 0"};
-    margin-top: ${props => props.marginTop};
-    flex-direction: ${props => props.direction};
+    margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
+    margin-top: ${(props) => props.marginTop};
+    flex-direction: ${(props) => props.direction};
     justify-content: center;
     align-items: center;
   }
 
   @media screen and (min-width: 576px) {
     margin-top: initial;
-    margin: ${props => props.margin ? props.margin : "0 0 2rem 0"};
+    margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
     margin-top: initial;
   }
 
   @media screen and (min-width: 992px) {
     margin-top: initial;
-    margin: ${props => props.margin ? props.margin : "0 0 2rem 0"};
+    margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
     flex-direction: row;
-    justify-content: ${props => props.justify};
+    justify-content: ${(props) => props.justify};
     align-items: center;
   }
 `;
@@ -598,9 +600,9 @@ export const PortfolioCol = styled(Col).attrs((props) => ({
   direction: props.direction || "row",
 }))`
   display: flex;
-  flex-direction: ${props => props.direction};
-  justify-content: ${props => props.justify};
-  align-items: ${props => props.align};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
 
   & > h3 {
     margin: 0;
@@ -608,7 +610,6 @@ export const PortfolioCol = styled(Col).attrs((props) => ({
 `;
 
 export const SmallColorBarContainer = styled.div`
-  
   margin-left: 0.35rem;
 
   @media screen and (min-width: 350px) {
@@ -640,14 +641,14 @@ export const AssetCol = styled(Col).attrs((props) => ({
   }  
 `;
 
-export const AssetCoinContainer = styled.div.attrs(props => ({
+export const AssetCoinContainer = styled.div.attrs((props) => ({
   backgroundColor: props.modal ? "#191b1f" : "rgba(0, 0, 0, 0)",
   padding: props.modal ? "1.5rem" : "0.5rem",
   margin: props.modal ? "0 0 1rem 0" : "default",
 }))`
   height: 100%;
-  padding: ${props => props.padding};
-  margin: ${props => props.margin};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
   border-radius: 6px;
   box-sizing: border-box;
   width: auto;
@@ -658,7 +659,7 @@ export const AssetCoinContainer = styled.div.attrs(props => ({
   align-items: center;
 
   @media screen and (min-width: 350px) {
-    background-color: ${props => props.backgroundColor};
+    background-color: ${(props) => props.backgroundColor};
   }
 
   @media screen and (min-width: 768px) {
@@ -674,39 +675,36 @@ export const AssetContainer = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 6px;
-  
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   @media screen and (min-width: 350px) {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     flex-direction: column;
     padding: 1rem;
   }
 
   @media screen and (min-width: 768px) {
-    
     background-color: #191b1f;
     flex-direction: row;
-    padding: .75rem;
+    padding: 0.75rem;
   }
 
   @media screen and (min-width: 992px) {
-    
     background-color: #191b1f;
     flex-direction: row;
-    padding: .75rem;
+    padding: 0.75rem;
   }
 `;
 
 export const AssetInfoContainer = styled.div`
   display: flex;
-  
+
   align-items: center;
   border-radius: 6px;
-  
+
   @media screen and (min-width: 350px) {
     background-color: #2c2d33;
     font-size: 1rem;
@@ -718,11 +716,11 @@ export const AssetInfoContainer = styled.div`
 
   @media screen and (min-width: 768px) {
     font-size: 0.75rem;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
   }
 
   @media screen and (min-width: 992px) {
-    background-color: #rgba(0,0,0,0);
+    background-color: #rgba(0, 0, 0, 0);
     padding: 0.25rem;
     width: auto;
     margin-bottom: 0;
@@ -764,14 +762,14 @@ export const ModalRow = styled(Row)`
   }
 
   @media screen and (min-width: 350px) {
-    flex-direction: ${props => props.form ? "column" : "row"};
+    flex-direction: ${(props) => (props.form ? "column" : "row")};
     align-items: center;
   }
 
   @media screen and (min-width: 576px) {
     flex-direction: row;
     align-items: default;
-  }  
+  }
 `;
 
 export const ModalContainer = styled.div`
@@ -790,5 +788,4 @@ export const ModalContainer = styled.div`
   @media screen and (min-width: 768px) {
     width: 57%;
   }
-  
 `;

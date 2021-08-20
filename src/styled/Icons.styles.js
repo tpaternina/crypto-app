@@ -70,7 +70,7 @@ const gradientGlobal = keyframes`
   }
 `;
 
-export const ContentLoadingGlobal = styled.div`
+/*export const ContentLoading = styled.div`
   background: linear-gradient(
     45deg,
     #1f2128,
@@ -82,8 +82,8 @@ export const ContentLoadingGlobal = styled.div`
   background-size: 200% 200%;
   animation: ${gradientGlobal} 1s ease infinite;
   width: 100%;
-  height: 25%;
-`;
+  height: ${props => props.height};
+`;*/
 
 /* HOME PAGE */
 const gradient = keyframes`
@@ -99,7 +99,7 @@ const gradient = keyframes`
 `;
 
 export const ContentLoading = styled.div`
-  background: #33363e;
+  background: ${props => props.color};
   background-size: 200% 200%;
   animation: ${gradient} 2s ease infinite;
   width: 100%;

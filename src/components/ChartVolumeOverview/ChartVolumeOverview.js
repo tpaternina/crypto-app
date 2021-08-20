@@ -9,9 +9,7 @@ export default function ChartPriceOverview(props) {
   const data = {
     datasets: [
       {
-        data: totalVolumes
-          .filter((item, index, array) => index !== array.length - 1)
-          .map(formatOverviewChart),
+        data: totalVolumes.map(formatOverviewChart),
         borderColor: "#2172e5",
         fill: true,
         backgroundColor: "#2172e5",
@@ -20,7 +18,7 @@ export default function ChartPriceOverview(props) {
   };
   const options = {
     layout: {
-      //padding: { top: 50, right: 25, left: 25 },
+      padding: { top: 30, right: 20, left: 25, bottom: 10 },
     },
     plugins: {
       legend: {
@@ -32,6 +30,7 @@ export default function ChartPriceOverview(props) {
     },
     scales: {
       x: {
+        display: false,
         grid: {
           display: false,
         },

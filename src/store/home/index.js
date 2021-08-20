@@ -14,6 +14,7 @@ const initialState = {
     perPage: 10,
     page: 1,
   },
+  timeRange: 30,
 };
 
 export const FETCH_ALL_COINS_SUCCESS = "FETCH_ALL_COINS_SUCCESS";
@@ -23,6 +24,8 @@ export const FETCH_ALL_COINS_ERROR = "FETCH_ALL_COINS_ERROR";
 export const FETCH_PRICES_PENDING = "FETCH_PRICES_PENDING";
 export const FETCH_PRICES_SUCCESS = "FETCH_PRICES_SUCCESS";
 export const FETCH_PRICES_ERROR = "FETCH_PRICES_ERROR";
+
+export const SET_TIME_RANGE = "SET_TIME_RANGE";
 
 export const TOGGLE_ORDER = "TOGGLE_ORDER";
 
@@ -64,6 +67,11 @@ const homeReducer = (state = initialState, { type, payload }) => {
         ...state,
         hasOverviewError: payload.err,
       };
+    case SET_TIME_RANGE:
+      return {
+        ...state,
+        timeRange: payload.timeRange,
+      }
     case TOGGLE_ORDER:
       const { sortBy, descending } = payload;
       return {

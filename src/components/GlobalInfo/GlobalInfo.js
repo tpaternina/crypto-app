@@ -7,7 +7,7 @@ import { formatLongNumber, keysToCamelCase } from "utils";
 import { fetchAllCoins } from "store/home/actions";
 import {
   BarContainer,
-  ContentLoadingGlobal,
+  ContentLoading,
   IncreaseArrow,
   DecreaseArrow,
   SmallLogo,
@@ -78,7 +78,7 @@ function GlobalInfo(props) {
   return (
     <GlobalInfoContainer>
       <>
-        {isLoading && <ContentLoadingGlobal />}
+        {isLoading && <ContentLoading color="#33363e" />}
         {hasResponse && (
           <>
             <InfoContainer title="Active coins" responsive={true}>

@@ -2,6 +2,7 @@ import { Row } from "antd";
 import {
   ChartCol,
   ChartContainer,
+  ContentLoading,
   StyledLoading,
   NarrowDivChart,
   WideDivChart,
@@ -23,11 +24,25 @@ export default function ChartLoading(props) {
             </ChartContainer>
           </ChartCol>
         </Row>
+        <Row justify="center">
+          <ChartCol xs={24} sm={18} md={15} lg={12}>
+            <ChartContainer timeRange>
+              <ContentLoading color="#22252d" />
+            </ChartContainer>
+          </ChartCol>
+        </Row>
       </WideDivChart>
       <NarrowDivChart>
         <ChartContainer>
           <StyledLoading />
         </ChartContainer>
+        <Row justify="center">
+          <ChartCol xs={24} sm={19}>
+            <ChartContainer timeRange>
+              <ContentLoading color="#22252d" />
+            </ChartContainer>
+          </ChartCol>
+        </Row>
       </NarrowDivChart>
     </>
   );

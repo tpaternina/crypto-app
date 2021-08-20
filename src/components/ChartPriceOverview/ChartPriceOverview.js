@@ -6,16 +6,14 @@ import { ChartDiv } from "styled";
 
 export default function ChartPriceOverview(props) {
   const { prices } = props;
-  // Whether coin price increased the last 30 days
-  // Exclude 31st element which corresponds to ... average?
-  const increase = !!prices.length && prices[29][1] - prices[0][1] > 0;
+  // Whether coin price increased in the last `timeRange`
+  const increase =
+    !!prices.length && prices[prices.length - 1][1] >= prices[0][1];
 
   const data = {
     datasets: [
       {
-        data: prices
-          .filter((item, index, array) => index !== array.length - 1)
-          .map(formatOverviewChart),
+        data: prices.map(formatOverviewChart),
         borderWidth: 1,
         borderColor: increase ? "#00fc2a" : "#fe1040",
         fill: true,
@@ -34,7 +32,7 @@ export default function ChartPriceOverview(props) {
         scales["x"].left,
         scales["y"].bottom,
         scales["x"].left,
-        scales["y"].top,
+        scales["y"].top
       );
       // add gradients stops
       color.addColorStop(0, "#00fc2a00");
@@ -45,6 +43,9 @@ export default function ChartPriceOverview(props) {
   };
 
   const options = {
+    layout: {
+      padding: { top: 30, right: 20, left: 25, bottom: 10 },
+    },
     plugins: {
       legend: {
         display: false,
@@ -55,12 +56,13 @@ export default function ChartPriceOverview(props) {
     },
     elements: {
       point: {
-        radius: 0,
+        radius: 1,
         backgroundColor: increase ? "#00fc2aff" : "#fe1040ff",
       },
     },
     scales: {
       x: {
+        display: false,
         grid: {
           display: false,
         },

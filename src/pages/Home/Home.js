@@ -108,7 +108,7 @@ class Home extends React.Component {
         </WideDiv>
         <TableContainer>
           <HeaderRow>
-            <HeaderCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank={true}>
+            <HeaderCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank>
               <TableHeader
                 text="#"
                 sortBy="marketCapRank"
