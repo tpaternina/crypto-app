@@ -39,7 +39,6 @@ function Converter(props) {
     <>
       <PortfolioCol
         span={8}
-        style={{border: "1px solid white"}}
       >
         <StyledInputNumber
           type="number"
