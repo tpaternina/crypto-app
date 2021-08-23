@@ -163,7 +163,7 @@ function Coin(props) {
                 );
               })}
           </CoinRow>
-          <CoinRow>
+          <CoinRow justify="center">
             <Converter />
           </CoinRow>
           <CoinRow justify="center">

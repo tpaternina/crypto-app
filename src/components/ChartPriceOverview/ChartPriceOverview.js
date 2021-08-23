@@ -13,7 +13,6 @@ export default function ChartPriceOverview(props) {
     !!prices.length && prices[prices.length - 1][1] >= prices[0][1];
 
   chartColor = chartColor || (increase ? "#00fc2a" : "#fe1040");
-  console.log(prices.map(formatOverviewChart))
 
   const data = {
     datasets: [

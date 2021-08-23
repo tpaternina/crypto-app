@@ -39,7 +39,6 @@ export const StyledLoading = styled(LoadingOutlined)`
   left: 45%;
   top: 45%;
 
-
   @media screen and (min-width: 350px) {
     & {
       color: #fff;
@@ -187,4 +186,22 @@ export const StyledClose = styled(CloseOutlined)`
   @media screen and (min-width: 576px) {
     font-size: 1.25rem;
   }
+`;
+
+/* CONVERTER */
+
+export const CurrencyTag = styled.div`
+  position: absolute;
+  top: 3px;
+  left: 0;
+  background-color: #06d554;
+  color: #fff;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  height: 31px;
+
+  padding: 0 1rem;
+  border-radius: 6px 0 0 6px;
 `;

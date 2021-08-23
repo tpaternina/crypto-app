@@ -31,6 +31,26 @@ export const StyledButton = styled.button.attrs(props => ({
   }
 `;
 
+export const ConverterButton = styled.button`
+  color: #fff;
+  background-color: #06d554;
+  border: none;
+
+  text-transform: capitalize;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin: 0 auto;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: ${props => props.backgroundColor + "cc"};
+  }
+`;
+
+
 
 export const StyledAnchor = styled.a`
   color: #fff;

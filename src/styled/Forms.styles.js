@@ -100,6 +100,7 @@ export const StyledInputNumber = styled(InputNumber)`
   border: 1px solid #191b1f;
   background-color: #191b1f;
   color: #fff;
+  padding: ${props => props.padding};
 `;
 
 export const StyledDatePicker = styled(DatePicker)`
