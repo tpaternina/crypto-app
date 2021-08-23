@@ -35,20 +35,19 @@ export const DecreaseArrow = styled(CaretDownFilled).attrs((props) => ({
 
 export const StyledLoading = styled(LoadingOutlined)`
   font-size: 3rem;
-  text-align: center;
+  position: absolute;
+  left: 45%;
+  top: 45%;
+
 
   @media screen and (min-width: 350px) {
     & {
-      margin-top: 20%;
-      margin-bottom: 20%;
       color: #fff;
     }
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     & {
-      margin-top: 20%;
-      margin-bottom: 20%;
       color: #33363e;
     }
   }
@@ -60,30 +59,6 @@ export const SmallLogo = styled.img`
   width: 15px;
   margin-right: 0.25rem;
 `;
-
-const gradientGlobal = keyframes`
-  from {
-    background-position: 150% 50%;
-  }
-  to {
-    background-position: -50% 50%;
-  }
-`;
-
-/*export const ContentLoading = styled.div`
-  background: linear-gradient(
-    45deg,
-    #1f2128,
-    #1f2128,
-    #33363e,
-    #1f2128,
-    #1f2128
-  );
-  background-size: 200% 200%;
-  animation: ${gradientGlobal} 1s ease infinite;
-  width: 100%;
-  height: ${props => props.height};
-`;*/
 
 /* HOME PAGE */
 const gradient = keyframes`
@@ -99,11 +74,20 @@ const gradient = keyframes`
 `;
 
 export const ContentLoading = styled.div`
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   background-size: 200% 200%;
   animation: ${gradient} 2s ease infinite;
   width: 100%;
   height: 1rem;
+`;
+
+export const StyledBar = styled.div.attrs((props) => ({
+  ...props,
+}))`
+  background-color: ${(props) => props.color};
+  height: 0.5rem;
+  width: ${(props) => props.width};
+  border-radius: 5px;
 `;
 
 /* SINGLE COIN PAGE */
@@ -126,8 +110,7 @@ export const StyledPlus = styled.img`
 `;
 
 export const StyledCopy = styled(CopyOutlined)`
-  position: absolute;
-  right: 0.75rem;
+  margin-left: 0.5rem;
   font-size: 0.85rem;
 `;
 
@@ -180,7 +163,6 @@ export const StyledDeleteIcon = styled(DeleteFilled)`
     background-color: #191b1f;
   }
 `;
-
 
 /* ADD ASSET MODAL */
 

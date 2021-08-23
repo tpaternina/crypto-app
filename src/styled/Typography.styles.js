@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { Typography } from "antd";
 
 const { Paragraph } = Typography;
@@ -91,12 +91,31 @@ export const StyledPrice = styled.h1`
   }
 `;
 
+/* HOME PAGE */
+
+export const StyledRowLink = styled(Link)`
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+  &:visited {
+    color: #fff;
+  }
+`;
+
+export const CoinRowName = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
 /* PRICE INCREASE */
 export const IncreaseText = styled.span.attrs((props) => ({
   increase: props.increase,
   size: props.size,
   margin: props.margin,
 }))`
+  min-width: 65px;
   color: ${(props) => (props.increase ? "#00fc2a" : "#fe1040")};
   font-size: ${(props) => props.size};
   margin: ${(props) => props.margin};

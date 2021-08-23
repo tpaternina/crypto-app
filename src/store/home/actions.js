@@ -51,7 +51,7 @@ export const fetchAllCoins = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchPrices = (currency) => async (dispatch, getState) => {
+export const fetchPrices = (currency, id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: FETCH_PRICES_PENDING,
@@ -59,8 +59,9 @@ export const fetchPrices = (currency) => async (dispatch, getState) => {
     const {
       home: { coinList, timeRange },
     } = getState();
+    id = id || coinList[0].id
     const query = queryString.stringifyUrl({
-      url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${coinList[0].id}/market_chart`,
+      url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}/market_chart`,
       query: {
         vs_currency: currency,
         days: timeRange,
@@ -84,7 +85,6 @@ export const fetchPrices = (currency) => async (dispatch, getState) => {
 };
 
 export const setTimeRange = ({target: {value}}) => {
-  console.log({ value });
   return {
     type: SET_TIME_RANGE,
     payload: { timeRange: value },

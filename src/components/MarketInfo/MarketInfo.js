@@ -1,5 +1,5 @@
 import { formatLongNumber } from "utils";
-import { MarketDiv, MarketInfoRow, StyledInfo } from "./MarketInfo.styles";
+import { MarketDiv, MarketInfoRow, StyledInfo } from "styled";
 import { ColorBar } from "components";
 
 export default function MarketInfo(props) {

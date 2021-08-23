@@ -38,7 +38,7 @@ export const Container = styled.div`
     }
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     & {
       padding: 2rem 3rem;
       padding-top: 0;
@@ -296,6 +296,7 @@ export const ChartCol = styled(Col)`
 export const ChartContainer = styled.div.attrs(props => ({
   margin: props.timeRange ? "1rem 0 0 0" : "0",
   padding: props.timeRange ? "0.75rem 0.75rem" : "default",
+  paddingTop: props.timeRange ? "0.75rem" : "50%",
 }))`
   text-align: center;
   font-size: 0.9rem;
@@ -303,6 +304,7 @@ export const ChartContainer = styled.div.attrs(props => ({
   width: 100%;
   margin: ${(props) => props.margin};
   padding: ${props => props.padding};
+  padding-top: ${props => props.paddingTop};
   position: relative;
   border-radius: 6px;
   border-collapse: collapse;
@@ -322,18 +324,9 @@ export const ChartContainer = styled.div.attrs(props => ({
 
 export const ChartDiv = styled.div`
   width: 100%;
-
-  @media screen and (min-width: 350px) {
-    & {
-      padding: 25px 15px 0px 5px;
-    }
-  }
-
-  @media screen and (min-width: 576px) {
-    & {
-      padding: 35px 25px 5px 15px;
-    }
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 export const ChartInfo = styled.div`
@@ -349,7 +342,7 @@ export const ChartInfo = styled.div`
   align-items: flex-start;
 `;
 
-export const StyledInfo = styled.p`
+export const StyledChartInfo = styled.p`
   color: #fff;
   margin: 0;
 
@@ -459,6 +452,34 @@ export const TableRow = styled(Row)`
   }
 `;
 
+export const TableRowLogo = styled.img`
+  width: 20px;
+  margin-right: 0.75rem;
+`;
+
+export const MarketInfoRow = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const StyledInfo = styled.div.attrs((props) => ({
+  width: props.width,
+}))`
+  width: ${(props) => props.width};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const MarketDiv = styled.div.attrs(props => ({
+  color: props.color,
+}))`
+  color: ${(props) => props.color};
+`;
+
+
 /* SINGLE COIN INFO */
 
 export const CoinCol = styled(Col)`
@@ -563,6 +584,15 @@ export const CoinInfoContainer = styled.div`
   flex-direction: ${(props) => props.direction};
   justify-content: flex-start;
   align-items: ${(props) => props.align};
+`;
+
+export const CoinChartDiv = styled.div`
+  width: 100%;
+  min-height: 200px;
+  position: absolute;
+  bottom: -1;
+  left: 0;
+  margin-bottom: 84.5px;
 `;
 
 /* PORTFOLIO PAGE */

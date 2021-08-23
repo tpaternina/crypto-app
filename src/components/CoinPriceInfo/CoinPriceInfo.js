@@ -48,7 +48,7 @@ export default function CoinPriceInfo(props) {
         <StyledLayerIcon src={layers} />
         <div>
           <CoinInfoContainer margin="1rem 0 0 0" direction="row" align="center">
-            <IncreaseArrow />
+            <IncreaseArrow color="#06d554" />
             <CoinAllTimeInfo>
               <div>
                 <strong>All Time High: </strong>
@@ -58,7 +58,7 @@ export default function CoinPriceInfo(props) {
             </CoinAllTimeInfo>
           </CoinInfoContainer>
           <CoinInfoContainer margin="1rem 0 0 0" direction="row" align="center">
-            <DecreaseArrow />
+            <DecreaseArrow color="#fe1040" />
             <CoinAllTimeInfo>
               <div>
                 <strong>All Time Low: </strong>

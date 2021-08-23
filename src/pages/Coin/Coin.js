@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
+import { Radio } from "antd";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
+import { fetchPrices, setTimeRange } from "store/home/actions";
 import { getCoinInfo } from "store/coin/actions";
 import { setCurrency } from "store/app/actions";
 import {
   BlockchainLink,
+  ChartPriceOverview,
   CoinDescription,
   CoinMarketInfo,
   CoinPriceInfo,
   CoinTitle,
+  Converter,
   Currency,
 } from "components";
 import {
   CoinCol,
   CoinRow,
+  CoinChartDiv,
   NarrowDiv,
   TopDiv,
   WideDiv,
+  StyledLoading,
   StyledTitle,
 } from "styled";
 
@@ -32,6 +38,10 @@ function Coin(props) {
   const {
     coin: { data, isLoading, hasError },
     currency,
+    prices,
+    isOverviewLoading,
+    timeRange,
+    setTimeRange,
   } = props;
 
   useEffect(() => {
@@ -46,6 +56,7 @@ function Coin(props) {
       props.history.push(`?${query}`);
     }
     props.getCoinInfo(props.match.params.id);
+    props.fetchPrices(currency, props.match.params.id);
     // eslint-disable-next-line
   }, []);
 
@@ -75,6 +86,11 @@ function Coin(props) {
   }, [currency]);
 
   useEffect(() => {
+    props.fetchPrices(currency, props.match.params.id);
+    // eslint-disable-next-line
+  }, [timeRange]);
+
+  useEffect(() => {
     if (isLoading) {
       loadingBar.current.continuousStart();
     } else {
@@ -85,6 +101,7 @@ function Coin(props) {
 
   useEffect(() => {
     props.getCoinInfo(props.match.params.id);
+    props.fetchPrices(currency, props.match.params.id);
     // eslint-disable-next-line
   }, [props.match.params.id]);
 
@@ -106,7 +123,7 @@ function Coin(props) {
       <LoadingBar ref={loadingBar} />
       {hasResponse && (
         <>
-          <CoinRow justify="center" gutter={16} top={true}>
+          <CoinRow justify="center" gutter={16} top>
             <CoinCol xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
               <CoinTitle data={data} />
             </CoinCol>
@@ -130,12 +147,47 @@ function Coin(props) {
           <CoinRow justify="center" gutter={16}>
             {data.links.blockchainSite
               .filter((link) => link !== "")
-              .map((link) => (
-                <CoinCol key={link} xs={24} sm={24} md={18} lg={18} xl={24 / linkNumber} xxl={24 / linkNumber}>
-                  <BlockchainLink link={link} />
-                </CoinCol>
-              ))}
+              .map((link) => {
+                return (
+                  <CoinCol
+                    key={link}
+                    xs={24}
+                    sm={24}
+                    md={18}
+                    lg={18}
+                    xl={Math.max(Math.round(24 / linkNumber), 8)}
+                    xxl={Math.max(Math.round(24 / linkNumber), 8)}
+                  >
+                    <BlockchainLink link={link} />
+                  </CoinCol>
+                );
+              })}
           </CoinRow>
+          <CoinRow>
+            <Converter />
+          </CoinRow>
+          <CoinRow justify="center">
+            <CoinCol>
+              <Radio.Group onChange={setTimeRange} value={timeRange}>
+                <Radio.Button value={1}>1d</Radio.Button>
+                <Radio.Button value={7}>1w</Radio.Button>
+                <Radio.Button value={30}>1mo</Radio.Button>
+                <Radio.Button value={90}>3mo</Radio.Button>
+                <Radio.Button value={180}>6mo</Radio.Button>
+                <Radio.Button value={365}>1y</Radio.Button>
+              </Radio.Group>
+            </CoinCol>
+          </CoinRow>
+          <CoinChartDiv>
+            {isOverviewLoading && <StyledLoading />}
+            {!isOverviewLoading && (
+              <ChartPriceOverview
+                prices={prices}
+                chartColor="#4e4e4e"
+                padding={{ top: 0, right: 0, left: 0, bottom: 84}}
+              />
+            )}
+          </CoinChartDiv>
         </>
       )}
     </>
@@ -145,11 +197,16 @@ function Coin(props) {
 const mapStateToProps = (state) => ({
   currency: state.app.currency,
   coin: state.coin,
+  prices: state.home.prices,
+  timeRange: state.home.timeRange,
+  isOverviewLoading: state.home.isOverviewLoading,
 });
 
 const mapDispatchToProps = {
   getCoinInfo,
   setCurrency,
+  fetchPrices,
+  setTimeRange,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coin);

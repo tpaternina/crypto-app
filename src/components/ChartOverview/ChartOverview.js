@@ -11,7 +11,7 @@ import {
   ChartCol,
   ChartContainer,
   ChartInfo,
-  StyledInfo,
+  StyledChartInfo,
   StyledPrice,
   NarrowDivChart,
   WideDivChart,
@@ -61,11 +61,11 @@ class ChartOverview extends React.Component {
                   <ChartContainer>
                     <ChartPriceOverview prices={prices} currency={currency} />
                     <ChartInfo>
-                      <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
+                      <StyledChartInfo> {topCoin.symbol.toUpperCase()} </StyledChartInfo>
                       <StyledPrice>
                         {formatLongNumber(prices[last][1], currency, 3)}
                       </StyledPrice>
-                      <StyledInfo> {formatDate(prices[last][0])} </StyledInfo>
+                      <StyledChartInfo> {formatDate(prices[last][0])} </StyledChartInfo>
                     </ChartInfo>
                   </ChartContainer>
                 </ChartCol>
@@ -76,13 +76,13 @@ class ChartOverview extends React.Component {
                       currency={currency}
                     />
                     <ChartInfo>
-                      <StyledInfo> Volume 24 h </StyledInfo>
+                      <StyledChartInfo> Volume 24 h </StyledChartInfo>
                       <StyledPrice>
                         {formatLongNumber(totalVolumes[last][1], currency, 3)}
                       </StyledPrice>
-                      <StyledInfo>
+                      <StyledChartInfo>
                         {formatDate(totalVolumes[last][0])}
-                      </StyledInfo>
+                      </StyledChartInfo>
                     </ChartInfo>
                   </ChartContainer>
                 </ChartCol>
@@ -107,11 +107,11 @@ class ChartOverview extends React.Component {
                 <ChartContainer>
                   <ChartPriceOverview prices={prices} currency={currency} />
                   <ChartInfo>
-                    <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
+                    <StyledChartInfo> {topCoin.symbol.toUpperCase()} </StyledChartInfo>
                     <StyledPrice>
                       {formatLongNumber(prices[last][1], currency, 3)}
                     </StyledPrice>
-                    <StyledInfo> {formatDate(prices[last][0])} </StyledInfo>
+                    <StyledChartInfo> {formatDate(prices[last][0])} </StyledChartInfo>
                   </ChartInfo>
                 </ChartContainer>
                 <ChartContainer>
@@ -120,14 +120,14 @@ class ChartOverview extends React.Component {
                     currency={currency}
                   />
                   <ChartInfo>
-                    <StyledInfo> Volume 24 h </StyledInfo>
+                    <StyledChartInfo> Volume 24 h </StyledChartInfo>
                     <StyledPrice>
                       {formatLongNumber(totalVolumes[last][1], currency, 3)}
                     </StyledPrice>
-                    <StyledInfo>
+                    <StyledChartInfo>
                       {" "}
                       {formatDate(totalVolumes[last][0])}{" "}
-                    </StyledInfo>
+                    </StyledChartInfo>
                   </ChartInfo>
                 </ChartContainer>
               </Slider>

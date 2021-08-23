@@ -11,6 +11,7 @@ export { default as Coins } from "./Coins";
 export { default as CoinMarketInfo } from "./CoinMarketInfo";
 export { default as CoinPriceInfo } from "./CoinPriceInfo";
 export { default as CoinTitle } from "./CoinTitle";
+export { default as Converter } from "./Converter";
 export { default as Currency } from "./Currency";
 export { default as ColorBar } from "./ColorBar";
 export { default as GlobalInfo } from "./GlobalInfo";

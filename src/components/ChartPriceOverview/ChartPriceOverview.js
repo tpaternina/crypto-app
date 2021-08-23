@@ -5,17 +5,22 @@ import { formatOverviewChart } from "utils";
 import { ChartDiv } from "styled";
 
 export default function ChartPriceOverview(props) {
-  const { prices } = props;
+  const { prices, padding } = props;
+  let { chartColor } = props;
+
   // Whether coin price increased in the last `timeRange`
   const increase =
     !!prices.length && prices[prices.length - 1][1] >= prices[0][1];
+
+  chartColor = chartColor || (increase ? "#00fc2a" : "#fe1040");
+  console.log(prices.map(formatOverviewChart))
 
   const data = {
     datasets: [
       {
         data: prices.map(formatOverviewChart),
         borderWidth: 1,
-        borderColor: increase ? "#00fc2a" : "#fe1040",
+        borderColor: chartColor,
         fill: true,
       },
     ],
@@ -35,8 +40,8 @@ export default function ChartPriceOverview(props) {
         scales["y"].top
       );
       // add gradients stops
-      color.addColorStop(0, "#00fc2a00");
-      color.addColorStop(1, "#00fc2a77");
+      color.addColorStop(0, "#00000000");
+      color.addColorStop(1, chartColor + "77");
       // changes the background color option
       chart.data.datasets[0].backgroundColor = color;
     },
@@ -44,7 +49,7 @@ export default function ChartPriceOverview(props) {
 
   const options = {
     layout: {
-      padding: { top: 30, right: 20, left: 25, bottom: 10 },
+      padding: padding || { top: 30, right: 20, left: 25, bottom: 10 },
     },
     plugins: {
       legend: {
@@ -56,8 +61,8 @@ export default function ChartPriceOverview(props) {
     },
     elements: {
       point: {
-        radius: 1,
-        backgroundColor: increase ? "#00fc2aff" : "#fe1040ff",
+        radius: 2,
+        backgroundColor: chartColor
       },
     },
     scales: {

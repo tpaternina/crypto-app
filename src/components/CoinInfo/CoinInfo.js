@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  CoinLogo,
-  IncreaseArrow,
-  StyledCoinName,
-  StyledLink,
-  StyledPercentage,
-} from "./CoinInfo.styles";
-import { increaseArrow, decreaseArrow } from "assets";
 import { Chart, MarketInfo } from "components";
-import { TableCol, TableRow } from "styled";
+import {
+  CoinRowName,
+  IncreaseArrow,
+  DecreaseArrow,
+  IncreaseText,
+  StyledRowLink,
+  TableRowLogo,
+  TableCol,
+  TableRow,
+} from "styled";
 
 function CoinInfo(props) {
   const { coin, currency } = props;
@@ -30,25 +31,25 @@ function CoinInfo(props) {
   return (
     <TableRow>
       <TableCol rank={true} xs={3} sm={4} md={3} lg={3} xl={2} xxl={2}>
-        <StyledLink
+        <StyledRowLink
           key={coin}
           to={`/coins/${coin.id}?currency=${currency}`}
           title={`More about ${coin.name}`}
         >
           {coin.marketCapRank}
-        </StyledLink>
+        </StyledRowLink>
       </TableCol>
       <TableCol xs={6} sm={4} md={6} lg={4} xl={4} xxl={4}>
-        <StyledLink
+        <StyledRowLink
           key={coin}
           to={`/coins/${coin.id}?currency=${currency}`}
           title={`More about ${coin.name}`}
         >
-          <StyledCoinName>
-            <CoinLogo src={coin.image} alt={coin.name} />
+          <CoinRowName>
+            <TableRowLogo src={coin.image} alt={coin.name} />
             {coin.name} ({coin.symbol.toUpperCase()})
-          </StyledCoinName>
-        </StyledLink>
+          </CoinRowName>
+        </StyledRowLink>
       </TableCol>
       <TableCol xs={6} sm={4} md={3} lg={3} xl={2} xxl={2}>
         {coin.currentPrice.toLocaleString("en-UK", {
@@ -58,28 +59,28 @@ function CoinInfo(props) {
         })}
       </TableCol>
       <TableCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
-        <StyledPercentage increase={increase1h}>
-          <IncreaseArrow src={increase1h ? increaseArrow : decreaseArrow} />
+        <IncreaseText increase={increase1h}>
+          {increase1h ? <IncreaseArrow /> : <DecreaseArrow />}
           {coin.priceChangePercentage1HInCurrency &&
             Math.abs(coin.priceChangePercentage1HInCurrency.toFixed(2))}
           %
-        </StyledPercentage>
+        </IncreaseText>
       </TableCol>
       <TableCol xs={5} sm={4} md={2} lg={2} xl={2} xxl={2}>
-        <StyledPercentage increase={increase24h}>
-          <IncreaseArrow src={increase24h ? increaseArrow : decreaseArrow} />
+        <IncreaseText increase={increase24h}>
+          {increase24h ? <IncreaseArrow /> : <DecreaseArrow />}
           {coin.priceChangePercentage24HInCurrency &&
             Math.abs(coin.priceChangePercentage24HInCurrency.toFixed(2))}
           %
-        </StyledPercentage>
+        </IncreaseText>
       </TableCol>
       <TableCol xs={0} sm={4} md={2} lg={2} xl={2} xxl={2}>
-        <StyledPercentage increase={increase7d}>
-          <IncreaseArrow src={increase7d ? increaseArrow : decreaseArrow} />
+        <IncreaseText increase={increase7d}>
+          {increase7d ? <IncreaseArrow /> : <DecreaseArrow />}
           {coin.priceChangePercentage7DInCurrency &&
             Math.abs(coin.priceChangePercentage7DInCurrency.toFixed(2))}
           %
-        </StyledPercentage>
+        </IncreaseText>
       </TableCol>
       <TableCol xs={0} sm={0} md={6} lg={4} xl={3} xxl={3}>
         <MarketInfo

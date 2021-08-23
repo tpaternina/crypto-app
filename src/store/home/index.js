@@ -53,6 +53,7 @@ const homeReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isOverviewLoading: true,
+        prices: [],
       };
     case FETCH_PRICES_SUCCESS:
       return {
@@ -66,6 +67,7 @@ const homeReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         hasOverviewError: payload.err,
+        prices: [],
       };
     case SET_TIME_RANGE:
       return {
