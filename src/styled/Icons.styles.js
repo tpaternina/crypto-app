@@ -170,9 +170,10 @@ export const StyledDeleteIcon = styled(DeleteFilled)`
 
 export const StyledFileImageIcon = styled(FileImageOutlined)`
   color: #40454f;
+  width: 75%;
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  padding: 1.25rem;
+  padding: 1.25rem 1rem;
 `;
 
 export const StyledClose = styled(CloseOutlined)`

@@ -18,7 +18,7 @@ export default function ChartPriceOverview(props) {
   };
   const options = {
     layout: {
-      padding: { top: 30, right: 20, left: 25, bottom: 10 },
+      padding: { top: 67.2, right: 32, left: 32, bottom: 16 },
     },
     plugins: {
       legend: {

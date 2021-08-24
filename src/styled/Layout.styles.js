@@ -63,6 +63,7 @@ export const StyledList = styled.ul`
 export const WideNavContainer = styled.nav`
   width: 100%;
   background-color: #191b1f;
+  justify-content: center;
 
   @media screen and (min-width: 350px) {
     & {
@@ -72,7 +73,7 @@ export const WideNavContainer = styled.nav`
 
   @media screen and (min-width: 576px) {
     & {
-      display: block;
+      display: flex;
     }
   }
 `;
@@ -105,11 +106,13 @@ export const WideNav = styled.div`
 
   ul {
     display: flex;
+    height: 100%;
   }
 
   li {
     list-style: none;
     margin-right: 1rem;
+    height: 100%;
   }
 `;
 
@@ -285,11 +288,11 @@ export const NarrowDivChart = styled.div`
 
 export const ChartCol = styled(Col)`
   &:first-of-type {
-    padding-right: 2.5%;
+    padding-right: 1%;
   }
 
   &:last-of-type {
-    padding-left: 2.5%;
+    padding-left: 1%;
   }
 `;
 
@@ -333,8 +336,8 @@ export const ChartInfo = styled.div`
   width: 100%;
 
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 16px;
+  left: 16px;
 
   display: flex;
   flex-direction: column;
@@ -468,6 +471,7 @@ export const StyledInfo = styled.div.attrs((props) => ({
   width: props.width,
 }))`
   width: ${(props) => props.width};
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

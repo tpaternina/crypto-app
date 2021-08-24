@@ -30,12 +30,14 @@ export const StyledLink = styled(NavLink)`
   text-decoration: none;
   border-radius: 6px;
   font-size: 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
 
   @media screen and (min-width: 350px) {
     & {
       display: flex;
       flex-direction: column;
-      align-items: center;
       padding: 0;
       color: #fff;
     }
@@ -53,7 +55,7 @@ export const StyledLink = styled(NavLink)`
 
   @media screen and (min-width: 570px) {
     & {
-      display: block;
+      flex-direction: row;
       padding: 0.5rem 1.5rem;
       color: #fff;
     }

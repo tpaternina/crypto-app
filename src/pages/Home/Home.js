@@ -1,10 +1,19 @@
 import React from "react";
+import { Row, Radio } from "antd";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
-import { fetchAllCoins, toggleOrder } from "store/home/actions";
+import {
+  fetchAllCoins,
+  toggleOrder,
+  fetchPrices,
+  setTimeRange,
+} from "store/home/actions";
 import { setCurrency } from "store/app/actions";
 import {
+  ChartCol,
+  ContentLoading,
+  ChartContainer,
   TableContainer,
   HeaderCol,
   HeaderRow,
@@ -72,6 +81,9 @@ class Home extends React.Component {
     if (prevProps.currency !== this.props.currency) {
       this.props.fetchAllCoins();
     }
+    if (prevProps.home.timeRange !== this.props.home.timeRange) {
+      this.props.fetchPrices(this.props.currency);
+    }
     if (
       prevProps.home.isLoading !== this.props.home.isLoading &&
       this.props.home.isLoading
@@ -89,8 +101,9 @@ class Home extends React.Component {
   render() {
     const {
       toggleOrder,
-      home: { coinList, isLoading },
+      home: { coinList, isLoading, timeRange },
       hasResponse,
+      setTimeRange,
     } = this.props;
     return (
       <>
@@ -103,6 +116,27 @@ class Home extends React.Component {
         </NarrowDiv>
         {isLoading && <ChartLoading />}
         {hasResponse && <ChartOverview />}
+        <Row justify="center">
+          <ChartCol xs={24} sm={19} md={15} lg={12}>
+            {isLoading && (
+              <ChartContainer timeRange>
+                <ContentLoading color="#404040" />
+              </ChartContainer>
+            )}
+            {!isLoading && (
+              <ChartContainer timeRange>
+                <Radio.Group onChange={setTimeRange} value={timeRange}>
+                  <Radio.Button value={1}>1d</Radio.Button>
+                  <Radio.Button value={7}>1w</Radio.Button>
+                  <Radio.Button value={30}>1mo</Radio.Button>
+                  <Radio.Button value={90}>3mo</Radio.Button>
+                  <Radio.Button value={180}>6mo</Radio.Button>
+                  <Radio.Button value={365}>1y</Radio.Button>
+                </Radio.Group>
+              </ChartContainer>
+            )}
+          </ChartCol>
+        </Row>
         <WideDiv>
           <StyledTitle> Market Overview </StyledTitle>
         </WideDiv>
@@ -170,7 +204,10 @@ class Home extends React.Component {
                 toggleOrder={toggleOrder}
               />
             </HeaderCol>
-            <HeaderCol xs={0} sm={0} md={0} lg={0} xl={4} xxl={4}> Last 7 d </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={0} lg={0} xl={4} xxl={4}>
+              {" "}
+              Last 7 d{" "}
+            </HeaderCol>
           </HeaderRow>
           {isLoading && <LoadingCoins />}
           {hasResponse && <Coins coinList={coinList} />}
@@ -193,6 +230,8 @@ const mapDispatchToProps = {
   fetchAllCoins,
   setCurrency,
   toggleOrder,
+  fetchPrices,
+  setTimeRange,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
