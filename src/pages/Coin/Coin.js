@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
-import { Radio } from "antd";
+import { Radio, Row } from "antd";
 import { isEmpty } from "lodash";
 import LoadingBar from "react-top-loading-bar";
 import { fetchPrices, setTimeRange } from "store/home/actions";
@@ -165,9 +165,9 @@ function Coin(props) {
                 );
               })}
           </CoinRow>
-          <CoinRow justify="center">
+          <Row justify="center" align="center">
             <Converter />
-          </CoinRow>
+          </Row>
           <CoinRow justify="center">
             <CoinCol xs={24} sm={19} md={15} lg={12} xl={10} xxl={8}>
               <Radio.Group onChange={setTimeRange} value={timeRange}>

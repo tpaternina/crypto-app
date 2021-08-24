@@ -13,7 +13,9 @@ function Converter(props) {
 
   const symbol = coin.symbol.toUpperCase();
 
-  const [price, setPrice] = useState(coin.marketData.currentPrice[currency.toLowerCase()]);
+  const [price, setPrice] = useState(
+    coin.marketData.currentPrice[currency.toLowerCase()]
+  );
 
   const [from, setFrom] = useState(symbol);
   const [fromVal, setFromVal] = useState(1);
@@ -31,27 +33,25 @@ function Converter(props) {
   };
 
   useEffect(
-    () => setPrice(1 / price), 
+    () => setPrice(1 / price),
     // eslint-disable-next-line
     [from, to]
   );
 
   return (
     <>
-      <PortfolioCol
-        span={8}
-      >
+      <PortfolioCol span={8} xs={10} md={8}>
         <StyledInputNumber
           type="number"
           min={0}
           onChange={(val) => (val ? convertTo(val) : convertTo(1))}
           value={fromVal}
           padding="0 0 0 3.5rem"
-          initialValue={fromVal}
+          converter
         />
         <CurrencyTag>{from}</CurrencyTag>
       </PortfolioCol>
-      <PortfolioCol span={3}>
+      <PortfolioCol xs={4} sm={3}>
         <ConverterButton
           onClick={() => {
             let temp = from;
@@ -63,15 +63,14 @@ function Converter(props) {
           <RetweetOutlined />
         </ConverterButton>
       </PortfolioCol>
-      <PortfolioCol
-        span={8}
-      >
+      <PortfolioCol span={8} xs={10} md={8}>
         <StyledInputNumber
           type="number"
           min={0}
           onChange={(val) => (val ? convertFrom(val) : convertFrom(1))}
           value={toVal}
           padding="0 0 0 3.5rem"
+          converter
         />
         <CurrencyTag>{to}</CurrencyTag>
       </PortfolioCol>
