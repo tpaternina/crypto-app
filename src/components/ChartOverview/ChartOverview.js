@@ -88,7 +88,7 @@ class ChartOverview extends React.Component {
                 </ChartCol>
               </Row>
               <Row justify="center">
-                <ChartCol xs={24} sm={18} md={15} lg={12}>
+                <ChartCol xs={24} sm={19} md={15} lg={12}>
                   <ChartContainer timeRange>
                     <Radio.Group onChange={setTimeRange} value={timeRange}>
                       <Radio.Button value={1}>1d</Radio.Button>

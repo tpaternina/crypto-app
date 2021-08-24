@@ -5,7 +5,7 @@ export default function CoinTitle(props) {
   const { data } = props;
   return (
     <>
-      <CoinTitleContainer top={true}>
+      <CoinTitleContainer top>
         <LogoContainer src={data.image.small} alt={data.name} />
         <StyledCoinName>
           {data.name} ({data.symbol.toUpperCase()})

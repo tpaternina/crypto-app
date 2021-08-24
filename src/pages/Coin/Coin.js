@@ -16,6 +16,7 @@ import {
   CoinTitle,
   Converter,
   Currency,
+  LoadingSingleCoin,
 } from "components";
 import {
   CoinCol,
@@ -121,6 +122,7 @@ function Coin(props) {
         <StyledTitle>Coin summary</StyledTitle>
       </WideDiv>
       <LoadingBar ref={loadingBar} />
+      {isLoading && <LoadingSingleCoin />}
       {hasResponse && (
         <>
           <CoinRow justify="center" gutter={16} top>
@@ -167,7 +169,7 @@ function Coin(props) {
             <Converter />
           </CoinRow>
           <CoinRow justify="center">
-            <CoinCol>
+            <CoinCol xs={24} sm={19} md={15} lg={12} xl={10} xxl={8}>
               <Radio.Group onChange={setTimeRange} value={timeRange}>
                 <Radio.Button value={1}>1d</Radio.Button>
                 <Radio.Button value={7}>1w</Radio.Button>

@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { InputNumber } from "antd";
 import { RetweetOutlined } from "@ant-design/icons";
-import { formatCurrency } from "utils";
 import {
   ConverterButton,
   CurrencyTag,
-  StyledButton,
   StyledInputNumber,
   PortfolioCol,
 } from "styled";
@@ -33,7 +30,11 @@ function Converter(props) {
     setFromVal((val / price).toFixed(2));
   };
 
-  useEffect(() => setPrice(1 / price), [from, to]);
+  useEffect(
+    () => setPrice(1 / price), 
+    // eslint-disable-next-line
+    [from, to]
+  );
 
   return (
     <>

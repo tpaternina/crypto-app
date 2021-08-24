@@ -33,11 +33,14 @@ export const DecreaseArrow = styled(CaretDownFilled).attrs((props) => ({
   color: ${(props) => props.color};
 `;
 
-export const StyledLoading = styled(LoadingOutlined)`
+export const StyledLoading = styled(LoadingOutlined).attrs(props => ({
+  left: props.left || "45%",
+  top: props.top || "45%"
+}))`
   font-size: 3rem;
   position: absolute;
-  left: 45%;
-  top: 45%;
+  left: ${props => props.left};
+  top: ${props => props.top};
 
   @media screen and (min-width: 350px) {
     & {

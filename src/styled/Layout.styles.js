@@ -503,7 +503,9 @@ export const CoinRow = styled(Row).attrs((props) => ({
   }
 `;
 
-export const CoinTitleContainer = styled.div`
+export const CoinTitleContainer = styled.div.attrs(props => ({
+  padding: props.padding || "1rem 0",
+}))`
   text-align: center;
   font-size: 0.9rem;
 
@@ -513,7 +515,7 @@ export const CoinTitleContainer = styled.div`
   align-items: center;
 
   margin: 0;
-  padding: 1rem 0;
+  padding: ${props => props.padding};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -533,16 +535,18 @@ export const CoinTitleContainer = styled.div`
   }
 `;
 
-export const CoinContainer = styled.div`
+export const CoinContainer = styled.div.attrs(props => ({
+  padding: props.padding || "1rem 3.5rem",
+}))`
   font-size: 0.9rem;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${props => props.justify};
   align-items: center;
 
   margin: 0;
-  padding: 1rem 3.5rem;
+  padding: ${props => props.padding};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
