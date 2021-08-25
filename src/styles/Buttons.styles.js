@@ -2,6 +2,47 @@ import styled from "styled-components";
 import { mobile, medium } from "./Sizes.styles";
 
 
+export const MobileClose = styled.button`
+  font-size: 2rem;
+  background-color: #00000000;
+  border: none;
+  margin-bottom: 1rem;
+  cursor: pointer;
+
+  & > * {
+    margin-right: 1rem;
+    font-weight: bold;
+  }
+`;
+
+export const StyledFauxLink = styled.button`
+  font-size: 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #00000000;
+  border: none;
+
+  ${mobile} {
+    & {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      color: #fff;
+    }
+    &::after {
+      color: #fff;
+      text-decoration: none;
+    }
+    &:hover,
+    &.selected {
+      color: #00ff5f;
+    }
+  }
+`;
+
+
 export const StyledButton = styled.button.attrs(props => ({
   color: props.primary ? "#ffffff" : "#06d554",
   backgroundColor: props.primary ? "#06d554" : "#ffffff",
@@ -51,7 +92,6 @@ export const ConverterButton = styled.button`
     background-color: ${props => props.backgroundColor + "cc"};
   }
 `;
-
 
 
 export const StyledAnchor = styled.a`

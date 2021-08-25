@@ -10,6 +10,10 @@ import {
   FETCH_PRICES_ERROR,
   SET_TIME_RANGE,
   TOGGLE_ORDER,
+  SEARCH_PAGE_OPEN,
+  SEARCH_PAGE_UNOPEN,
+  SEARCH_PAGE_DESTROY,
+  SEARCH_PAGE_UNDESTROY,
 } from "./index";
 
 export const fetchAllCoins = () => async (dispatch, getState) => {
@@ -59,7 +63,7 @@ export const fetchPrices = (currency, id) => async (dispatch, getState) => {
     const {
       home: { coinList, timeRange },
     } = getState();
-    id = id || coinList[0].id
+    id = id || coinList[0].id;
     const query = queryString.stringifyUrl({
       url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}/market_chart`,
       query: {
@@ -84,7 +88,7 @@ export const fetchPrices = (currency, id) => async (dispatch, getState) => {
   }
 };
 
-export const setTimeRange = ({target: {value}}) => {
+export const setTimeRange = ({ target: { value } }) => {
   return {
     type: SET_TIME_RANGE,
     payload: { timeRange: value },
@@ -99,4 +103,30 @@ export const toggleOrder = (sortBy, descending) => {
       descending,
     },
   };
+};
+
+export const showSearchPage = () => (dispatch, getState) => {
+  dispatch({
+    type: SEARCH_PAGE_UNDESTROY,
+  });
+  setTimeout(
+    () =>
+      dispatch({
+        type: SEARCH_PAGE_OPEN,
+      }),
+    250
+  );
+};
+
+export const hideSearchPage = () => (dispatch, getState) => {
+  dispatch({
+    type: SEARCH_PAGE_UNOPEN,
+  });
+  setTimeout(
+    () =>
+      dispatch({
+        type: SEARCH_PAGE_DESTROY,
+      }),
+    250
+  );
 };

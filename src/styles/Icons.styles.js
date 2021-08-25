@@ -5,11 +5,13 @@ import {
   CloseOutlined,
   CopyOutlined,
   DeleteFilled,
+  DisconnectOutlined,
   EditFilled,
   FileImageOutlined,
   InboxOutlined,
   LinkOutlined,
   LoadingOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import { mobile, tablet, medium } from "./Sizes.styles";
 
@@ -54,6 +56,17 @@ export const StyledLoading = styled(LoadingOutlined).attrs(props => ({
       color: #33363e;
     }
   }
+`;
+
+export const StyledLoadingList = styled(SyncOutlined)`
+  font-size: 2.5rem;
+  color: #40454f;
+`;
+
+export const StyledDisconnected = styled(DisconnectOutlined)`
+  color: #40454f;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 `;
 
 /* GLOBAL INFO BAR */

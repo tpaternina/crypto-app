@@ -73,6 +73,7 @@ export const StyledLink = styled(NavLink)`
   }
 `;
 
+
 /* GLOBAL BAR */
 export const StyledNumber = styled.span`
   display: flex;

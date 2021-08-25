@@ -98,7 +98,7 @@ class AddAsset extends React.Component {
       handleSubmit,
     } = this.props;
     return (
-      <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
+      <Background destroy={destroyAddAsset} open={openAddAsset}>
         <ModalContainer width="57%">
           <ModalRow>
             <PortfolioCol span={24}>
