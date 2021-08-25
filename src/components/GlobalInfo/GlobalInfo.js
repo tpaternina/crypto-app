@@ -15,7 +15,7 @@ import {
   InfoContainer,
   StyledNumber,
   GlobalText,
-} from "styled";
+} from "styles";
 
 function GlobalInfo(props) {
   const { coinList } = props;

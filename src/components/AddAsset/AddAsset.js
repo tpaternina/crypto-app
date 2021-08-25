@@ -22,7 +22,7 @@ import {
   StyledInputNumber,
   StyledItem,
   StyledFileImageIcon,
-} from "styled";
+} from "styles";
 import {
   getCoinList,
   handleClose,

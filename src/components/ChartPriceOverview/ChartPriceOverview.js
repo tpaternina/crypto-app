@@ -2,7 +2,7 @@ import React from "react";
 //import gradient from "chartjs-plugin-gradient";
 import { Line } from "react-chartjs-2";
 import { formatOverviewChart } from "utils";
-import { ChartDiv } from "styled";
+import { ChartDiv } from "styles";
 
 export default function ChartPriceOverview(props) {
   const { prices, padding } = props;
@@ -29,7 +29,7 @@ export default function ChartPriceOverview(props) {
     id: "responsiveGradient",
 
     afterLayout: function (chart, options) {
-      const scales = chart.scales;
+      const { scales } = chart;
 
       // create a linear gradient with the dimensions of the scale
       const color = chart.ctx.createLinearGradient(

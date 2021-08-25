@@ -5,7 +5,7 @@ import {
   StyledCopy,
   StyledCoinLink,
   StyledLinkIcon,
-} from "styled";
+} from "styles";
 
 export default class BlockchainList extends React.Component {
   handleCopy = (text) => {

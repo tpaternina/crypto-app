@@ -8,7 +8,7 @@ import {
   CoinMarketInfoTitle,
   StyledPlus,
   StyledPercentage,
-} from "styled";
+} from "styles";
 
 export default function CoinMarketInfo(props) {
   const { currency, data } = props;

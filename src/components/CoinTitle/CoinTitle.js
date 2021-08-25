@@ -1,5 +1,5 @@
 import { Row } from "antd";
-import { CoinTitleContainer, LogoContainer, StyledCoinName, StyledCoinLink, StyledLinkIcon } from "styled";
+import { CoinTitleContainer, LogoContainer, StyledCoinName, StyledCoinLink, StyledLinkIcon } from "styles";
 
 export default function CoinTitle(props) {
   const { data } = props;

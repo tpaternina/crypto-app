@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { formatOverviewChart } from "utils";
-import { ChartDiv } from "styled";
+import { ChartDiv } from "styles";
 
 export default function ChartPriceOverview(props) {
   const { totalVolumes } = props;

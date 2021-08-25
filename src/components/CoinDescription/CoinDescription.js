@@ -1,6 +1,6 @@
 import parse from "html-react-parser";
 import { layers } from "assets";
-import { CoinContainer, StyledDescription, StyledLayerIcon } from "styled";
+import { CoinContainer, StyledDescription, StyledLayerIcon } from "styles";
 
 export default function CoinDescription(props) {
   const { data } = props;

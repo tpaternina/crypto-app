@@ -21,7 +21,7 @@ import {
   StyledDeleteIcon,
   IncreaseArrow,
   DecreaseArrow,
-} from "styled";
+} from "styles";
 
 export default class PortfolioAsset extends React.Component {
   render() {

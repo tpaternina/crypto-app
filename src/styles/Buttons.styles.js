@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { mobile, medium } from "./Sizes.styles";
+
 
 export const StyledButton = styled.button.attrs(props => ({
   color: props.primary ? "#ffffff" : "#06d554",
@@ -22,11 +24,11 @@ export const StyledButton = styled.button.attrs(props => ({
     background-color: ${props => props.backgroundColor + "cc"};
   }
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     margin: ${props => props.margin};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     margin: 2rem auto;
   }
 `;
@@ -53,7 +55,7 @@ export const ConverterButton = styled.button`
 
 
 export const StyledAnchor = styled.a`
-  color: #fff;
+  color: #06d554;
   border-radius: 6px;
 
   height: 100%;
@@ -67,11 +69,11 @@ export const StyledAnchor = styled.a`
     color: #06d554;
   }
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: #2c2d33;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
   }
 `;

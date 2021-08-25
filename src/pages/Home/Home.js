@@ -21,7 +21,7 @@ import {
   WideDiv,
   StyledTitle,
   TopDiv,
-} from "styled";
+} from "styles";
 import {
   Currency,
   ChartLoading,

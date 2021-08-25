@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { DatePicker, InputNumber, Form, Select } from "antd";
+import { mobile, tablet, medium } from "./Sizes.styles";
 
 export const StyledSelect = styled(Select)`
   text-align: left;
@@ -11,7 +12,7 @@ export const StyledSelect = styled(Select)`
     color: #06d554;
   }
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     width: 10rem;
     & > .ant-select-selector.ant-select-selector {
       border-radius: 6px;
@@ -20,7 +21,7 @@ export const StyledSelect = styled(Select)`
     }
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     width: 14rem;
     & > .ant-select-selector.ant-select-selector {
       border-radius: 6px;
@@ -45,12 +46,12 @@ export const Background = styled.div`
   opacity: ${(props) => (props.openAddAsset ? "1" : "0")};
   transition: all 0.25s linear;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: #191b1fdd;
     align-items: flex-start;
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     background-color: #191b1f77;
     align-items: center;
   }
@@ -68,11 +69,11 @@ export const StyledForm = styled(Form)`
 export const StyledItem = styled(Form.Item)`
   width: 100%;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     margin-bottom: 1rem;
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     margin-bottom: default;
   }
 `;
@@ -101,11 +102,11 @@ export const StyledInputNumber = styled(InputNumber)`
   background-color: #191b1f;
   color: #fff;
   padding: ${props => props.padding};
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: ${props => props.converter ? "#2c2d33" : "#191b1f"};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
   }
 `;

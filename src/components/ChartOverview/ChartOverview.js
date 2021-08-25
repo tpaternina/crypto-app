@@ -15,7 +15,7 @@ import {
   StyledPrice,
   NarrowDivChart,
   WideDivChart,
-} from "styled";
+} from "styles";
 import { formatDate, formatLongNumber } from "utils";
 import { fetchPrices } from "store/home/actions";
 

@@ -9,7 +9,7 @@ import {
   IncreaseArrow,
   DecreaseArrow,
   StyledLayerIcon,
-} from "styled";
+} from "styles";
 import { formatCurrency, formatLongDate } from "utils";
 
 

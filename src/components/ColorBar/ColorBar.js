@@ -1,6 +1,6 @@
 import { clamp } from "lodash";
 import React from "react";
-import { StyledBar } from "styled";
+import { StyledBar } from "styles";
 
 export default function ColorBar(props) {
   const { numerator, denominator } = props;

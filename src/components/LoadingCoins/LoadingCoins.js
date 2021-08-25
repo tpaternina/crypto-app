@@ -1,4 +1,4 @@
-import { ContentLoading, TableCol, TableRow } from "styled";
+import { ContentLoading, TableCol, TableRow } from "styles";
 
 export default function LoadingCoins() {
   return (

@@ -11,6 +11,7 @@ import {
   LinkOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
+import { mobile, tablet, medium } from "./Sizes.styles";
 
 export const NavIcon = styled.div`
   font-size: 2rem;
@@ -42,13 +43,13 @@ export const StyledLoading = styled(LoadingOutlined).attrs(props => ({
   left: ${props => props.left};
   top: ${props => props.top};
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       color: #fff;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       color: #33363e;
     }
@@ -135,11 +136,11 @@ export const StyledEditIcon = styled(EditFilled)`
     color: #fff;
   }
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: #2c2d33;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
   }
 `;
@@ -157,11 +158,11 @@ export const StyledDeleteIcon = styled(DeleteFilled)`
     color: #fff;
   }
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: #2c2d33;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
   }
 `;
@@ -183,11 +184,11 @@ export const StyledClose = styled(CloseOutlined)`
   color: #06d554;
   font-weight: bold;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     font-size: 2rem;
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     font-size: 1.25rem;
   }
 `;

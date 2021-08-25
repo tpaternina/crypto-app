@@ -5,7 +5,7 @@ import {
   StyledLoading,
   NarrowDivChart,
   WideDivChart,
-} from "styled";
+} from "styles";
 
 export default function ChartLoading(props) {
   return (

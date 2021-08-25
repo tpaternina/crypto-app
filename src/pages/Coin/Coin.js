@@ -27,7 +27,7 @@ import {
   WideDiv,
   StyledLoading,
   StyledTitle,
-} from "styled";
+} from "styles";
 
 function Coin(props) {
   const loadingBar = React.createRef();

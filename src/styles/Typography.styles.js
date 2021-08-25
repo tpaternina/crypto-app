@@ -1,19 +1,20 @@
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
 import { Typography } from "antd";
+import { mobile, tablet, medium, large } from "./Sizes.styles";
 
 const { Paragraph } = Typography;
 
 export const StyledTitle = styled.h3`
   color: #fff;
   text-transform: capitalize;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       font-size: 2rem;
       margin: 0;
     }
   }
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       font-size: initial;
       margin: 3rem 0 1.5rem 0;
@@ -34,7 +35,7 @@ export const StyledLink = styled(NavLink)`
   display: flex;
   align-items: center;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: flex;
       flex-direction: column;
@@ -53,7 +54,7 @@ export const StyledLink = styled(NavLink)`
     }
   }
 
-  @media screen and (min-width: 570px) {
+  ${tablet} {
     & {
       flex-direction: row;
       padding: 0.5rem 1.5rem;
@@ -87,10 +88,14 @@ export const StyledPrice = styled.h1`
   color: #fff;
   font-weight: bold;
   margin: 0.5rem 0;
-  @media screen and (max-width: 936px) {
-    & {
-      font-size: 1rem;
-    }
+
+
+  ${medium} {
+    font-size: 1rem;
+  }
+
+  ${large} {
+    font-size: 2rem;
   }
 `;
 
@@ -128,11 +133,11 @@ export const IncreaseText = styled.span.attrs((props) => ({
 export const StyledCoinName = styled.h2`
   color: #fff;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     margin: 1rem auto 1rem auto;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     margin: 1.5rem auto 2rem auto;
   }
 `;
@@ -214,11 +219,11 @@ export const AssetSectionTitle = styled.h3`
   color: #fff;
   font-weight: bold;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     font-size: 2rem;
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     font-size: 1.25rem;
   }
 `;

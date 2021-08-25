@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Col, Row } from "antd";
+import { mobile, tablet, medium, large, xLarge, xxLarge } from "./Sizes.styles";
 
 /* HIGH-LEVEL CONTAINERS */
 
@@ -11,13 +12,13 @@ export const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       background-color: #171821;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       background-color: #1f2128;
     }
@@ -30,7 +31,7 @@ export const Container = styled.div`
   max-width: 1200px;
   height: 100%;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       padding: 1rem 1rem;
       padding-top: 0;
@@ -38,7 +39,7 @@ export const Container = styled.div`
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       padding: 2rem 3rem;
       padding-top: 0;
@@ -65,13 +66,13 @@ export const WideNavContainer = styled.nav`
   background-color: #191b1f;
   justify-content: center;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: none;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       display: flex;
     }
@@ -84,20 +85,20 @@ export const WideNav = styled.div`
   justify-content: space-between;
   max-width: 1200px;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: none;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       display: flex;
       padding: 1rem;
     }
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     & {
       display: flex;
       padding: 1rem 3rem;
@@ -126,13 +127,13 @@ export const NarrowNav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: flex;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       display: none;
     }
@@ -142,13 +143,13 @@ export const NarrowNav = styled.nav`
 /* RESPONSIVE PAGE TITLES */
 
 export const WideDiv = styled.div`
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: none;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       display: block;
     }
@@ -161,13 +162,13 @@ export const NarrowDiv = styled.div`
   position: absolute;
   top: 60px;
   left: 0;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: block;
     }
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       display: none;
     }
@@ -192,11 +193,11 @@ export const InfoContainer = styled.div`
   align-items: center;
   align-content: center;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     display: ${({ responsive }) => (responsive ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     display: flex;
   }
 `;
@@ -218,7 +219,7 @@ export const GlobalInfoContainer = styled.div`
 
   background-color: #191b1f;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       background-color: #2c2f36;
       border-radius: 0;
@@ -230,7 +231,7 @@ export const GlobalInfoContainer = styled.div`
       z-index: 900;
     }
   }
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       position: initial;
       background-color: #191b1f;
@@ -239,7 +240,7 @@ export const GlobalInfoContainer = styled.div`
     }
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     & {
       position: initial;
       background-color: #191b1f;
@@ -252,13 +253,13 @@ export const GlobalInfoContainer = styled.div`
 /* OVERVIEW CHART ELEMENTS */
 
 export const WideDivChart = styled.div`
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: none;
     }
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     & {
       display: block;
     }
@@ -267,19 +268,19 @@ export const WideDivChart = styled.div`
 
 export const NarrowDivChart = styled.div`
   width: 100%;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       display: block;
       margin-top: 125px;
     }
   }
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       display: block;
       margin-top: 50px;
     }
   }
-  @media screen and (min-width: 768px) {
+  ${medium} {
     & {
       display: none;
     }
@@ -296,7 +297,7 @@ export const ChartCol = styled(Col)`
   }
 `;
 
-export const ChartContainer = styled.div.attrs(props => ({
+export const ChartContainer = styled.div.attrs((props) => ({
   margin: props.timeRange ? "1rem 0 0 0" : "0",
   padding: props.timeRange ? "0.75rem 0.75rem" : "default",
   paddingTop: props.timeRange ? "0.75rem" : "50%",
@@ -306,18 +307,18 @@ export const ChartContainer = styled.div.attrs(props => ({
 
   width: 100%;
   margin: ${(props) => props.margin};
-  padding: ${props => props.padding};
-  padding-top: ${props => props.paddingTop};
+  padding: ${(props) => props.padding};
+  padding-top: ${(props) => props.paddingTop};
   position: relative;
   border-radius: 6px;
   border-collapse: collapse;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & {
       background-color: #2c2f36;
     }
   }
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     & {
       background-color: #191b1f;
       color: #2c2f36;
@@ -368,10 +369,10 @@ export const TableContainer = styled.div`
 
   border-radius: 6px;
   border-collapse: collapse;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: none;
   }
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     background-color: #191b1f;
   }
 `;
@@ -384,27 +385,27 @@ export const HeaderCol = styled(Col).attrs((props) => ({
   flex-direction: column;
   align-items: ${(props) => props.align};
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     display: ${(props) => (props.xs === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     display: ${(props) => (props.sm === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     display: ${(props) => (props.md === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     display: ${(props) => (props.lg === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 1200px) {
+  ${xLarge} {
     display: ${(props) => (props.xl === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 1600px) {
+  ${xxLarge} {
     display: flex;
   }
 `;
@@ -422,27 +423,27 @@ export const TableCol = styled(Col).attrs((props) => ({
   align-items: flex-end;
   width: fit-content;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     display: ${(props) => (props.xs === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     display: ${(props) => (props.sm === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     display: ${(props) => (props.md === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     display: ${(props) => (props.lg === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 1200px) {
+  ${xLarge} {
     display: ${(props) => (props.xl === 0 ? "none" : "flex")};
   }
 
-  @media screen and (min-width: 1600px) {
+  ${xxLarge} {
     display: flex;
   }
 `;
@@ -477,12 +478,11 @@ export const StyledInfo = styled.div.attrs((props) => ({
   justify-content: space-between;
 `;
 
-export const MarketDiv = styled.div.attrs(props => ({
+export const MarketDiv = styled.div.attrs((props) => ({
   color: props.color,
 }))`
   color: ${(props) => props.color};
 `;
-
 
 /* SINGLE COIN INFO */
 
@@ -496,18 +496,18 @@ export const CoinCol = styled(Col)`
 export const CoinRow = styled(Row).attrs((props) => ({
   margin: props.top ? "125px" : 0,
 }))`
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     flex-direction: column;
     margin-top: ${(props) => props.margin};
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     flex-direction: row;
     margin-top: 0;
   }
 `;
 
-export const CoinTitleContainer = styled.div.attrs(props => ({
+export const CoinTitleContainer = styled.div.attrs((props) => ({
   padding: props.padding || "1rem 0",
 }))`
   text-align: center;
@@ -519,7 +519,7 @@ export const CoinTitleContainer = styled.div.attrs(props => ({
   align-items: center;
 
   margin: 0;
-  padding: ${props => props.padding};
+  padding: ${(props) => props.padding};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -527,40 +527,40 @@ export const CoinTitleContainer = styled.div.attrs(props => ({
   border-radius: 6px;
   border-collapse: collapse;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: ${(props) =>
       props.top ? "rgba(0, 0, 0, 0)" : "#2c2d33"};
     margin-bottom: 0;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
     margin-bottom: ${(props) => (props.top ? "0.75rem" : "0")};
   }
 `;
 
-export const CoinContainer = styled.div.attrs(props => ({
+export const CoinContainer = styled.div.attrs((props) => ({
   padding: props.padding || "1rem 3.5rem",
 }))`
   font-size: 0.9rem;
 
   display: flex;
   flex-direction: column;
-  justify-content: ${props => props.justify};
+  justify-content: ${(props) => props.justify};
   align-items: center;
 
   margin: 0;
-  padding: ${props => props.padding};
+  padding: ${(props) => props.padding};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
 
   border-radius: 6px;
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: #2c2d33;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
   }
 `;
@@ -576,11 +576,11 @@ export const LogoContainer = styled.img.attrs((props) => ({
   box-sizing: border-box;
   margin: ${(props) => props.margin};
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: ${(props) => props.backgroundColor};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #1f2128;
   }
 `;
@@ -609,7 +609,7 @@ export const PortfolioRow = styled(Row).attrs((props) => ({
   marginTop: props.top ? "125px" : "initial",
   direction: props.asset ? "column" : "row",
 }))`
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
     margin-top: ${(props) => props.marginTop};
     flex-direction: ${(props) => props.direction};
@@ -617,13 +617,13 @@ export const PortfolioRow = styled(Row).attrs((props) => ({
     align-items: center;
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     margin-top: initial;
     margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
     margin-top: initial;
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     margin-top: initial;
     margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
     flex-direction: row;
@@ -650,11 +650,11 @@ export const PortfolioCol = styled(Col).attrs((props) => ({
 export const SmallColorBarContainer = styled.div`
   margin-left: 0.35rem;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     width: 60px;
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     width: 35px;
   }
 `;
@@ -668,12 +668,12 @@ export const AssetCol = styled(Col).attrs((props) => ({
   flex-direction: column;
   justify-content: space-between;
   
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     & > div {
     margin-top: .5rem;
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     & > div {
     margin-top: 0;
   }  
@@ -696,15 +696,15 @@ export const AssetCoinContainer = styled.div.attrs((props) => ({
   justify-content: center;
   align-items: center;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: ${(props) => props.backgroundColor};
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     background-color: #191b1f;
   }
 `;
@@ -718,19 +718,19 @@ export const AssetContainer = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: rgba(0, 0, 0, 0);
     flex-direction: column;
     padding: 1rem;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     background-color: #191b1f;
     flex-direction: row;
     padding: 0.75rem;
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     background-color: #191b1f;
     flex-direction: row;
     padding: 0.75rem;
@@ -743,7 +743,7 @@ export const AssetInfoContainer = styled.div`
   align-items: center;
   border-radius: 6px;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     background-color: #2c2d33;
     font-size: 1rem;
     padding: 1rem;
@@ -752,12 +752,12 @@ export const AssetInfoContainer = styled.div`
     justify-content: space-between;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     font-size: 0.75rem;
     background-color: rgba(0, 0, 0, 0);
   }
 
-  @media screen and (min-width: 992px) {
+  ${large} {
     background-color: #rgba(0, 0, 0, 0);
     padding: 0.25rem;
     width: auto;
@@ -799,12 +799,12 @@ export const ModalRow = styled(Row)`
     margin-bottom: 0;
   }
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     flex-direction: ${(props) => (props.form ? "column" : "row")};
     align-items: center;
   }
 
-  @media screen and (min-width: 576px) {
+  ${tablet} {
     flex-direction: row;
     align-items: default;
   }
@@ -818,12 +818,12 @@ export const ModalContainer = styled.div`
   padding: 2rem;
   box-sizing: content-box;
 
-  @media screen and (min-width: 350px) {
+  ${mobile} {
     width: 100%;
     margin: 0 1rem;
   }
 
-  @media screen and (min-width: 768px) {
+  ${medium} {
     width: 57%;
   }
 `;

@@ -16,7 +16,7 @@ import {
   NarrowDiv,
   WideDiv,
   TopDiv,
-} from "styled";
+} from "styles";
 import { camelCaseToCapitalize } from "utils";
 import {
   getCoinInfo,
@@ -166,15 +166,15 @@ const Portfolio = (props) => {
             />
           ))}
       <PortfolioRow justify="end" gutter={16}>
-        <PortfolioCol xs={8} sm={10} md={15} lg={15} xl={17} xxl={17} justify="flex-end">
+        <PortfolioCol xs={8} sm={8} md={10} lg={15} xl={17} xxl={17} justify="flex-start">
           <StyledAnchor href="#">
             Back to top <UpCircleOutlined />
           </StyledAnchor>
         </PortfolioCol>
-        <PortfolioCol xs={6} sm={7} md={3} lg={3} xl={2} xxl={2} justify="flex-end">
+        <PortfolioCol xs={6} sm={6} md={7} lg={3} xl={2} xxl={2} justify="flex-end">
             Sort by:
           </PortfolioCol>
-          <PortfolioCol xs={10} sm={7} md={6} lg={6} xl={5} xxl={5} justify="flex-end">
+          <PortfolioCol xs={10} sm={10} md={7} lg={6} xl={5} xxl={5} justify="center">
             <StyledSelect
               value={sortBy}
               onChange={onChange}

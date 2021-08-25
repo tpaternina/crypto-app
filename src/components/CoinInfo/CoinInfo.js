@@ -10,7 +10,7 @@ import {
   TableRowLogo,
   TableCol,
   TableRow,
-} from "styled";
+} from "styles";
 
 function CoinInfo(props) {
   const { coin, currency } = props;
@@ -30,7 +30,7 @@ function CoinInfo(props) {
 
   return (
     <TableRow>
-      <TableCol rank={true} xs={3} sm={4} md={3} lg={3} xl={2} xxl={2}>
+      <TableCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank>
         <StyledRowLink
           key={coin}
           to={`/coins/${coin.id}?currency=${currency}`}

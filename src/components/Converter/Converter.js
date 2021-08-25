@@ -6,7 +6,7 @@ import {
   CurrencyTag,
   StyledInputNumber,
   PortfolioCol,
-} from "styled";
+} from "styles";
 
 function Converter(props) {
   const { currency, coin } = props;

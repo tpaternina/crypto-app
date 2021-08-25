@@ -10,7 +10,7 @@ import {
   StyledLoading,
   StyledTitle,
   ConverterButton,
-} from "styled";
+} from "styles";
 
 export default function LoadingSingleCoin(props) {
   return (
