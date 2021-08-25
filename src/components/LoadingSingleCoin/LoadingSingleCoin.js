@@ -1,11 +1,11 @@
+import { Col, Row } from "antd";
 import { RetweetOutlined } from "@ant-design/icons";
 import {
   CoinRow,
   CoinCol,
   PortfolioCol,
   CoinChartDiv,
-  CoinContainer,
-  CoinTitleContainer,
+  CoinLoadingContainer,
   ContentLoading,
   StyledLoading,
   StyledTitle,
@@ -17,45 +17,45 @@ export default function LoadingSingleCoin(props) {
     <>
       <CoinRow justify="center" gutter={16} top>
         <CoinCol xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
-          <CoinTitleContainer padding="40% 2rem" top>
+          <CoinLoadingContainer height={"233px"} top>
             <StyledLoading top="35%" left="45%"/>
-          </CoinTitleContainer>
-          <CoinTitleContainer padding="1rem">
+          </CoinLoadingContainer>
+          <CoinLoadingContainer height={"48px"} padding="1rem">
             <ContentLoading color="#404040" />
-          </CoinTitleContainer>
+          </CoinLoadingContainer>
         </CoinCol>
         <CoinCol xs={24} sm={16} md={10} lg={10} xl={8} xxl={8}>
-          <CoinContainer>
+          <CoinLoadingContainer height={"293px"}>
             <StyledLoading />
-          </CoinContainer>
+          </CoinLoadingContainer>
         </CoinCol>
         <CoinCol xs={24} sm={18} md={16} lg={16} xl={10} xxl={10}>
-          <CoinContainer padding="20%">
+          <CoinLoadingContainer height={"293px"}>
             <StyledLoading />
-          </CoinContainer>
+          </CoinLoadingContainer>
         </CoinCol>
       </CoinRow>
       <StyledTitle>Description</StyledTitle>
       <CoinRow justify="center">
         <CoinCol xs={24} sm={24} md={18} lg={18} xl={24} xxl={24}>
-          <CoinContainer padding="30%">
+          <CoinLoadingContainer height={"406px"}>
             <StyledLoading />
-          </CoinContainer>
+          </CoinLoadingContainer>
         </CoinCol>
       </CoinRow>
-      <CoinRow justify="center">
-        <PortfolioCol span={8}>
+      <Row justify="center">
+        <PortfolioCol xs={10} md={8}>
           <ContentLoading color="#404040" />
         </PortfolioCol>
-        <PortfolioCol span={3}>
+        <PortfolioCol xs={4} md={3}>
           <ConverterButton onClick={() => console.log("Page is loading!")}>
             <RetweetOutlined />
           </ConverterButton>
         </PortfolioCol>
-        <PortfolioCol span={8}>
+        <PortfolioCol xs={10} md={8}>
           <ContentLoading color="#404040" />
         </PortfolioCol>
-      </CoinRow>
+      </Row>
       <CoinRow justify="center">
         <CoinCol xs={24} sm={19} md={15} lg={12} xl={10} xxl={8}>
             <ContentLoading color="#404040" />

@@ -507,6 +507,23 @@ export const CoinRow = styled(Row).attrs((props) => ({
   }
 `;
 
+export const CoinLoadingContainer = styled.div`
+  border-radius: 6px;
+  height: ${props => props.height};
+  padding: ${props => props.padding};
+
+  ${mobile} {
+    background-color: ${(props) =>
+      props.top ? "rgba(0, 0, 0, 0)" : "#2c2d33"};
+    margin-bottom: 0;
+  }
+
+  ${tablet} {
+    background-color: #191b1f;
+    margin-bottom: ${(props) => (props.top ? "0.75rem" : "0")};
+  }
+`;
+
 export const CoinTitleContainer = styled.div.attrs((props) => ({
   padding: props.padding || "1rem 0",
 }))`
@@ -533,7 +550,7 @@ export const CoinTitleContainer = styled.div.attrs((props) => ({
     margin-bottom: 0;
   }
 
-  ${medium} {
+  ${tablet} {
     background-color: #191b1f;
     margin-bottom: ${(props) => (props.top ? "0.75rem" : "0")};
   }
@@ -544,7 +561,6 @@ export const CoinContainer = styled.div.attrs((props) => ({
 }))`
   font-size: 0.9rem;
 
-  display: flex;
   flex-direction: column;
   justify-content: ${(props) => props.justify};
   align-items: center;
@@ -558,10 +574,16 @@ export const CoinContainer = styled.div.attrs((props) => ({
   border-radius: 6px;
   ${mobile} {
     background-color: #2c2d33;
+    /*display: ${props => props.xs ? "flex" : "none"};*/
+  }
+
+  ${tablet} {
+    background-color: #191b1f;
+    /*display: ${props => props.sm ? "flex" : "none"};*/
   }
 
   ${medium} {
-    background-color: #191b1f;
+    /*display: ${props => props.md > 0 ? "flex" : "none"};*/
   }
 `;
 

@@ -40,7 +40,7 @@ function Converter(props) {
 
   return (
     <>
-      <PortfolioCol span={8} xs={10} md={8}>
+      <PortfolioCol xs={10} md={8}>
         <StyledInputNumber
           type="number"
           min={0}
@@ -63,7 +63,7 @@ function Converter(props) {
           <RetweetOutlined />
         </ConverterButton>
       </PortfolioCol>
-      <PortfolioCol span={8} xs={10} md={8}>
+      <PortfolioCol xs={10} md={8}>
         <StyledInputNumber
           type="number"
           min={0}
