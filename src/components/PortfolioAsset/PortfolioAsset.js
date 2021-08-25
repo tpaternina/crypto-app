@@ -4,21 +4,24 @@ import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 import { ColorBar } from "components";
 import { formatCurrency, formatLongNumber } from "utils";
 import {
-  ColorBarContainer,
-  Container,
-  CoinContainer,
-  InfoContainer,
-  InfoTitle,
+  AssetCol,
+  AssetCoinContainer,
+  AssetCoinLink,
+  AssetCoinName,
+  AssetContainer,
+  AssetInfo,
+  AssetInfoContainer,
+  AssetInfoTitleContainer,
+  AssetSectionTitle,
   LogoContainer,
-  StyledCol,
-  StyledRow,
+  PortfolioRow,
+  PercentageContainer,
+  SmallColorBarContainer,
   StyledEditIcon,
   StyledDeleteIcon,
-  StyledCoinName,
-  StyledInfo,
-  StyledLink,
-  StyledTitle,
-} from "./PortfolioAsset.styles";
+  IncreaseArrow,
+  DecreaseArrow,
+} from "styles";
 
 export default class PortfolioAsset extends React.Component {
   render() {
@@ -53,102 +56,126 @@ export default class PortfolioAsset extends React.Component {
 
     return (
       <>
-        <StyledRow justify="space-between" margin="0 0 2rem 0">
-          <StyledCol height="190px" span={4}>
-            <CoinContainer>
-              <StyledLink to={`/coins/${id}?currency=${currency}`}>
-                <LogoContainer width="45%" src={large} />
-                <StyledCoinName>
+        <PortfolioRow justify="space-between" gutter={16} asset>
+          <AssetCol
+            height="190px"
+            span={4}
+            xs={24}
+            sm={10}
+            md={8}
+            lg={5}
+            xl={4}
+            xxl={4}
+          >
+            <AssetCoinContainer>
+              <AssetCoinLink to={`/coins/${id}?currency=${currency}`}>
+                <LogoContainer width="45%" margin="0 0 1rem 0" src={large} />
+                <AssetCoinName>
                   {name} ({symbol.toUpperCase()})
-                </StyledCoinName>
-              </StyledLink>
-            </CoinContainer>
-          </StyledCol>
-          <StyledCol height="190px" span={19}>
-            <StyledRow margin={0}>
-              <StyledCol span={24} height="100%">
-                <StyledTitle>Market Price</StyledTitle>
-                <Container>
-                  <InfoContainer>
-                    <InfoTitle>Current price</InfoTitle>
-                    <StyledInfo color="#06d554">
+                </AssetCoinName>
+              </AssetCoinLink>
+            </AssetCoinContainer>
+          </AssetCol>
+          <AssetCol
+            height="190px"
+            span={19}
+            xs={24}
+            sm={24}
+            md={24}
+            lg={19}
+            xl={20}
+            xxl={20}
+          >
+            <PortfolioRow margin="0" asset>
+              <AssetCol span={24} height="100%">
+                <AssetSectionTitle>Market Price</AssetSectionTitle>
+                <AssetContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Current price</AssetInfoTitleContainer>
+                    <AssetInfo color="#06d554">
                       {formatCurrency(
                         currentPrice[currency.toLowerCase()],
                         currency
                       )}
-                    </StyledInfo>
-                  </InfoContainer>
-                  <InfoContainer>
-                    <InfoTitle>Price change 24h</InfoTitle>
-                    <StyledInfo color={increase ? "#06d554" : "#fe1040"}>
-                      {increase ? <CaretUpOutlined /> : <CaretDownOutlined />}{" "}
+                    </AssetInfo>
+                  </AssetInfoContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Price change 24h</AssetInfoTitleContainer>
+                    <AssetInfo color={increase ? "#06d554" : "#fe1040"}>
+                      {increase ? <IncreaseArrow /> : <DecreaseArrow />}{" "}
                       {formatCurrency(priceChange, currency)}
-                    </StyledInfo>
-                  </InfoContainer>
-                  <InfoContainer>
-                    <InfoTitle>Vol. vs. Market Cap</InfoTitle>
-                    <StyledInfo color="#06d554">{volumePercentage}%</StyledInfo>
-                    <ColorBarContainer>
-                      <ColorBar
-                        numerator={volumePercentage}
-                        denominator={100}
-                        numeratorColor="#fff"
-                        denominatorColor="#06d554"
-                      />
-                    </ColorBarContainer>
-                  </InfoContainer>
-                  <InfoContainer>
-                    <InfoTitle>Circ. vs. Max. supply</InfoTitle>
-                    <StyledInfo color="#fff">
+                    </AssetInfo>
+                  </AssetInfoContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Vol. vs. Market Cap</AssetInfoTitleContainer>
+                    <PercentageContainer>
+                      <AssetInfo color="#06d554">
+                        {volumePercentage}%
+                      </AssetInfo>
+                      <SmallColorBarContainer>
+                        <ColorBar
+                          numerator={volumePercentage}
+                          denominator={100}
+                          numeratorColor="#fff"
+                          denominatorColor="#06d554"
+                        />
+                      </SmallColorBarContainer>
+                    </PercentageContainer>
+                  </AssetInfoContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Circ. vs. Max. supply</AssetInfoTitleContainer>
+                    <AssetInfo color="#fff">
                       {formatLongNumber(circulatingSupply, symbol)}
-                    </StyledInfo>
-                    <ColorBarContainer>
+                    </AssetInfo>
+                    <SmallColorBarContainer>
                       <ColorBar
                         numerator={circulatingSupply}
                         denominator={maxSupply}
                         numeratorColor="#fff"
                         denominatorColor="#06d554"
                       />
-                    </ColorBarContainer>
-                    <StyledInfo color="#06d554">
+                    </SmallColorBarContainer>
+                    <AssetInfo color="#06d554">
                       {formatLongNumber(maxSupply, symbol)}
-                    </StyledInfo>
-                  </InfoContainer>
-                </Container>
-              </StyledCol>
-            </StyledRow>
-            <StyledRow>
-              <StyledCol span={24}>
-                <StyledTitle>
+                    </AssetInfo>
+                  </AssetInfoContainer>
+                </AssetContainer>
+              </AssetCol>
+            </PortfolioRow>
+            <PortfolioRow margin="0" asset>
+              <AssetCol span={24}>
+                <AssetSectionTitle>
                   Your coin{" "}
                   <StyledEditIcon
                     onClick={() => showEditAsset(coin)}
                     title="Edit coin"
+                    aria-label="Edit coin"
                     role="button"
                   />
                   <StyledDeleteIcon
                     onClick={() => handleDelete(key)}
                     title="Delete coin"
+                    aria-label="Delete coin"
                     role="button"
                   />
-                </StyledTitle>
-                <Container>
-                  <InfoContainer>
-                    <InfoTitle>Coin amount</InfoTitle>
-                    <StyledInfo color="#06d554">{purchasedAmount}</StyledInfo>
-                  </InfoContainer>
-                  <InfoContainer>
-                    <InfoTitle>Amount value</InfoTitle>
-                    <StyledInfo color="#06d554">
+                </AssetSectionTitle>
+                <AssetContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Coin amount</AssetInfoTitleContainer>
+                    <AssetInfo color="#06d554">{purchasedAmount}</AssetInfo>
+                  </AssetInfoContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Amount value</AssetInfoTitleContainer>
+                    <AssetInfo color="#06d554">
                       {formatCurrency(
                         purchasedAmount * currentPrice[currency.toLowerCase()],
                         currency
                       )}
-                    </StyledInfo>
-                  </InfoContainer>
-                  <InfoContainer>
-                    <InfoTitle>Amount price change since purchase</InfoTitle>
-                    <StyledInfo
+                    </AssetInfo>
+                  </AssetInfoContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Amount price change since purchase</AssetInfoTitleContainer>
+                    <AssetInfo
                       color={increaseSincePurchase > 0 ? "#06d554" : "#fe1040"}
                     >
                       {increaseSincePurchase > 0 ? (
@@ -157,19 +184,19 @@ export default class PortfolioAsset extends React.Component {
                         <CaretDownOutlined />
                       )}{" "}
                       {formatCurrency(increaseSincePurchase, currency)}
-                    </StyledInfo>
-                  </InfoContainer>
-                  <InfoContainer>
-                    <InfoTitle>Purchase date</InfoTitle>
-                    <StyledInfo color="#06d554">
+                    </AssetInfo>
+                  </AssetInfoContainer>
+                  <AssetInfoContainer>
+                    <AssetInfoTitleContainer>Purchase date</AssetInfoTitleContainer>
+                    <AssetInfo color="#06d554">
                       {moment(purchasedDate).format("DD/MM/YYYY")}
-                    </StyledInfo>
-                  </InfoContainer>
-                </Container>
-              </StyledCol>
-            </StyledRow>
-          </StyledCol>
-        </StyledRow>
+                    </AssetInfo>
+                  </AssetInfoContainer>
+                </AssetContainer>
+              </AssetCol>
+            </PortfolioRow>
+          </AssetCol>
+        </PortfolioRow>
       </>
     );
   }

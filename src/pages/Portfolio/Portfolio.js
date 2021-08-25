@@ -3,7 +3,20 @@ import queryString from "query-string";
 import moment from "moment";
 import { connect } from "react-redux";
 import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
-import { AddAsset, PortfolioAsset } from "components";
+import { AddAsset, Currency, PortfolioAsset } from "components";
+import {
+  EmptyListIcon,
+  PlaceholderText,
+  PortfolioCol,
+  PortfolioRow,
+  StyledAnchor,
+  StyledButton,
+  StyledSelect,
+  StyledTitle,
+  NarrowDiv,
+  WideDiv,
+  TopDiv,
+} from "styles";
 import { camelCaseToCapitalize } from "utils";
 import {
   getCoinInfo,
@@ -18,16 +31,6 @@ import {
 } from "store/portfolio/actions";
 import { fetchAllCoins } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
-import {
-  EmptyListIcon,
-  PlaceholderText,
-  StyledAnchor,
-  StyledButton,
-  StyledCol,
-  StyledRow,
-  StyledSelect,
-  StyledTitle,
-} from "./Portfolio.styles";
 
 const { Option } = StyledSelect;
 
@@ -42,7 +45,7 @@ const Portfolio = (props) => {
       case "marketCapRank":
         return item1[sortBy] - item2[sortBy];
       case "purchasedDate":
-        return moment(item2[sortBy]) - moment(item1[sortBy]) 
+        return moment(item2[sortBy]) - moment(item1[sortBy]);
       case "purchasedAmount":
         return item2[sortBy] - item1[sortBy];
       case "currentPrice":
@@ -71,9 +74,7 @@ const Portfolio = (props) => {
 
   useEffect(() => {
     if (props.location.search) {
-      const { currency, sortBy } = queryString.parse(
-        props.location.search
-      );
+      const { currency, sortBy } = queryString.parse(props.location.search);
       props.setCurrency(currency);
       props.setOrder(sortBy);
     } else {
@@ -87,30 +88,26 @@ const Portfolio = (props) => {
   }, []);
 
   useEffect(() => {
-      const query = queryString.stringify({
-        currency,
-        sortBy,
-      });
-      props.history.push(`?${query}`);
-      // eslint-disable-next-line
-    }, [currency, sortBy])
-  
+    const query = queryString.stringify({
+      currency,
+      sortBy,
+    });
+    props.history.push(`?${query}`);
+    // eslint-disable-next-line
+  }, [currency, sortBy]);
+
   return (
     <>
-      <StyledRow justify="center">
-        <StyledCol span={6}>
-          <StyledButton onClick={showAddAsset}>Add Asset</StyledButton>
-        </StyledCol>
-      </StyledRow>
-      <StyledRow justify="center" gutter={16}>
-        <StyledCol span={4} justify="flex-start">
-          <StyledTitle>Your statistics</StyledTitle>
-        </StyledCol>
-        <StyledCol span={15} justify="flex-end">
-          Sort by:{" "}
-        </StyledCol>
-        <StyledCol span={5}>
+      <PortfolioRow justify="center" top>
+        <PortfolioCol xs={24} sm={12} md={8} lg={6} xl={6} xxl={5}>
+          <StyledButton onClick={showAddAsset} primary>Add Asset</StyledButton>
+        </PortfolioCol>
+      </PortfolioRow>
+      <NarrowDiv>
+        <TopDiv>
+          <StyledTitle>Portfolio</StyledTitle>
           <StyledSelect
+            aria-label="Sort by"
             value={sortBy}
             onChange={onChange}
             suffixIcon={<DownCircleOutlined />}
@@ -121,15 +118,40 @@ const Portfolio = (props) => {
               </Option>
             ))}
           </StyledSelect>
-        </StyledCol>
-      </StyledRow>
+          <Currency />
+        </TopDiv>
+      </NarrowDiv>
+      <WideDiv>
+        <PortfolioRow justify="center" gutter={16}>
+          <PortfolioCol xs={8} sm={8} md={6} lg={6} xl={4} xxl={4} justify="flex-start" align="center">
+            <StyledTitle>Your statistics</StyledTitle>
+          </PortfolioCol>
+          <PortfolioCol xs={9} sm={9} md={13} lg={13} xl={15} xxl={15} justify="flex-end">
+            Sort by:
+          </PortfolioCol>
+          <PortfolioCol xs={7} sm={7} md={5} lg={5} xl={5} xxl={5}>
+            <StyledSelect
+              value={sortBy}
+              onChange={onChange}
+              suffixIcon={<DownCircleOutlined />}
+            >
+              {options.map((el) => (
+                <Option value={el} key={el}>
+                  {camelCaseToCapitalize(el)}
+                </Option>
+              ))}
+            </StyledSelect>
+          </PortfolioCol>
+        </PortfolioRow>
+      </WideDiv>
+
       {!assetList.length && (
-        <StyledRow justify="center">
-          <StyledCol>
+        <PortfolioRow justify="center">
+          <PortfolioCol>
             <EmptyListIcon />
-            <PlaceholderText>You have no assets yet.</PlaceholderText>
-          </StyledCol>
-        </StyledRow>
+            <PlaceholderText size="3rem">You have no assets yet.</PlaceholderText>
+          </PortfolioCol>
+        </PortfolioRow>
       )}
       {!!assetList.length &&
         assetList
@@ -143,27 +165,29 @@ const Portfolio = (props) => {
               handleDelete={handleDelete}
             />
           ))}
-      <StyledRow justify="end" gutter={16}>
-        <StyledCol span={17} justify="flex-end">
-          <StyledAnchor href="#">Back to top <UpCircleOutlined /></StyledAnchor>
-        </StyledCol>
-        <StyledCol span={2} justify="flex-end">
-          Sort by:{" "}
-        </StyledCol>
-        <StyledCol span={5}>
-          <StyledSelect
-            value={sortBy}
-            onChange={onChange}
-            suffixIcon={<DownCircleOutlined />}
-          >
-            {options.map((el) => (
-              <Option value={el} key={el}>
-                {camelCaseToCapitalize(el)}
-              </Option>
-            ))}
-          </StyledSelect>
-        </StyledCol>
-      </StyledRow>
+      <PortfolioRow justify="end" gutter={16}>
+        <PortfolioCol xs={8} sm={8} md={10} lg={15} xl={17} xxl={17} justify="flex-start">
+          <StyledAnchor href="#">
+            Back to top <UpCircleOutlined />
+          </StyledAnchor>
+        </PortfolioCol>
+        <PortfolioCol xs={6} sm={6} md={7} lg={3} xl={2} xxl={2} justify="flex-end">
+            Sort by:
+          </PortfolioCol>
+          <PortfolioCol xs={10} sm={10} md={7} lg={6} xl={5} xxl={5} justify="center">
+            <StyledSelect
+              value={sortBy}
+              onChange={onChange}
+              suffixIcon={<DownCircleOutlined />}
+            >
+              {options.map((el) => (
+                <Option value={el} key={el}>
+                  {camelCaseToCapitalize(el)}
+                </Option>
+              ))}
+            </StyledSelect>
+          </PortfolioCol>
+      </PortfolioRow>
       <AddAsset
         coin={editCoin}
         destroyAddAsset={destroyAddAsset}

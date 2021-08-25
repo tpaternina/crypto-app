@@ -1,15 +1,18 @@
-import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 import { isEmpty } from "lodash";
 import { layers } from "assets";
-import { formatCurrency, formatLongDate } from "utils";
 import {
-  StyledAllTimeContainer,
-  StyledAllTimeInfo,
-  StyledContainer,
-  StyledIncrease,
+  CoinAllTimeInfo,
+  CoinInfoContainer,
+  CoinContainer,
+  CoinPrice,
+  IncreaseText,
+  IncreaseArrow,
+  DecreaseArrow,
   StyledLayerIcon,
-  StyledPrice,
-} from "./CoinPriceInfo.styles";
+} from "styles";
+import { formatCurrency, formatLongDate } from "utils";
+
+
 
 export default function CoinPriceInfo(props) {
   const { data, increase } = props;
@@ -17,21 +20,21 @@ export default function CoinPriceInfo(props) {
   currency = currency.toLowerCase();
   return (
     !isEmpty(data) && (
-      <StyledContainer>
-        <StyledPrice>
+      <CoinContainer>
+        <CoinPrice>
           {formatCurrency(data.marketData.currentPrice[currency], currency)}
-          <StyledIncrease increase={increase}>
-            {increase ? <CaretUpOutlined /> : <CaretDownOutlined />}
+          <IncreaseText increase={increase} size="1rem" margin="0 0.25rem">
+            {increase ? <IncreaseArrow /> : <DecreaseArrow />}
             {data.marketData.priceChangePercentage24H ? (
               `${data.marketData.priceChangePercentage24H.toFixed(2)}%`
             ) : (
               <small>unavailable</small>
             )}
-          </StyledIncrease>
-        </StyledPrice>
+          </IncreaseText>
+        </CoinPrice>
         <p>
           <strong>Profit: </strong>
-          <StyledIncrease increase={increase}>
+          <IncreaseText increase={increase} size="1rem" margin="0 0.25rem">
             {data.marketData.priceChangePercentage24H ? (
               formatCurrency(
                 data.marketData.priceChange24HInCurrency[currency],
@@ -40,34 +43,32 @@ export default function CoinPriceInfo(props) {
             ) : (
               <small>unavailable</small>
             )}
-          </StyledIncrease>
+          </IncreaseText>
         </p>
         <StyledLayerIcon src={layers} />
-        <StyledAllTimeContainer>
-          <StyledIncrease increase={true}>
-            <CaretUpOutlined />
-          </StyledIncrease>
-          <StyledAllTimeInfo>
-            <div>
-              <strong>All Time High: </strong>
-              {formatCurrency(data.marketData.ath[currency], currency)}
-            </div>
-            <div>{formatLongDate(data.marketData.athDate[currency])}</div>
-          </StyledAllTimeInfo>
-        </StyledAllTimeContainer>
-        <StyledAllTimeContainer>
-          <StyledIncrease increase={false}>
-            <CaretDownOutlined />
-          </StyledIncrease>
-          <StyledAllTimeInfo>
-            <div>
-              <strong>All Time Low: </strong>
-              {formatCurrency(data.marketData.atl[currency], currency)}
-            </div>
-            <div>{formatLongDate(data.marketData.atlDate[currency])}</div>
-          </StyledAllTimeInfo>
-        </StyledAllTimeContainer>
-      </StyledContainer>
+        <div>
+          <CoinInfoContainer margin="1rem 0 0 0" direction="row" align="center">
+            <IncreaseArrow color="#06d554" />
+            <CoinAllTimeInfo>
+              <div>
+                <strong>All Time High: </strong>
+                {formatCurrency(data.marketData.ath[currency], currency)}
+              </div>
+              <div>{formatLongDate(data.marketData.athDate[currency])}</div>
+            </CoinAllTimeInfo>
+          </CoinInfoContainer>
+          <CoinInfoContainer margin="1rem 0 0 0" direction="row" align="center">
+            <DecreaseArrow color="#fe1040" />
+            <CoinAllTimeInfo>
+              <div>
+                <strong>All Time Low: </strong>
+                {formatCurrency(data.marketData.atl[currency], currency)}
+              </div>
+              <div>{formatLongDate(data.marketData.atlDate[currency])}</div>
+            </CoinAllTimeInfo>
+          </CoinInfoContainer>
+        </div>
+      </CoinContainer>
     )
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
-import { formatOverviewChart } from "utils";
 import { Bar } from "react-chartjs-2";
+import { formatOverviewChart } from "utils";
+import { ChartDiv } from "styles";
 
 export default function ChartPriceOverview(props) {
   const { totalVolumes } = props;
@@ -8,9 +9,7 @@ export default function ChartPriceOverview(props) {
   const data = {
     datasets: [
       {
-        data: totalVolumes
-          .filter((item, index, array) => index !== array.length - 1)
-          .map(formatOverviewChart),
+        data: totalVolumes.map(formatOverviewChart),
         borderColor: "#2172e5",
         fill: true,
         backgroundColor: "#2172e5",
@@ -19,7 +18,7 @@ export default function ChartPriceOverview(props) {
   };
   const options = {
     layout: {
-      padding: { top: 50, right: 25, left: 25 },
+      padding: { top: 67.2, right: 32, left: 32, bottom: 16 },
     },
     plugins: {
       legend: {
@@ -31,13 +30,15 @@ export default function ChartPriceOverview(props) {
     },
     scales: {
       x: {
+        display: false,
         grid: {
           display: false,
         },
         ticks: {
           font: {
-            size: 16,
+            size: 12,
           },
+          color: "#c6c7ce",
         },
       },
       y: {
@@ -53,8 +54,8 @@ export default function ChartPriceOverview(props) {
   };
 
   return (
-    <div className="chart">
+    <ChartDiv>
       {!!totalVolumes.length && <Bar data={data} options={options} />}
-    </div>
+    </ChartDiv>
   );
 }

@@ -1,17 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ChartPriceOverview, ChartVolumeOverview } from "components";
-import { formatDate, formatLongNumber } from "utils";
-import { fetchPrices } from "store/home/actions";
+import { Row } from "antd";
+import Slider from "react-slick";
+import {
+  ChartLoading,
+  ChartPriceOverview,
+  ChartVolumeOverview,
+} from "components";
 import {
   ChartCol,
   ChartContainer,
   ChartInfo,
-  ChartRow,
-  StyledInfo,
-  StyledLoading,
+  StyledChartInfo,
   StyledPrice,
-} from "./ChartOverview.styles";
+  NarrowDivChart,
+  WideDivChart,
+} from "styles";
+import { formatDate, formatLongNumber } from "utils";
+import { fetchPrices } from "store/home/actions";
+
+const slickSettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 class ChartOverview extends React.Component {
   componentDidMount() {
@@ -30,53 +44,93 @@ class ChartOverview extends React.Component {
       hasResponse,
       currency,
     } = this.props;
-    const topCoin = coinList.find(item => item.marketCapRank === 1);
+    const last = prices.length - 1;
+    const topCoin = coinList.find((item) => item.marketCapRank === 1);
     return (
       <>
-        {isOverviewLoading && (
-          <ChartRow>
-            <ChartCol span={11}>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-            </ChartCol>
-            <ChartCol span={11}>
-              <ChartContainer>
-                <StyledLoading />
-              </ChartContainer>
-            </ChartCol>
-          </ChartRow>
-        )}
+        {isOverviewLoading && <ChartLoading />}
         {hasResponse && (
-          <ChartRow>
-            <ChartCol span={11}>
-              <ChartContainer>
-                <ChartPriceOverview prices={prices} currency={currency} />
-                <ChartInfo className="chart-info">
-                  <StyledInfo> {topCoin.symbol.toUpperCase()} </StyledInfo>
-                  <StyledPrice>
-                    {formatLongNumber(prices[29][1], currency, 3)}
-                  </StyledPrice>
-                  <StyledInfo> {formatDate(prices[29][0])} </StyledInfo>
-                </ChartInfo>
-              </ChartContainer>
-            </ChartCol>
-            <ChartCol span={11}>
-              <ChartContainer>
-                <ChartVolumeOverview
-                  totalVolumes={totalVolumes}
-                  currency={currency}
-                />
-                <ChartInfo className="chart-info">
-                  <StyledInfo> Volume 24 h </StyledInfo>
-                  <StyledPrice>
-                    {formatLongNumber(totalVolumes[29][1], currency, 3)}
-                  </StyledPrice>
-                  <StyledInfo> {formatDate(totalVolumes[29][0])} </StyledInfo>
-                </ChartInfo>
-              </ChartContainer>
-            </ChartCol>
-          </ChartRow>
+          <>
+            <WideDivChart>
+              <Row justify="space-between">
+                <ChartCol justify="start" span={12}>
+                  <ChartContainer>
+                    <ChartPriceOverview
+                      prices={prices}
+                      symbol={topCoin.symbol.toUpperCase()}
+                      price={formatLongNumber(prices[last][1], currency, 3)}
+                      currency={currency}
+                    />
+                    <ChartInfo>
+                      <StyledChartInfo>
+                        {" "}
+                        {topCoin.symbol.toUpperCase()}{" "}
+                      </StyledChartInfo>
+                      <StyledPrice>
+                        {formatLongNumber(prices[last][1], currency, 3)}
+                      </StyledPrice>
+                      <StyledChartInfo>
+                        {formatDate(prices[last][0])}
+                      </StyledChartInfo>
+                    </ChartInfo>
+                  </ChartContainer>
+                </ChartCol>
+                <ChartCol justify="end" span={12}>
+                  <ChartContainer>
+                    <ChartVolumeOverview
+                      totalVolumes={totalVolumes}
+                      currency={currency}
+                    />
+                    <ChartInfo>
+                      <StyledChartInfo> Volume 24 h </StyledChartInfo>
+                      <StyledPrice>
+                        {formatLongNumber(totalVolumes[last][1], currency, 3)}
+                      </StyledPrice>
+                      <StyledChartInfo>
+                        {formatDate(totalVolumes[last][0])}
+                      </StyledChartInfo>
+                    </ChartInfo>
+                  </ChartContainer>
+                </ChartCol>
+              </Row>
+            </WideDivChart>
+            <NarrowDivChart>
+              <Slider {...slickSettings}>
+                <ChartContainer>
+                  <ChartPriceOverview prices={prices} currency={currency} />
+                  <ChartInfo>
+                    <StyledChartInfo>
+                      {" "}
+                      {topCoin.symbol.toUpperCase()}{" "}
+                    </StyledChartInfo>
+                    <StyledPrice>
+                      {formatLongNumber(prices[last][1], currency, 3)}
+                    </StyledPrice>
+                    <StyledChartInfo>
+                      {" "}
+                      {formatDate(prices[last][0])}{" "}
+                    </StyledChartInfo>
+                  </ChartInfo>
+                </ChartContainer>
+                <ChartContainer>
+                  <ChartVolumeOverview
+                    totalVolumes={totalVolumes}
+                    currency={currency}
+                  />
+                  <ChartInfo>
+                    <StyledChartInfo> Volume 24 h </StyledChartInfo>
+                    <StyledPrice>
+                      {formatLongNumber(totalVolumes[last][1], currency, 3)}
+                    </StyledPrice>
+                    <StyledChartInfo>
+                      {" "}
+                      {formatDate(totalVolumes[last][0])}{" "}
+                    </StyledChartInfo>
+                  </ChartInfo>
+                </ChartContainer>
+              </Slider>
+            </NarrowDivChart>
+          </>
         )}
       </>
     );

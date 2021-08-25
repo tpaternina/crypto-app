@@ -1,20 +1,35 @@
 import React from "react";
+import { Row, Radio } from "antd";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
-import { fetchAllCoins, toggleOrder } from "store/home/actions";
+import {
+  fetchAllCoins,
+  toggleOrder,
+  fetchPrices,
+  setTimeRange,
+} from "store/home/actions";
 import { setCurrency } from "store/app/actions";
-import { ChartOverview, Coins, LoadingCoins, TableHeader } from "components";
 import {
   ChartCol,
+  ContentLoading,
   ChartContainer,
-  ChartRow,
-  Container,
-  StyledCol,
-  StyledLoading,
-  StyledRow,
+  TableContainer,
+  HeaderCol,
+  HeaderRow,
+  NarrowDiv,
+  WideDiv,
   StyledTitle,
-} from "./Home.styles";
+  TopDiv,
+} from "styles";
+import {
+  Currency,
+  ChartLoading,
+  ChartOverview,
+  Coins,
+  LoadingCoins,
+  TableHeader,
+} from "components";
 
 class Home extends React.Component {
   loadingBar = React.createRef();
@@ -66,6 +81,9 @@ class Home extends React.Component {
     if (prevProps.currency !== this.props.currency) {
       this.props.fetchAllCoins();
     }
+    if (prevProps.home.timeRange !== this.props.home.timeRange) {
+      this.props.fetchPrices(this.props.currency);
+    }
     if (
       prevProps.home.isLoading !== this.props.home.isLoading &&
       this.props.home.isLoading
@@ -83,101 +101,117 @@ class Home extends React.Component {
   render() {
     const {
       toggleOrder,
-      home: { coinList, isLoading },
+      home: { coinList, isLoading, timeRange },
       hasResponse,
+      setTimeRange,
     } = this.props;
     return (
       <>
         <LoadingBar ref={this.loadingBar} />
-        {isLoading && (
-          <ChartRow>
-            <ChartCol span={11}>
-              <ChartContainer>
-                {" "}
-                <StyledLoading />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
-            <ChartCol span={11}>
-              <ChartContainer>
-                {" "}
-                <StyledLoading />{" "}
-              </ChartContainer>{" "}
-            </ChartCol>{" "}
-          </ChartRow>
-        )}
+        <NarrowDiv>
+          <TopDiv>
+            <StyledTitle>Overview</StyledTitle>
+            <Currency />
+          </TopDiv>
+        </NarrowDiv>
+        {isLoading && <ChartLoading />}
         {hasResponse && <ChartOverview />}
-        <StyledTitle> Market Overview </StyledTitle>
-        <Container>
-          <StyledRow>
-            <StyledCol span={1}>
+        <Row justify="center">
+          <ChartCol xs={24} sm={19} md={15} lg={12}>
+            {isLoading && (
+              <ChartContainer timeRange>
+                <ContentLoading color="#404040" />
+              </ChartContainer>
+            )}
+            {!isLoading && (
+              <ChartContainer timeRange>
+                <Radio.Group onChange={setTimeRange} value={timeRange}>
+                  <Radio.Button value={1}>1d</Radio.Button>
+                  <Radio.Button value={7}>1w</Radio.Button>
+                  <Radio.Button value={30}>1mo</Radio.Button>
+                  <Radio.Button value={90}>3mo</Radio.Button>
+                  <Radio.Button value={180}>6mo</Radio.Button>
+                  <Radio.Button value={365}>1y</Radio.Button>
+                </Radio.Group>
+              </ChartContainer>
+            )}
+          </ChartCol>
+        </Row>
+        <WideDiv>
+          <StyledTitle> Market Overview </StyledTitle>
+        </WideDiv>
+        <TableContainer>
+          <HeaderRow>
+            <HeaderCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank>
               <TableHeader
                 text="#"
                 sortBy="marketCapRank"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={3}>
+            </HeaderCol>
+            <HeaderCol xs={6} sm={4} md={6} lg={4} xl={4} xxl={4}>
               <TableHeader text="Name" sortBy="id" toggleOrder={toggleOrder} />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={6} sm={4} md={3} lg={3} xl={2} xxl={2}>
               <TableHeader
                 text="Price"
                 sortBy="currentPrice"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={4} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="1h"
                 sortBy="priceChangePercentage1HInCurrency"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={5} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="24h"
                 sortBy="priceChangePercentage24HInCurrency"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={2}>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={4} md={2} lg={2} xl={2} xxl={2}>
               <TableHeader
                 text="7d"
                 sortBy="priceChangePercentage7DInCurrency"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={4}>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={6} lg={4} xl={3} xxl={3}>
               <TableHeader
                 text="24h Volume"
                 sortBy="totalVolume"
                 toggleOrder={toggleOrder}
-              />{" "}
-              /{" "}
+              />
               <TableHeader
                 text="Market Cap"
                 sortBy="marketCap"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={4}>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={0} lg={4} xl={3} xxl={3}>
               <TableHeader
                 text="Circulating"
                 sortBy="circulatingSupply"
                 toggleOrder={toggleOrder}
-              />{" "}
-              /{" "}
+              />
               <TableHeader
                 text="Total Supply"
                 sortBy="totalSupply"
                 toggleOrder={toggleOrder}
               />
-            </StyledCol>
-            <StyledCol span={4}> Last 7 d </StyledCol>
-          </StyledRow>
+            </HeaderCol>
+            <HeaderCol xs={0} sm={0} md={0} lg={0} xl={4} xxl={4}>
+              {" "}
+              Last 7 d{" "}
+            </HeaderCol>
+          </HeaderRow>
           {isLoading && <LoadingCoins />}
           {hasResponse && <Coins coinList={coinList} />}
-        </Container>
+        </TableContainer>
       </>
     );
   }
@@ -196,6 +230,8 @@ const mapDispatchToProps = {
   fetchAllCoins,
   setCurrency,
   toggleOrder,
+  fetchPrices,
+  setTimeRange,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

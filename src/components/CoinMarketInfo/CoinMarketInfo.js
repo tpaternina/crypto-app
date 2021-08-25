@@ -3,23 +3,21 @@ import { MarketInfo } from "components";
 import { formatCurrency } from "utils";
 import { plusSign } from "assets";
 import {
-  StyledContainer,
-  StyledDiv,
-  StyledInfo,
-  StyledPercentage,
+  CoinContainer,
+  CoinInfoContainer,
+  CoinMarketInfoTitle,
   StyledPlus,
-  StyledSectionTitle,
-} from "./CoinMarketInfo.styles";
+  StyledPercentage,
+} from "styles";
 
 export default function CoinMarketInfo(props) {
   const { currency, data } = props;
-  console.log(data.marketData.totalVolume[currency],data.marketData.marketCap[currency])
   return (
-    <StyledContainer>
-      <StyledDiv>
-        <StyledInfo>
+    <CoinContainer>
+      <CoinInfoContainer direction="column" align="flex-start">
+        <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-          <StyledSectionTitle>Market Cap: </StyledSectionTitle>
+          <CoinMarketInfoTitle>Market Cap: </CoinMarketInfoTitle>
           {formatCurrency(data.marketData.marketCap[currency], currency)}
           <StyledPercentage>
             {data.marketData.marketCapChangePercentage24H ? (
@@ -28,68 +26,72 @@ export default function CoinMarketInfo(props) {
               <small>unavailable</small>
             )}
           </StyledPercentage>
-        </StyledInfo>
+        </CoinInfoContainer>
         {!isEmpty(data.marketData.fullyDilutedValuation) && (
-          <StyledInfo>
+          <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-            <StyledSectionTitle>Fully diluted valuation: </StyledSectionTitle>
+            <CoinMarketInfoTitle>Fully diluted valuation: </CoinMarketInfoTitle>
             {formatCurrency(
               data.marketData.fullyDilutedValuation[currency],
               currency
             )}
-          </StyledInfo>
+          </CoinInfoContainer>
         )}
-        <StyledInfo>
+        <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-          <StyledSectionTitle>Volume 24h: </StyledSectionTitle>
+          <CoinMarketInfoTitle>Volume 24h: </CoinMarketInfoTitle>
           {formatCurrency(data.marketData.totalVolume[currency], currency)}
-        </StyledInfo>
-        <StyledInfo>
+        </CoinInfoContainer>
+        <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-          <StyledSectionTitle>Volume / Market: </StyledSectionTitle>
-          {data.marketData.marketCap[currency] ? (
-            data.marketData.totalVolume[currency] /
-            data.marketData.marketCap[currency]
-          ).toFixed(5) : "∞"}
-        </StyledInfo>
-      </StyledDiv>
-      <StyledDiv>
-        {(data.marketData.totalVolume[data.symbol] && (
-          <StyledInfo>
+          <CoinMarketInfoTitle>Volume / Market: </CoinMarketInfoTitle>
+          {data.marketData.marketCap[currency]
+            ? (
+                data.marketData.totalVolume[currency] /
+                data.marketData.marketCap[currency]
+              ).toFixed(5)
+            : "∞"}
+        </CoinInfoContainer>
+      </CoinInfoContainer>
+      <CoinInfoContainer direction="column" align="flex-start">
+        {data.marketData.totalVolume[data.symbol] && (
+          <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-            <StyledSectionTitle>Total volume: </StyledSectionTitle>
+            <CoinMarketInfoTitle>Total volume: </CoinMarketInfoTitle>
             {`${data.marketData.totalVolume[data.symbol].toLocaleString(
               "en-UK"
             )} ${data.symbol.toUpperCase()}`}
-          </StyledInfo>
-        ))}
+          </CoinInfoContainer>
+        )}
         {typeof data.marketData.circulatingSupply === "number" ? (
-          <StyledInfo>
+          <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
             <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-            <StyledSectionTitle>Circulating supply: </StyledSectionTitle>
+            <CoinMarketInfoTitle>Circulating supply: </CoinMarketInfoTitle>
             {`${data.marketData.circulatingSupply.toLocaleString(
               "en-UK"
             )} ${data.symbol.toUpperCase()}`}
-          </StyledInfo>
-        ) : <></>}
-        <StyledInfo>
+          </CoinInfoContainer>
+        ) : (
+          <></>
+        )}
+        <CoinInfoContainer direction="row" align="center" margin="0.35rem 0">
           <StyledPlus src={plusSign} twoToneColor="#2172e5" />
-          <StyledSectionTitle>Max supply: </StyledSectionTitle>
+          <CoinMarketInfoTitle>Max supply: </CoinMarketInfoTitle>
           {data.marketData.totalSupply
             ? `${data.marketData.totalSupply.toLocaleString(
                 "en-UK"
               )} ${data.symbol.toUpperCase()}`
             : "∞"}
-        </StyledInfo>
-        {(data.marketData.marketCap[currency] && (
+        </CoinInfoContainer>
+        {data.marketData.marketCap[currency] && (
           <MarketInfo
             percentage={true}
             width="65%"
             numerator={data.marketData.totalVolume[currency]}
             denominator={data.marketData.marketCap[currency]}
           />
-        ))}
-      </StyledDiv>
-    </StyledContainer>
+        )}
+      </CoinInfoContainer>
+    </CoinContainer>
   );
 }

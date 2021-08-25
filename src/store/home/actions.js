@@ -1,6 +1,6 @@
 import axios from "axios";
 import queryString from "query-string";
-import { keysToSnakeCase, keysToCamelCase } from "utils";
+import { keysToSnakeCase, keysToCamelCase, getInterval } from "utils";
 import {
   FETCH_ALL_COINS_SUCCESS,
   FETCH_ALL_COINS_PENDING,
@@ -8,6 +8,7 @@ import {
   FETCH_PRICES_PENDING,
   FETCH_PRICES_SUCCESS,
   FETCH_PRICES_ERROR,
+  SET_TIME_RANGE,
   TOGGLE_ORDER,
 } from "./index";
 
@@ -50,20 +51,21 @@ export const fetchAllCoins = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchPrices = (currency) => async (dispatch, getState) => {
+export const fetchPrices = (currency, id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: FETCH_PRICES_PENDING,
     });
     const {
-      home: { coinList },
+      home: { coinList, timeRange },
     } = getState();
+    id = id || coinList[0].id
     const query = queryString.stringifyUrl({
-      url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${coinList[0].id}/market_chart`,
+      url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}/market_chart`,
       query: {
         vs_currency: currency,
-        days: 30,
-        interval: "daily",
+        days: timeRange,
+        ...getInterval(timeRange),
       },
     });
     let { data } = await axios(query);
@@ -80,6 +82,13 @@ export const fetchPrices = (currency) => async (dispatch, getState) => {
       payload: { err },
     });
   }
+};
+
+export const setTimeRange = ({target: {value}}) => {
+  return {
+    type: SET_TIME_RANGE,
+    payload: { timeRange: value },
+  };
 };
 
 export const toggleOrder = (sortBy, descending) => {

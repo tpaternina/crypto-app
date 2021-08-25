@@ -45,7 +45,7 @@ export const formatLongDate = (date) => {
 export const formatOverviewChart = (array) => {
   // chart data
   const data = {
-    x: formatDate(array[0]).split(" ").slice(0, 2).join(" "),
+    x: formatLongDate(array[0]),
     y: array[1].toFixed(2),
   };
   return data;
@@ -90,3 +90,15 @@ export const camelCaseToCapitalize = (string) => {
 export const formatQueryDate = (dateString) => {
   return moment(dateString).format("DD-MM-YYYY");
 };
+
+export const getInterval = (timeRange) => {
+  const map = {
+    365: {interval: "daily"},
+    180: {interval: "daily"},
+    90: {interval: "daily"},
+    30: {interval: "daily"},
+    7: {},
+    1: {},
+  }
+  return map[timeRange];
+}

@@ -1,5 +1,5 @@
 import { formatLongNumber } from "utils";
-import { MarketDiv, MarketInfoRow, StyledInfo } from "./MarketInfo.styles";
+import { MarketDiv, MarketInfoRow, StyledInfo } from "styles";
 import { ColorBar } from "components";
 
 export default function MarketInfo(props) {
@@ -8,7 +8,6 @@ export default function MarketInfo(props) {
   const fraction = denominator
     ? (numerator * 100) / denominator
     : "∞";
-  console.log({ fraction, percentage });
   return (
     <StyledInfo width={width || "100%"}>
       <MarketInfoRow>

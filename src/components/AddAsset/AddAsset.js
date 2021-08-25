@@ -6,28 +6,28 @@ import { Form, Select } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { LoadingList } from "components";
 import {
+  AssetCoinContainer,
+  AssetCoinName,
+  AssetSectionTitle,
+  Background,
+  LogoContainer,
+  ModalContainer,
+  ModalSelect,
+  ModalRow,
+  PortfolioCol,  
+  PlaceholderText,
+  StyledButton,
+  StyledClose,
+  StyledDatePicker,
+  StyledInputNumber,
+  StyledItem,
+  StyledFileImageIcon,
+} from "styles";
+import {
   getCoinList,
   handleClose,
   handleSubmit,
 } from "store/portfolio/actions";
-import {
-  Background,
-  CoinContainer,
-  Container,
-  LogoContainer,
-  PlaceholderText,
-  StyledButton,
-  StyledCoinName,
-  StyledCol,
-  StyledClose,
-  StyledDatePicker,
-  StyledFileImageIcon,
-  StyledInputNumber,
-  StyledItem,
-  StyledRow,
-  StyledSelect,
-  StyledTitle,
-} from "./AddAsset.styles";
 
 const { Option } = Select;
 
@@ -39,7 +39,7 @@ class AddAsset extends React.Component {
   }, 1000);
 
   handleSearch = (val) => {
-    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] }); 
+    val !== "" ? this.getCoinList(val) : this.setState({ coinList: [] });
   };
 
   handleSelect = (value) => {
@@ -99,15 +99,15 @@ class AddAsset extends React.Component {
     } = this.props;
     return (
       <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
-        <Container width="57%">
-          <StyledRow>
-            <StyledCol span={24}>
-              <StyledTitle>Select Coin</StyledTitle>
+        <ModalContainer width="57%">
+          <ModalRow>
+            <PortfolioCol span={24}>
+              <AssetSectionTitle>Select Coin</AssetSectionTitle>
               <StyledClose onClick={handleClose} />
-            </StyledCol>
-          </StyledRow>
-          <StyledRow>
-            <StyledCol span={24}>
+            </PortfolioCol>
+          </ModalRow>
+          <ModalRow>
+            <PortfolioCol span={24}>
               <Form
                 ref={this.form}
                 initialValues={{
@@ -115,24 +115,29 @@ class AddAsset extends React.Component {
                 }}
                 onFinish={handleSubmit}
               >
-                <StyledRow justify="space-between">
-                  <StyledCol span={7}>
+                <ModalRow justify="space-between" gutter={16} form>
+                  <PortfolioCol span={7} xs={12} sm={8}>
                     {large ? (
-                      <CoinContainer>
-                        <LogoContainer src={large} />
-                        <StyledCoinName>
+                      <AssetCoinContainer modal>
+                        <LogoContainer
+                          width="75%"
+                          margin="0 0 1rem 0"
+                          src={large}
+                          modal
+                        />
+                        <AssetCoinName>
                           {name} ({symbol.toUpperCase()})
-                        </StyledCoinName>
-                      </CoinContainer>
+                        </AssetCoinName>
+                      </AssetCoinContainer>
                     ) : (
-                      <CoinContainer>
+                      <AssetCoinContainer modal>
                         <StyledFileImageIcon />
-                        <PlaceholderText>Select Coin</PlaceholderText>
-                      </CoinContainer>
+                        <PlaceholderText size="1rem">Select Coin</PlaceholderText>
+                      </AssetCoinContainer>
                     )}
-                  </StyledCol>
+                  </PortfolioCol>
 
-                  <StyledCol span={15}>
+                  <PortfolioCol span={15} xs={24} sm={16} direction="column">
                     <StyledItem
                       aria-label="Select coin"
                       name="id"
@@ -146,7 +151,7 @@ class AddAsset extends React.Component {
                         key ? `${name} (${symbol.toUpperCase()})` : undefined
                       }
                     >
-                      <StyledSelect
+                      <ModalSelect
                         showSearch
                         placeholder="Search coin..."
                         optionFilterProp="children"
@@ -166,7 +171,7 @@ class AddAsset extends React.Component {
                             {coin.name} ({coin.symbol.toUpperCase()})
                           </Option>
                         ))}
-                      </StyledSelect>
+                      </ModalSelect>
                     </StyledItem>
                     <StyledItem
                       aria-label="Purchased amount"
@@ -202,31 +207,34 @@ class AddAsset extends React.Component {
                         disabledDate={(date) => date && date > moment()}
                       />
                     </StyledItem>
-                  </StyledCol>
-                </StyledRow>
-                <StyledRow>
-                  <StyledCol span={24}>
+                  </PortfolioCol>
+                </ModalRow>
+                <ModalRow justify="center" gutter={16}>
+                  <PortfolioCol xs={24} sm={12} justify="flex-end">
                     <StyledButton
                       onClick={(e) => {
                         e.preventDefault();
                         handleClose();
                       }}
+                      modal
                     >
                       Close
                     </StyledButton>
-                    <StyledButton type="submit" primary>
+                  </PortfolioCol>
+                  <PortfolioCol xs={24} sm={12} justify="flex-start">
+                    <StyledButton type="submit" primary modal>
                       {isPriceLoading ? (
                         <LoadingOutlined />
                       ) : (
-                        "Save and Continue"
+                        "Save"
                       )}
                     </StyledButton>
-                  </StyledCol>
-                </StyledRow>
+                  </PortfolioCol>
+                </ModalRow>
               </Form>
-            </StyledCol>
-          </StyledRow>
-        </Container>
+            </PortfolioCol>
+          </ModalRow>
+        </ModalContainer>
       </Background>
     );
   }
