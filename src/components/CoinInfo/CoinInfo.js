@@ -30,7 +30,7 @@ function CoinInfo(props) {
 
   return (
     <TableRow>
-      <TableCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank>
+      <TableCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank="true">
         <StyledRowLink
           key={coin}
           to={`/coins/${coin.id}?currency=${currency}`}

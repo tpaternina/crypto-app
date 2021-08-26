@@ -5,11 +5,13 @@ import {
   CloseOutlined,
   CopyOutlined,
   DeleteFilled,
+  DisconnectOutlined,
   EditFilled,
   FileImageOutlined,
   InboxOutlined,
   LinkOutlined,
   LoadingOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import { mobile, tablet, medium } from "./Sizes.styles";
 
@@ -56,6 +58,17 @@ export const StyledLoading = styled(LoadingOutlined).attrs(props => ({
   }
 `;
 
+export const StyledLoadingList = styled(SyncOutlined)`
+  font-size: 2.5rem;
+  color: #40454f;
+`;
+
+export const StyledDisconnected = styled(DisconnectOutlined)`
+  color: #40454f;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+`;
+
 /* GLOBAL INFO BAR */
 
 export const SmallLogo = styled.img`
@@ -96,7 +109,6 @@ export const StyledBar = styled.div.attrs((props) => ({
 /* SINGLE COIN PAGE */
 
 export const StyledLinkIcon = styled(LinkOutlined)`
-  margin-right: 0.5rem;
   font-size: 0.75rem;
 `;
 
@@ -113,7 +125,6 @@ export const StyledPlus = styled.img`
 `;
 
 export const StyledCopy = styled(CopyOutlined)`
-  margin-left: 0.5rem;
   font-size: 0.85rem;
 `;
 

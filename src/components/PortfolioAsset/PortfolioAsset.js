@@ -56,7 +56,7 @@ export default class PortfolioAsset extends React.Component {
 
     return (
       <>
-        <PortfolioRow justify="space-between" gutter={16} asset>
+        <PortfolioRow justify="space-between" gutter={16} asset="true">
           <AssetCol
             height="190px"
             span={4}
@@ -86,7 +86,7 @@ export default class PortfolioAsset extends React.Component {
             xl={20}
             xxl={20}
           >
-            <PortfolioRow margin="0" asset>
+            <PortfolioRow margin="0" asset="true">
               <AssetCol span={24} height="100%">
                 <AssetSectionTitle>Market Price</AssetSectionTitle>
                 <AssetContainer>
@@ -142,7 +142,7 @@ export default class PortfolioAsset extends React.Component {
                 </AssetContainer>
               </AssetCol>
             </PortfolioRow>
-            <PortfolioRow margin="0" asset>
+            <PortfolioRow margin="0" asset="true">
               <AssetCol span={24}>
                 <AssetSectionTitle>
                   Your coin{" "}

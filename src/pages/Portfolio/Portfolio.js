@@ -98,7 +98,7 @@ const Portfolio = (props) => {
 
   return (
     <>
-      <PortfolioRow justify="center" top>
+      <PortfolioRow justify="center" top="true">
         <PortfolioCol xs={24} sm={12} md={8} lg={6} xl={6} xxl={5}>
           <StyledButton onClick={showAddAsset} primary>Add Asset</StyledButton>
         </PortfolioCol>

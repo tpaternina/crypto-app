@@ -2,12 +2,10 @@ import React from "react";
 import axios from "axios";
 import { debounce } from "lodash";
 import { DownCircleOutlined } from "@ant-design/icons";
-import { LoadingList } from "components";
-import {
-  StyledSelect,
-} from "./SearchCoin.styles";
+import { ErrorList, LoadingList } from "components";
+import { StyledSearch } from "styles";
 
-const { Option } = StyledSelect;
+const { Option } = StyledSearch;
 
 export default class SearchCoin extends React.Component {
   state = {
@@ -39,16 +37,15 @@ export default class SearchCoin extends React.Component {
   };
 
   onBlur = () => {
-    console.log("blur")
-    this.setState({data: []})
-  }
+    this.setState({ data: [] });
+  };
 
   render() {
-    const { data, isLoading } = this.state;
+    const { data, isLoading, hasError } = this.state;
 
     return (
-      <div ref={this.searchWrapper}>
-        <StyledSelect
+      <>
+        <StyledSearch
           showSearch
           placeholder="Search coin..."
           optionFilterProp="children"
@@ -56,31 +53,16 @@ export default class SearchCoin extends React.Component {
           onChange={this.handleSelect}
           onBlur={this.onBlur}
           suffixIcon={<DownCircleOutlined />}
-          notFoundContent={isLoading && <LoadingList />}
+          notFoundContent={(isLoading && <LoadingList />) || (hasError && <ErrorList />)}
           aria-expanded="true"
         >
           {data.map((coin) => (
             <Option key={`${coin.id}-${Math.random()}`} value={coin.id}>
-                {coin.name} ({coin.symbol.toUpperCase()})
+              {coin.name} ({coin.symbol.toUpperCase()})
             </Option>
           ))}
-        </StyledSelect>
-        {/*<StyledInput
-          type="text"
-          placeholder="Search coins..."
-          list="coinList"
-          value={searchValue}
-          ref={this.searchInput}
-          onChange={this.handleChange}
-        />
-        <StyledMenu onClick={this.handleSelect}>
-          {data.map((coin) => (
-            <Link key={coin.id} to={`/coins/${coin.id}`}>
-              <StyledItem>{coin.name}</StyledItem>
-            </Link>
-          ))}
-        </StyledMenu>*/}
-      </div>
+        </StyledSearch>
+      </>
     );
   }
 }

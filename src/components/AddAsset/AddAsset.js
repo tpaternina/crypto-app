@@ -98,7 +98,7 @@ class AddAsset extends React.Component {
       handleSubmit,
     } = this.props;
     return (
-      <Background destroyAddAsset={destroyAddAsset} openAddAsset={openAddAsset}>
+      <Background destroy={destroyAddAsset} open={openAddAsset}>
         <ModalContainer width="57%">
           <ModalRow>
             <PortfolioCol span={24}>
@@ -115,7 +115,7 @@ class AddAsset extends React.Component {
                 }}
                 onFinish={handleSubmit}
               >
-                <ModalRow justify="space-between" gutter={16} form>
+                <ModalRow justify="space-between" gutter={16} form="true">
                   <PortfolioCol span={7} xs={12} sm={8}>
                     {large ? (
                       <AssetCoinContainer modal>
