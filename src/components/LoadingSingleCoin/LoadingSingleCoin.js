@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Row } from "antd";
 import { RetweetOutlined } from "@ant-design/icons";
 import {
   CoinRow,
@@ -15,9 +15,9 @@ import {
 export default function LoadingSingleCoin(props) {
   return (
     <>
-      <CoinRow justify="center" gutter={16} top>
+      <CoinRow justify="center" gutter={16} top="true">
         <CoinCol xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
-          <CoinLoadingContainer height={"233px"} top>
+          <CoinLoadingContainer height={"233px"} top="true">
             <StyledLoading top="35%" left="45%"/>
           </CoinLoadingContainer>
           <CoinLoadingContainer height={"48px"} padding="1rem">

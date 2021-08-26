@@ -47,7 +47,7 @@ function Converter(props) {
           onChange={(val) => (val ? convertTo(val) : convertTo(1))}
           value={fromVal}
           padding="0 0 0 3.5rem"
-          converter
+          converter="true"
         />
         <CurrencyTag>{from}</CurrencyTag>
       </PortfolioCol>
@@ -70,7 +70,7 @@ function Converter(props) {
           onChange={(val) => (val ? convertFrom(val) : convertFrom(1))}
           value={toVal}
           padding="0 0 0 3.5rem"
-          converter
+          converter="true"
         />
         <CurrencyTag>{to}</CurrencyTag>
       </PortfolioCol>

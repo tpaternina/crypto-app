@@ -115,7 +115,7 @@ class AddAsset extends React.Component {
                 }}
                 onFinish={handleSubmit}
               >
-                <ModalRow justify="space-between" gutter={16} form>
+                <ModalRow justify="space-between" gutter={16} form="true">
                   <PortfolioCol span={7} xs={12} sm={8}>
                     {large ? (
                       <AssetCoinContainer modal>

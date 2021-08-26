@@ -109,7 +109,6 @@ export const StyledBar = styled.div.attrs((props) => ({
 /* SINGLE COIN PAGE */
 
 export const StyledLinkIcon = styled(LinkOutlined)`
-  margin-right: 0.5rem;
   font-size: 0.75rem;
 `;
 
@@ -126,7 +125,6 @@ export const StyledPlus = styled.img`
 `;
 
 export const StyledCopy = styled(CopyOutlined)`
-  margin-left: 0.5rem;
   font-size: 0.85rem;
 `;
 
