@@ -8,6 +8,7 @@ import {
   toggleOrder,
   fetchPrices,
   setTimeRange,
+  setPage,
 } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
 import {
@@ -36,45 +37,54 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (this.props.location.search) {
-      const { sortBy, descending, currency } = queryString.parse(
+      const { sortBy, descending, currency, page } = queryString.parse(
         this.props.location.search,
         { parseBooleans: true }
       );
       this.props.toggleOrder(sortBy, descending);
       this.props.setCurrency(currency);
+      this.props.setPage(parseInt(page));
     } else {
       const {
         currency,
         home: {
           pageConfig: { sortBy, descending },
+          queryConfig: { page },
         },
       } = this.props;
       const query = queryString.stringify({
         sortBy,
         descending,
         currency,
+        page,
       });
       this.props.history.push(`/?${query}`);
     }
-    this.props.fetchAllCoins();
+    if (!this.props.home.isLoading) {
+      this.props.fetchAllCoins();
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (
       JSON.stringify(prevProps.home.pageConfig) !==
         JSON.stringify(this.props.home.pageConfig) ||
-      prevProps.currency !== this.props.currency
+      prevProps.currency !== this.props.currency ||
+      prevProps.home.queryConfig.page !== this.props.home.queryConfig.page
     ) {
+      console.log({prevPage: prevProps.home.queryConfig.page, page: this.props.home.queryConfig.page})
       const {
         currency,
         home: {
           pageConfig: { sortBy, descending },
+          queryConfig: { page },
         },
       } = this.props;
       const query = queryString.stringify({
         sortBy,
         descending,
         currency,
+        page,
       });
       this.props.history.push(`/?${query}`);
     }
@@ -232,6 +242,7 @@ const mapDispatchToProps = {
   toggleOrder,
   fetchPrices,
   setTimeRange,
+  setPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

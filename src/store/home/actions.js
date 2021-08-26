@@ -2,6 +2,7 @@ import axios from "axios";
 import queryString from "query-string";
 import { keysToSnakeCase, keysToCamelCase, getInterval } from "utils";
 import {
+  SET_PAGE,
   FETCH_ALL_COINS_SUCCESS,
   FETCH_ALL_COINS_PENDING,
   FETCH_ALL_COINS_ERROR,
@@ -12,32 +13,47 @@ import {
   TOGGLE_ORDER,
 } from "./index";
 
-export const fetchAllCoins = () => async (dispatch, getState) => {
+export const setPage = (page) => ({
+  type: SET_PAGE,
+  payload: { page },
+});
+
+export const fetchAllCoins = (page) => async (dispatch, getState) => {
+  const {
+    home: { queryConfig, coinList },
+    app: { currency },
+  } = getState();
+
+  page = page || queryConfig.page;
+  console.log(page);
+  const pages = !coinList.length ? [...Array(page).keys()].map((val) => val + 1): [page];
   try {
-    const {
-      home: { queryConfig },
-      app: { currency },
-    } = getState();
     dispatch({
       type: FETCH_ALL_COINS_PENDING,
     });
-    const query = {
-      ...keysToSnakeCase({
-        ...queryConfig,
-        vsCurrency: currency,
-        priceChangePercentage: "1h,24h,7d",
-        sparkline: true,
-      }),
-    };
-
-    let { data } = await axios(
-      queryString.stringifyUrl({
-        url: process.env.REACT_APP_COINS_ENDPOINT,
-        query: query,
+    let data = await Promise.all(
+      pages.map(async (page) => {
+        const query = {
+          ...keysToSnakeCase({
+            ...queryConfig,
+            page,
+            vsCurrency: currency,
+            priceChangePercentage: "1h,24h,7d",
+            sparkline: true,
+          }),
+        };
+        let { data } = await axios(
+          queryString.stringifyUrl({
+            url: process.env.REACT_APP_COINS_ENDPOINT,
+            query: query,
+          })
+        );
+        // Convert keys from API to camelCase
+        data = data.map(keysToCamelCase);
+        return data;
       })
     );
-    // Convert keys from API to camelCase
-    data = data.map(keysToCamelCase);
+    data = data.reduce((acc, list) => [...acc, ...list], []);
     dispatch({
       type: FETCH_ALL_COINS_SUCCESS,
       payload: { data },
@@ -59,7 +75,7 @@ export const fetchPrices = (currency, id) => async (dispatch, getState) => {
     const {
       home: { coinList, timeRange },
     } = getState();
-    id = id || coinList[0].id
+    id = id || coinList[0].id;
     const query = queryString.stringifyUrl({
       url: `${process.env.REACT_APP_SINGLE_COIN_ENDPOINT}/${id}/market_chart`,
       query: {
@@ -84,7 +100,7 @@ export const fetchPrices = (currency, id) => async (dispatch, getState) => {
   }
 };
 
-export const setTimeRange = ({target: {value}}) => {
+export const setTimeRange = ({ target: { value } }) => {
   return {
     type: SET_TIME_RANGE,
     payload: { timeRange: value },

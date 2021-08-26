@@ -29,7 +29,6 @@ import {
   showAddAsset,
   showEditAsset,
 } from "store/portfolio/actions";
-import { fetchAllCoins } from "store/home/actions";
 import { setCurrency } from "store/app/actions";
 
 const { Option } = StyledSelect;
@@ -211,7 +210,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchAllCoins,
   getCoinInfo,
   getPriceAtDate,
   handleClose,

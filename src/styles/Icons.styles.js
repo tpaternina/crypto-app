@@ -56,6 +56,23 @@ export const StyledLoading = styled(LoadingOutlined).attrs(props => ({
   }
 `;
 
+export const LoadingMoreCoins = styled(LoadingOutlined)`
+  font-size: 1rem;
+  margin: 1rem auto;
+
+  ${mobile} {
+    & {
+      color: #fff;
+    }
+  }
+
+  ${tablet} {
+    & {
+      color: #33363e;
+    }
+  }
+`;
+
 /* GLOBAL INFO BAR */
 
 export const SmallLogo = styled.img`

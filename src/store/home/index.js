@@ -17,6 +17,8 @@ const initialState = {
   timeRange: 30,
 };
 
+export const SET_PAGE = "SET_PAGE";
+
 export const FETCH_ALL_COINS_SUCCESS = "FETCH_ALL_COINS_SUCCESS";
 export const FETCH_ALL_COINS_PENDING = "FETCH_ALL_COINS_PENDING";
 export const FETCH_ALL_COINS_ERROR = "FETCH_ALL_COINS_ERROR";
@@ -30,16 +32,25 @@ export const SET_TIME_RANGE = "SET_TIME_RANGE";
 export const TOGGLE_ORDER = "TOGGLE_ORDER";
 
 const homeReducer = (state = initialState, { type, payload }) => {
+  let { queryConfig } = state;
   switch (type) {
+    case SET_PAGE:
+      return {
+        ...state,
+        queryConfig: {
+          ...queryConfig,
+          page: payload.page,
+        },
+      };
     case FETCH_ALL_COINS_PENDING:
       return {
         ...state,
-        isLoading: true,
+        isLoading: true && !state.coinList.length,
       };
     case FETCH_ALL_COINS_SUCCESS:
       return {
         ...state,
-        coinList: payload.data,
+        coinList: [...state.coinList, ...payload.data],
         isLoading: false,
         hasError: false,
       };
@@ -73,7 +84,7 @@ const homeReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         timeRange: payload.timeRange,
-      }
+      };
     case TOGGLE_ORDER:
       const { sortBy, descending } = payload;
       return {

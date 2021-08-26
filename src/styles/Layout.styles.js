@@ -594,6 +594,12 @@ export const CoinInfoContainer = styled.div`
   align-items: ${(props) => props.align};
 `;
 
+export const CoinWideDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 export const CoinChartDiv = styled.div`
   width: 100%;
   min-height: 200px;
