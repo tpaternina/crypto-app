@@ -23,7 +23,7 @@ const Coins = (props) => {
   } = props;
   return (
     <InfiniteScroll
-      dataLength={perPage} //This is important field to render the next data
+      dataLength={coinList.length} //This is important field to render the next data
       next={() => {
         fetchAllCoins(page + 1);
         setPage(page + 1);
@@ -34,6 +34,8 @@ const Coins = (props) => {
           <LoadingMoreCoins />
         </CoinWideDiv>
       }
+      scrollThreshold={0.95}
+      initialScrollY={page * perPage}
       endMessage={
         <p style={{ textAlign: "center" }}>
           <b>Yay! You have seen it all</b>

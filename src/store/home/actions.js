@@ -29,9 +29,9 @@ export const fetchAllCoins = (page) => async (dispatch, getState) => {
   } = getState();
 
   page = page || queryConfig.page;
-  console.log(page);
   const pages = !coinList.length ? [...Array(page).keys()].map((val) => val + 1): [page];
   try {
+    console.log("fetching...")
     dispatch({
       type: FETCH_ALL_COINS_PENDING,
     });
