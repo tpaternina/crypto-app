@@ -10,6 +10,7 @@ import {
 import {
   AppContainer,
   Container,
+  StyledFauxLink,
   StyledLink,
   StyledList,
   NavIcon,
@@ -19,8 +20,8 @@ import {
   WideNavContainer,
 } from "styles";
 import { Coin, Home, Portfolio } from "pages";
-import { Currency, GlobalInfo, SearchCoin } from "components";
-import { setCurrency } from "store/app/actions";
+import { Currency, GlobalInfo, MobileSearch, SearchCoin } from "components";
+import { showSearchPage } from "store/home/actions";
 
 console.clear();
 
@@ -30,6 +31,7 @@ class App extends React.Component {
       app: { currency },
       pageConfig: { sortBy, descending },
       portfolio: { sortBy: portfolioSort },
+      showSearchPage,
     } = this.props;
     return (
       <AppContainer>
@@ -72,6 +74,7 @@ class App extends React.Component {
               <Route path="/portfolio" component={Portfolio} />
               <Route path="/" component={Home} />
             </Switch>
+            <MobileSearch />
           </Container>
           <NarrowNav>
             <StyledLink
@@ -103,12 +106,12 @@ class App extends React.Component {
               </NavIcon>
               <NavText>Summary</NavText>
             </StyledLink>
-            <StyledLink exact activeClassName="selected" to={`/search`}>
+            <StyledFauxLink onClick={showSearchPage}>
               <NavIcon>
                 <SearchOutlined />
               </NavIcon>
               <NavText>Search</NavText>
-            </StyledLink>
+            </StyledFauxLink>
           </NarrowNav>
         </Router>
       </AppContainer>
@@ -123,7 +126,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  setCurrency,
+  showSearchPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

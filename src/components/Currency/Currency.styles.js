@@ -29,6 +29,7 @@ export const StyledSelect = styled(Select)`
 
 export const Container = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 export const StyledDollar = styled(DollarCircleOutlined)`

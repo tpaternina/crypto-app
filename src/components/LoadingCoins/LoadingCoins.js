@@ -5,7 +5,7 @@ export default function LoadingCoins() {
     <>
       {[...Array(5)].map((item) => (
         <TableRow key={Math.random()}>
-          <TableCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank={true}>
+          <TableCol xs={3} sm={4} md={3} lg={3} xl={2} xxl={2} rank="true">
             <ContentLoading color="#33363e" />
           </TableCol>
           <TableCol xs={6} sm={4} md={6} lg={4} xl={4} xxl={4}>

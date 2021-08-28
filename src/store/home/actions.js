@@ -11,6 +11,10 @@ import {
   FETCH_PRICES_ERROR,
   SET_TIME_RANGE,
   TOGGLE_ORDER,
+  SEARCH_PAGE_OPEN,
+  SEARCH_PAGE_UNOPEN,
+  SEARCH_PAGE_DESTROY,
+  SEARCH_PAGE_UNDESTROY,
 } from "./index";
 
 export const setPage = (page) => ({
@@ -115,4 +119,30 @@ export const toggleOrder = (sortBy, descending) => {
       descending,
     },
   };
+};
+
+export const showSearchPage = () => (dispatch, getState) => {
+  dispatch({
+    type: SEARCH_PAGE_UNDESTROY,
+  });
+  setTimeout(
+    () =>
+      dispatch({
+        type: SEARCH_PAGE_OPEN,
+      }),
+    250
+  );
+};
+
+export const hideSearchPage = () => (dispatch, getState) => {
+  dispatch({
+    type: SEARCH_PAGE_UNOPEN,
+  });
+  setTimeout(
+    () =>
+      dispatch({
+        type: SEARCH_PAGE_DESTROY,
+      }),
+    250
+  );
 };

@@ -507,8 +507,25 @@ export const CoinRow = styled(Row).attrs((props) => ({
   }
 `;
 
+export const CoinLoadingContainer = styled.div`
+  border-radius: 6px;
+  height: ${(props) => props.height};
+  padding: ${(props) => props.padding};
+
+  ${mobile} {
+    background-color: ${(props) =>
+      props.top ? "rgba(0, 0, 0, 0)" : "#2c2d33"};
+    margin-bottom: 0;
+  }
+
+  ${tablet} {
+    background-color: #191b1f;
+    margin-bottom: ${(props) => (props.top ? "0.75rem" : "0")};
+  }
+`;
+
 export const CoinTitleContainer = styled.div.attrs((props) => ({
-  padding: props.padding || "1rem 0",
+  padding: props.padding || "1rem",
 }))`
   text-align: center;
   font-size: 0.9rem;
@@ -533,7 +550,7 @@ export const CoinTitleContainer = styled.div.attrs((props) => ({
     margin-bottom: 0;
   }
 
-  ${medium} {
+  ${tablet} {
     background-color: #191b1f;
     margin-bottom: ${(props) => (props.top ? "0.75rem" : "0")};
   }
@@ -543,7 +560,6 @@ export const CoinContainer = styled.div.attrs((props) => ({
   padding: props.padding || "1rem 3.5rem",
 }))`
   font-size: 0.9rem;
-
   display: flex;
   flex-direction: column;
   justify-content: ${(props) => props.justify};
@@ -560,7 +576,7 @@ export const CoinContainer = styled.div.attrs((props) => ({
     background-color: #2c2d33;
   }
 
-  ${medium} {
+  ${tablet} {
     background-color: #191b1f;
   }
 `;
@@ -612,29 +628,26 @@ export const CoinChartDiv = styled.div`
 /* PORTFOLIO PAGE */
 
 export const PortfolioRow = styled(Row).attrs((props) => ({
-  marginTop: props.top ? "125px" : "initial",
+  margintop: props.top ? "125px" : "initial",
   direction: props.asset ? "column" : "row",
-}))`
+}))` 
+  display: flex;
+  margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
+  align-items: center;
+
   ${mobile} {
-    margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
-    margin-top: ${(props) => props.marginTop};
+    margin-top: ${(props) => props.margintop};
     flex-direction: ${(props) => props.direction};
     justify-content: center;
-    align-items: center;
   }
 
   ${tablet} {
     margin-top: initial;
-    margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
-    margin-top: initial;
   }
 
   ${large} {
-    margin-top: initial;
-    margin: ${(props) => (props.margin ? props.margin : "0 0 2rem 0")};
     flex-direction: row;
     justify-content: ${(props) => props.justify};
-    align-items: center;
   }
 `;
 

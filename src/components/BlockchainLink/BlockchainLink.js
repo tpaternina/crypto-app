@@ -1,10 +1,12 @@
 import React from "react";
-import { message, Row } from "antd";
+import { message, Col, Row } from "antd";
 import {
   CoinTitleContainer,
+  CoinWideDiv,
   StyledCopy,
   StyledCoinLink,
   StyledLinkIcon,
+  StyledLongLink,
 } from "styles";
 
 export default class BlockchainList extends React.Component {
@@ -16,15 +18,29 @@ export default class BlockchainList extends React.Component {
   render() {
     const { link } = this.props;
     return (
-      <>
-        <CoinTitleContainer>
-          <Row justify="space-between">
-            <StyledLinkIcon />
-            <StyledCoinLink href={link}>{link}</StyledCoinLink>
-            <StyledCopy onClick={() => this.handleCopy(link)} />
+      <CoinTitleContainer>
+        <CoinWideDiv>
+          <Row justify="space-between" align="center" gutter={16}>
+            <Col span={2}>
+              <StyledLinkIcon />
+            </Col>
+            <Col span={20}>
+              <StyledCoinLink href={link}>
+                <StyledLongLink
+                  ellipsis={{
+                    symbol: "...",
+                  }}
+                >
+                  {link}
+                </StyledLongLink>
+              </StyledCoinLink>
+            </Col>
+            <Col span={2}>
+              <StyledCopy onClick={() => this.handleCopy(link)} />
+            </Col>
           </Row>
-        </CoinTitleContainer>
-      </>
+        </CoinWideDiv>
+      </CoinTitleContainer>
     );
   }
 }

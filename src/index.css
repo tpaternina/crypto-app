@@ -41,6 +41,26 @@ code {
     monospace;
 }
 
+/* Customize antd Selector dropdown in mobile */
+
+.mobile-dropdown {
+  box-shadow: none;
+}
+
+.mobile-dropdown > * > .ant-select-item-option-active {
+  background-color: red;
+  color: #fff;
+}
+
+.mobile-dropdown > * > .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: red;
+  color: #fff;
+}
+
+.mobile-dropdown > * > .ant-select-item-empty .ant-empty .ant-empty-description {
+  color: #fff;
+}
+
 /* Customize Slick */
 .slick-arrow.slick-next {
   right: 17px;
@@ -149,6 +169,7 @@ code {
 }
 
 /* Customize InputNumber component from antdesign */
+
 .ant-input-number:hover,
 .ant-input-number:focus {
   border-color: #06d554;

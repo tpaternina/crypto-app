@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { Typography } from "antd";
 import { mobile, tablet, medium, large } from "./Sizes.styles";
 
-const { Paragraph } = Typography;
+const { Paragraph, Text } = Typography;
 
 export const StyledTitle = styled.h3`
   color: #fff;
@@ -72,6 +72,7 @@ export const StyledLink = styled(NavLink)`
     }
   }
 `;
+
 
 /* GLOBAL BAR */
 export const StyledNumber = styled.span`
@@ -156,6 +157,14 @@ export const StyledCoinLink = styled.a`
   }
 `;
 
+export const StyledLongLink = styled(Text)`
+  &.ant-typography {
+    color: #fff;
+    font-size: 0.85rem;
+    max-width: 200px;
+  }
+`;
+
 export const CoinPrice = styled.div`
   display: flex;
   justify-content: center;
@@ -179,6 +188,7 @@ export const StyledDescription = styled(Paragraph)`
     color: #00fc2a;
   }
 `;
+
 
 export const CoinAllTimeInfo = styled.div`
   display: flex;

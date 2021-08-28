@@ -1,12 +1,12 @@
-import { Row } from "antd";
-import { StyledCol, StyledLoadingIcon } from "./LoadingList.styles";
+import { Col, Row } from "antd";
+import { StyledLoadingList } from "styles";
 
 export default function LoadingList(props) {
   return (
     <Row justify="center">
-      <StyledCol span={4}>
-        <StyledLoadingIcon spin />
-      </StyledCol>
+      <Col>
+        <StyledLoadingList spin />
+      </Col>
     </Row>
   );
 }
