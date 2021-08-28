@@ -72,7 +72,6 @@ class Home extends React.Component {
       prevProps.currency !== this.props.currency ||
       prevProps.home.queryConfig.page !== this.props.home.queryConfig.page
     ) {
-      console.log({prevPage: prevProps.home.queryConfig.page, page: this.props.home.queryConfig.page})
       const {
         currency,
         home: {
