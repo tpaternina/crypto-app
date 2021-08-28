@@ -11,7 +11,7 @@ const initialState = {
     descending: false, // if true, sort in descending order, if false sort in ascending order
   },
   queryConfig: {
-    perPage: 10,
+    perPage: 20,
     page: 1,
   },
   timeRange: 30,
