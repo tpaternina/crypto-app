@@ -30,6 +30,7 @@ class App extends React.Component {
     const {
       app: { currency },
       pageConfig: { sortBy, descending },
+      queryConfig: { page },
       portfolio: { sortBy: portfolioSort },
       showSearchPage,
     } = this.props;
@@ -43,7 +44,7 @@ class App extends React.Component {
                   <StyledLink
                     exact
                     activeClassName="selected"
-                    to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
+                    to={`/?currency=${currency}&descending=${descending}&page=${page}&sortBy=${sortBy}`}
                   >
                     Coins
                   </StyledLink>
@@ -80,7 +81,7 @@ class App extends React.Component {
             <StyledLink
               exact
               activeClassName="selected"
-              to={`/?currency=${currency}&sortBy=${sortBy}&descending=${descending}`}
+              to={`/?currency=${currency}&descending=${descending}&page=${page}&sortBy=${sortBy}`}
             >
               <NavIcon>
                 <AppstoreFilled />
@@ -122,6 +123,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => ({
   app: state.app,
   pageConfig: state.home.pageConfig,
+  queryConfig: state.home.queryConfig,
   portfolio: state.portfolio,
 });
 

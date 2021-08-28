@@ -125,7 +125,7 @@ function Coin(props) {
       {isLoading && <LoadingSingleCoin />}
       {hasResponse && (
         <>
-          <CoinRow justify="center" gutter={16} top>
+          <CoinRow justify="center" gutter={16} top="true">
             <CoinCol xs={24} sm={16} md={8} lg={8} xl={6} xxl={6}>
               <CoinTitle data={data} />
             </CoinCol>
