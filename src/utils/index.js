@@ -101,4 +101,4 @@ export const getInterval = (timeRange) => {
     1: {},
   }
   return map[timeRange];
-}
+};

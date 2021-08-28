@@ -58,6 +58,23 @@ export const StyledLoading = styled(LoadingOutlined).attrs(props => ({
   }
 `;
 
+export const LoadingMoreCoins = styled(LoadingOutlined)`
+  font-size: 1rem;
+  margin: 1rem auto;
+
+  ${mobile} {
+    & {
+      color: #fff;
+    }
+  }
+
+  ${tablet} {
+    & {
+      color: #33363e;
+    }
+  }
+`;
+
 export const StyledLoadingList = styled(SyncOutlined)`
   font-size: 2.5rem;
   color: #40454f;

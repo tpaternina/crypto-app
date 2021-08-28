@@ -612,7 +612,9 @@ export const CoinInfoContainer = styled.div`
 
 export const CoinWideDiv = styled.div`
   width: 100%;
-`
+  display: flex;
+  justify-content: center;
+`;
 
 export const CoinChartDiv = styled.div`
   width: 100%;

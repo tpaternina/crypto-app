@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import { ColorBar } from "components";
 import { formatLongNumber, keysToCamelCase } from "utils";
-import { fetchAllCoins } from "store/home/actions";
 import {
   BarContainer,
   ContentLoading,
@@ -51,7 +50,6 @@ function GlobalInfo(props) {
   useEffect(() => {
     // eslint-disable-next-line
     getInfo();
-    props.fetchAllCoins();
     // eslint-disable-next-line
   }, []);
 
@@ -156,8 +154,4 @@ const mapStateToProps = (state) => ({
   coinList: state.home.coinList,
 });
 
-const mapDispatchToProps = {
-  fetchAllCoins,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GlobalInfo);
+export default connect(mapStateToProps)(GlobalInfo);

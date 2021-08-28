@@ -68,7 +68,7 @@ class App extends React.Component {
             </WideNav>
           </WideNavContainer>
           <Container>
-            <GlobalInfo currency={currency} />
+            {/*<GlobalInfo currency={currency} />*/}
             <Switch>
               <Route path="/coins/:id" component={Coin} />
               <Route path="/portfolio" component={Portfolio} />
