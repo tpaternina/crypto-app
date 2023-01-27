@@ -17,7 +17,11 @@ function Currency(props) {
   };
 
   useEffect(
-    () => getCurrencies(),
+    () => {
+      if (currencyList.length === 0) {
+        getCurrencies()
+      }
+    },
     // eslint-disable-next-line
     []
   );

@@ -29,7 +29,9 @@ const slickSettings = {
 
 class ChartOverview extends React.Component {
   componentDidMount() {
-    this.props.fetchPrices(this.props.currency);
+    if (this.props.home.prices.length === 0) {
+      this.props.fetchPrices(this.props.currency);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {

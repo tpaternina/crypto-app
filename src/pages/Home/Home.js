@@ -60,7 +60,7 @@ class Home extends React.Component {
       });
       this.props.history.push(`/?${query}`);
     }
-    if (!this.props.home.isLoading) {
+    if (!this.props.home.isLoading && this.props.home.coinList.length === 0) {
       this.props.fetchAllCoins();
     }
   }
