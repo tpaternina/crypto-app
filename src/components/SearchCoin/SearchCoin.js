@@ -23,7 +23,7 @@ export default class SearchCoin extends React.Component {
     try {
       this.setState({ isLoading: true });
       const { data } = await axios(
-        `${process.env.REACT_APP_SEARCH_LIST}/${searchValue}`
+        `${process.env.REACT_APP_SEARCH_LIST}/coins/?name_filter=${searchValue}`
       );
       this.setState({ data, isLoading: false, hasError: false });
     } catch (err) {

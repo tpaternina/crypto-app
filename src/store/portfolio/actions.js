@@ -55,7 +55,7 @@ export const getCoinList = (val) => async (dispatch, getState) => {
       type: FETCH_COIN_LIST_PENDING,
     });
     const { data: coinList } = await axios(
-      `${process.env.REACT_APP_SEARCH_LIST}/${val}`
+      `${process.env.REACT_APP_SEARCH_LIST}/coins/?name_filter=${val}`
     );
     dispatch({
       type: FETCH_COIN_LIST_SUCCESS,
